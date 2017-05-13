@@ -1,0 +1,8 @@
+{
+	"appURL": "http://localhost/miz_planner/",
+	"defaultSection": "index",
+	"sections": [{
+		"sectionName": "index",
+		"title": "MIZ Planner"
+	}]
+}
