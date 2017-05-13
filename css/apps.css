@@ -1,0 +1,8 @@
+.app-item {
+	border: 1px solid black;
+	min-height: 50px;
+}
+
+.hour-container {
+	line-height: 50px;
+}
