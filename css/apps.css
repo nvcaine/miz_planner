@@ -1,8 +1,19 @@
 .app-item {
-	border: 1px solid black;
+	border: 1px solid #999999;
 	min-height: 50px;
 }
 
 .hour-container {
-	line-height: 50px;
+	border: 1px solid #999999;
+	font-weight: bold;
+	line-height: 48px;
+	text-align: center;
+}
+
+.day-container {
+	background-color: #DDDDDD;
+	border: 1px solid #999999;
+	font-weight: bold;
+	padding: 10px 0;
+	text-align: center;
 }

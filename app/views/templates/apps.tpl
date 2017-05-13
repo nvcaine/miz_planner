@@ -19,30 +19,27 @@
 		<div>
 			<h3>Week {$week}</h3>
 			{if isset($previousWeek)}
-			<a href="{$appURL}apps/?week={$previousWeek}" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Previous week</a>
+			<a href="{$appURL}apps/?week={$previousWeek}" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-chevron-left"></span> Previous week</a>
 			{/if}
 			{if isset($nextWeek)}
-			<a href="{$appURL}apps/?week={$nextWeek}" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-right"></span> Next week</a>
+			<a href="{$appURL}apps/?week={$nextWeek}" class="btn btn-primary btn-sm">Next week <span class="glyphicon glyphicon-chevron-right"></span></a>
 			{/if}
 		</div>
 
 		<div class="row">
-			<div class="col-xs-2"></div>
+			<div class="col-xs-2 day-container"><strong>Hours / Days</strong></div>
 
 			{foreach from=$weekdays item=day}
-			<div class="col-xs-2">{$day}</div>
+			<div class="col-xs-2 day-container">{$day}</div>
 			{/foreach}
 		</div>
 
 		{foreach from=$hours item=hour}
 		<div class="row" style="background-color: {cycle values='#FFFFFF,#DDDDDD'}">
 			<div class="col-xs-2 hour-container">{$hour}</div>
-
-			<div class="col-xs-2 app-item"></div>
-			<div class="col-xs-2 app-item"></div>
-			<div class="col-xs-2 app-item"></div>
-			<div class="col-xs-2 app-item"></div>
-			<div class="col-xs-2 app-item"></div>
+			{foreach from=$weekdays item=day}
+			<div class="col-xs-2 app-item" data-day="{$day}" data-hour="{$hour}"></div>
+			{/foreach}
 		</div>
 		{/foreach}
 	</main>

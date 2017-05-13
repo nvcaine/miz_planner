@@ -1,5 +1,5 @@
 <?php
-class AppsSection extends AbstractAuthSection {
+class AppsSection extends AbstractMenuSection {
 
 	public function runGetMethod($params) {
 		session_start();
@@ -7,29 +7,35 @@ class AppsSection extends AbstractAuthSection {
 		if(!$this->userIsLoggedIn()) {
 			header('Location: ' . $this->appFacade->getAppURL());
 		} else {
-			//echo date('M d', strtotime('2017W01')) . ' - ';
-			//echo date('M d', strtotime('sunday', strtotime('2017W01')));die;
-			$currentWeek = $maxWeek = date('W');
-			if(isset($params['week'])) {
-				$currentWeek = $params['week'];
-			}
-
-			$weekdays = $this->getWeekdays($currentWeek);
-			$hours = $this->getHours(8, 19);
-
-			$this->view->assign('weekdays', $weekdays);
-			$this->view->assign('hours', $hours);
-			$this->view->assign('week', $currentWeek);
-
-			if($currentWeek > 1) {
-				$this->view->assign('previousWeek', $currentWeek - 1);
-			}
-
-			if($currentWeek < $maxWeek) {
-				$this->view->assign('nextWeek', $currentWeek + 1);
-			}
-
+			$this->init();
+			$this->assignSmartyVariables($this->getWeekParam($params), 8, 19);
 			$this->view->display('apps');
+		}
+	}
+
+	private function getWeekParam($params) {
+
+		if(isset($params['week'])) {
+			return $params['week'];
+		}
+
+		return date('W');
+	}
+
+	private function assignSmartyVariables($currentWeek, $startHour, $endHour) {
+
+		$maxWeek = date('W');
+
+		$this->view->assign('week', $currentWeek);
+		$this->view->assign('weekdays', $this->getWeekdays($currentWeek));
+		$this->view->assign('hours', $this->getHours($startHour, $endHour));
+
+		if($currentWeek > 1) {
+			$this->view->assign('previousWeek', $currentWeek - 1);
+		}
+
+		if($currentWeek < $maxWeek) {
+			$this->view->assign('nextWeek', $currentWeek + 1);
 		}
 	}
 
