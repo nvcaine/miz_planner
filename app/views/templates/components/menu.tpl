@@ -3,7 +3,7 @@
 	<div class="container">
 		<div class="pull-left">
 			<a href="{$appURL}" class="navbar-brand" style="padding:5px; background-color:white;">
-				<img src="{$appURL}assets/gamelab.png" alt="" style="max-width:100%; max-height:100%;">
+				<img src="{$appURL}assets/logo-massage.png" alt="" style="max-width:100%; max-height:100%;">
 			</a>
 		</div>
 
