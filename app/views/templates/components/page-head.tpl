@@ -5,6 +5,9 @@
 	<title>{$title}</title>
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">-->
+	
 	<link href="{$appURL}/libs/material/css/roboto.min.css" rel="stylesheet">
 	<link href="{$appURL}/libs/material/css/material.min.css" rel="stylesheet">
 	<link href="{$appURL}/libs/material/css/ripples.min.css" rel="stylesheet">

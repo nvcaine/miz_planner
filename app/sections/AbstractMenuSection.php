@@ -1,20 +1,21 @@
 <?php
-abstract class AbstractMenuSection extends AbstractSection {
+abstract class AbstractMenuSection extends AbstractAuthSection {
 
 	const LOGIN_SECTION = 'login';
-	const LOGOUT_SECTION = 'logout';
 
 	private $requiresLogin = array('apps', 'clients', 'logout');
 
-	protected function init($userIsLoggedIn = false) {
-		$this->initMenu($this->appFacade->getSections(), $userIsLoggedIn);
+	protected function init() {
+		$this->initMenu($this->appFacade->getSections());
 	}
 
-	private function initMenu($sections, $userIsLoggedIn) {
-		$this->view->assign('menuItems', $this->parseMenuItems($sections, $userIsLoggedIn));
+	private function initMenu($sections) {
+		$this->view->assign('menuItems', $this->parseMenuItems($sections));
 	}
 
-	private function parseMenuItems($menuItems, $loggedIn) {
+	private function parseMenuItems($menuItems) {
+
+		$loggedIn = $this->userIsLoggedIn();
 
 		foreach($menuItems as $index => $item)
 			if(
