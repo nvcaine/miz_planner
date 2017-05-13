@@ -4,6 +4,14 @@
 	"sections": [{
 		"sectionName": "index",
 		"title": "MIZ Planner"
+	},{
+		"sectionName": "apps",
+		"title": "MIZ Planner - Appointments",
+		"menuLabel": "Appointments"
+	},{
+		"sectionName": "clients",
+		"title": "MIZ Planner - Clients",
+		"menuLabel": "Clients"
 	}, {
 		"sectionName": "login",
 		"title": "MIZ Planner - Login",
