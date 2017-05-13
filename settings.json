@@ -4,5 +4,13 @@
 	"sections": [{
 		"sectionName": "index",
 		"title": "MIZ Planner"
+	}, {
+		"sectionName": "login",
+		"title": "MIZ Planner - Login",
+		"menuLabel": "Login"
+	}, {
+		"sectionName": "logout",
+		"title": "MIZ Planner - Logout",
+		"menuLabel": "Logout"
 	}]
 }
