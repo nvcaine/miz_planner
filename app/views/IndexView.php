@@ -13,8 +13,8 @@ class IndexView extends AbstractView {
 			//'css/index.css'
 		));
 
-		//if(isset($this->assignedVariables->menuItems))
-			//$this->appFacade->assignSmartyVariable('menuItems', $this->assignedVariables->menuItems);
+		if(isset($this->assignedVariables->menuItems))
+			$this->appFacade->assignSmartyVariable('menuItems', $this->assignedVariables->menuItems);
 
 		parent::display($template);
 	}
