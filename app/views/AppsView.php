@@ -9,6 +9,10 @@ class AppsView extends AbstractView {
 			'css/apps.css'
 		));
 
+		$this->addExternalScripts(array(
+			'js/apps.js'
+		));
+
 		$this->appFacade->assignSmartyVariable('weekdays', $this->assignedVariables->weekdays);
 		$this->appFacade->assignSmartyVariable('hours', $this->assignedVariables->hours);
 		$this->appFacade->assignSmartyVariable('week', $this->assignedVariables->week);
