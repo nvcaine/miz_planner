@@ -1,0 +1,30 @@
+.app-item {
+	border: 1px solid #999999;
+	min-height: 50px;
+	cursor: pointer;
+}
+
+.hour-container {
+	border: 1px solid #999999;
+	font-weight: bold;
+	line-height: 48px;
+	text-align: center;
+}
+
+.day-container {
+	background-color: #DDDDDD;
+	border: 1px solid #999999;
+	font-weight: bold;
+	padding: 10px 0;
+	text-align: center;
+}
+
+.app-item-inner {
+	height: 40px;
+	margin: 4px 0 0 0;
+	width: 100%;
+}
+
+.edit-status-option {
+	width: 100%;
+}
