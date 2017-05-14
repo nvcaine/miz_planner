@@ -25,9 +25,15 @@
 				</a>
 				{/if}
 				{if isset($nextWeek)}
+				{if $week < $maxWeek - 1}
+				<a href="{$appURL}apps/?week={$nextWeek}" class="btn btn-primary btn-sm">
+					Next week <span class="glyphicon glyphicon-chevron-right"></span>
+				</a>
+				{else}
 				<a href="{$appURL}apps/" class="btn btn-primary btn-sm">
 					Next week <span class="glyphicon glyphicon-chevron-right"></span>
 				</a>
+				{/if}
 				{/if}
 			</div>
 		</div>

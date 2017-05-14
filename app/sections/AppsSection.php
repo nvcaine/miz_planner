@@ -68,6 +68,7 @@ class AppsSection extends AbstractMenuSection {
 		$this->view->assign('week', $currentWeek);
 		$this->view->assign('weekdays', $this->getWeekdays($currentWeek));
 		$this->view->assign('hours', $this->getHours($startHour, $endHour));
+		$this->view->assign('maxWeek', date('W'));
 
 		if($currentWeek > 1) {
 			$this->view->assign('previousWeek', $currentWeek - 1);
