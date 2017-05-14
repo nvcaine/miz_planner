@@ -18,22 +18,17 @@
 
 		<div>
 			<h3>Week {$week}</h3>
-			{if isset($previousWeek)}
 			<div>
+				{if isset($previousWeek)}
 				<a href="{$appURL}apps/?week={$previousWeek}" class="btn btn-primary btn-sm">
 					<span class="glyphicon glyphicon-chevron-left"></span> Previous week
 				</a>
 				{/if}
 				{if isset($nextWeek)}
-				<a href="{$appURL}apps/?week={$nextWeek}" class="btn btn-primary btn-sm">
+				<a href="{$appURL}apps/" class="btn btn-primary btn-sm">
 					Next week <span class="glyphicon glyphicon-chevron-right"></span>
 				</a>
-			</div>
-			{/if}
-			<div>
-				<button class="btn btn-primary" data-toggle="modal" data-target="#add-appointment-popup" data-day="Mon May 08" data-hour="10:00">
-					<span class="glyphicon glyphicon-plus"></span> Add appointment
-				</button>
+				{/if}
 			</div>
 		</div>
 
@@ -49,38 +44,30 @@
 		<div class="row" style="background-color: {cycle values='#FFFFFF,#DDDDDD'}">
 			<div class="col-xs-2 hour-container">{$hour}</div>
 			{foreach from=$weekdays item=day}
-			<div class="col-xs-2 app-item" data-toggle="modal" data-target="#add-appointment-popup" data-day="{$day}" data-hour="{$hour}"></div>
+			<div class="col-xs-2 app-item" data-toggle="modal" data-target="#add-appointment-popup" data-day="{$day}" data-hour="{$hour}">
+				{foreach from=$apps item=app}
+					{if $day == $app->day && $hour == $app->hour}
+					{if $app->status == 'new'}
+						{assign var='buttonClass' value='info'}
+					{elseif $app->status == 'done'}
+						{assign var='buttonClass' value='success'}
+					{else}
+						{assign var='buttonClass' value='warning'}
+					{/if}
+					<button class="btn btn-{$buttonClass} app-item-inner" data-toggle="modal" data-target="#edit-appointment-popup" data-status="{$app->status}" data-appid="{$app->id}">
+						{$app->client}
+					</button>
+					{/if}
+				{/foreach}
+			</div>
 			{/foreach}
 		</div>
 		{/foreach}
 	</main>
 
-	<div class="modal fade" id="add-appointment-popup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">Add appointment</h4>
-					<div class="modal-body">
-						<p>Hour: <span id="app-hour-label"></span></p>
-						<p>Day: <span id="app-day-label"></span></p>
-						<p>
-							<form>
-								<div class="form-group">
-									<input name="client-name" type="text" class="form-control validate" placeholder="Client name" required>
-								</div>
-							</form>
-						</p>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	{include file='popups/add-app-popup.tpl'}
+
+	{include file='popups/edit-app-popup.tpl'}
 
 	{include file='components/footer.tpl'}
 

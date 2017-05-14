@@ -7,10 +7,49 @@ class AppsSection extends AbstractMenuSection {
 		if(!$this->userIsLoggedIn()) {
 			header('Location: ' . $this->appFacade->getAppURL());
 		} else {
-			$this->init();
-			$this->assignSmartyVariables($this->getWeekParam($params), 8, 19);
-			$this->view->display('apps');
+			$this->showView($params);
 		}
+	}
+
+	public function runPostMethod($params) {
+		session_start();
+
+		if(!$this->userIsLoggedIn()) {
+
+			header('Location: ' . $this->appFacade->getAppURL());
+
+		} else {
+
+			$existingApps = json_decode(file_get_contents('json/apps.json'));
+
+			if(isset($params['edit-app-action'])) {
+				foreach($existingApps as $key => $app)
+					if($app->id == $params['edit-app-id']) {
+						$existingApps[$key]->status = $params['edit-app-status'];
+						break;
+					}
+
+			} else {
+
+				$existingApps[] = array(
+					'id' => time(),
+					'hour' => $params['new-app-hour'],
+					'day' => $params['new-app-day'],
+					'client' => $params['new-app-client'],
+					'status' => 'new'
+				);
+			}
+
+			file_put_contents('json/apps.json', json_encode($existingApps, JSON_PRETTY_PRINT));
+
+			$this->showView($params);
+		}
+	}
+
+	private function showView($params) {
+		$this->init();
+		$this->assignSmartyVariables($this->getWeekParam($params), 8, 19);
+		$this->view->display('apps');
 	}
 
 	private function getWeekParam($params) {
@@ -37,6 +76,8 @@ class AppsSection extends AbstractMenuSection {
 		if($currentWeek < $maxWeek) {
 			$this->view->assign('nextWeek', $currentWeek + 1);
 		}
+
+		$this->view->assign('apps', $this->getAppointments());
 	}
 
 	private function getWeekdays($week) {
@@ -65,5 +106,9 @@ class AppsSection extends AbstractMenuSection {
 		}
 
 		return $result;
+	}
+
+	private function getAppointments() {
+		return json_decode(file_get_contents('json/apps.json'));
 	}
 }
