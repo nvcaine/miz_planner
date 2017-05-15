@@ -23,6 +23,8 @@
 	height: 40px;
 	margin: 4px 0 0 0;
 	width: 100%;
+	white-space: normal !important;
+	word-wrap: break-word;
 }
 
 .edit-status-option {

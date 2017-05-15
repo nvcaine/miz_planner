@@ -11,7 +11,7 @@
 					<p>Hour: <span id="edit-app-hour-label"></span></p>
 					<p>Day: <span id="edit-app-day-label"></span></p>
 					<p>Update appointment status.</p>
-					<form method="post">
+					<form method="post" onsubmit="return confirm('Are you sure you want to delete this appointment?');">
 						<div class="form-group" style="width:100%;">
 							<div class="dropdown">
 								<button class="btn btn-default dropdown-toggle" type="button" id="app-status-list" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="width:100%;">
@@ -33,6 +33,7 @@
 						</div>
 						<div class="form-group">
 							<button type="submit" class="btn btn-success">Save</button>
+							<input type="submit" class="btn btn-danger" name="delete-app-action" value="Delete">
 						</div>
 						<input type="hidden" name="edit-app-id">
 						<input type="hidden" name="edit-app-status">
