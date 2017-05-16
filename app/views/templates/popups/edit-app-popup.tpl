@@ -33,6 +33,7 @@
 						</div>
 						<div class="form-group">
 							<button type="submit" class="btn btn-success">Save</button>
+							<input type="submit" class="btn btn-danger" name="delete-app-action" value="Delete" onclick="return confirm('Are you sure you want to delete this appointment?');">
 						</div>
 						<input type="hidden" name="edit-app-id">
 						<input type="hidden" name="edit-app-status">

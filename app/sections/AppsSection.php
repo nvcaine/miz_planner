@@ -25,10 +25,14 @@ class AppsSection extends AbstractMenuSection {
 			if(isset($params['edit-app-action'])) {
 				foreach($existingApps as $key => $app)
 					if($app->id == $params['edit-app-id']) {
-						$existingApps[$key]->status = $params['edit-app-status'];
+						if(isset($params['delete-app-action'])) {
+							unset($existingApps[$key]);
+							$existingApps = array_values($existingApps);
+						} else {
+							$existingApps[$key]->status = $params['edit-app-status'];
+						}
 						break;
 					}
-
 			} else {
 
 				$existingApps[] = array(
