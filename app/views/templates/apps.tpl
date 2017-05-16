@@ -20,12 +20,19 @@
 			<h3>Week {$week}</h3>
 			<div>
 				{if isset($previousWeek)}
+				{if $previousWeek != $thisWeek}
 				<a href="{$appURL}apps/?week={$previousWeek}" class="btn btn-primary btn-sm">
 					<span class="glyphicon glyphicon-chevron-left"></span> Previous week
 				</a>
+				{else}
+				<a href="{$appURL}apps/" class="btn btn-primary btn-sm">
+					<span class="glyphicon glyphicon-chevron-left"></span> Previous week
+				</a>
 				{/if}
+				{/if}
+
 				{if isset($nextWeek)}
-				{if $week < $maxWeek - 1}
+				{if $nextWeek != $thisWeek}
 				<a href="{$appURL}apps/?week={$nextWeek}" class="btn btn-primary btn-sm">
 					Next week <span class="glyphicon glyphicon-chevron-right"></span>
 				</a>
@@ -34,6 +41,11 @@
 					Next week <span class="glyphicon glyphicon-chevron-right"></span>
 				</a>
 				{/if}
+				{/if}
+
+				{if $week != $thisWeek}
+				<a href="{$appURL}apps/" class="btn btn-primary btn-sm">This week</span>
+				</a>
 				{/if}
 			</div>
 		</div>

@@ -67,12 +67,12 @@ class AppsSection extends AbstractMenuSection {
 
 	private function assignSmartyVariables($currentWeek, $startHour, $endHour) {
 
-		$maxWeek = date('W');
+		$maxWeek = $this->getMaxWeek();
 
 		$this->view->assign('week', $currentWeek);
 		$this->view->assign('weekdays', $this->getWeekdays($currentWeek));
 		$this->view->assign('hours', $this->getHours($startHour, $endHour));
-		$this->view->assign('maxWeek', date('W'));
+		$this->view->assign('thisWeek', date('W'));
 
 		if($currentWeek > 1) {
 			$this->view->assign('previousWeek', $currentWeek - 1);
@@ -115,5 +115,9 @@ class AppsSection extends AbstractMenuSection {
 
 	private function getAppointments() {
 		return json_decode(file_get_contents('json/apps.json'));
+	}
+
+	private function getMaxWeek() {
+		return (strtotime('2017W53') !== false) ? 53 : 52;
 	}
 }
