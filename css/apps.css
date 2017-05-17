@@ -1,7 +1,9 @@
 .app-item {
 	border: 1px solid #999999;
-	min-height: 50px;
 	cursor: pointer;
+	min-height: 50px;
+	padding-left: 3px !important;
+	padding-right: 3px !important;
 }
 
 .hour-container {
@@ -20,8 +22,9 @@
 }
 
 .app-item-inner {
-	height: 40px;
-	margin: 4px 0 0 0;
+	/*height: 40px;*/
+	margin: 2px 0 0 0;
+	padding: 2px 2px !important;
 	width: 100%;
 	white-space: normal !important;
 	word-wrap: break-word;
