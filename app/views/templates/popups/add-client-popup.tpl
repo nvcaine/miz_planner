@@ -26,7 +26,7 @@
 						<p><br />* Required</p>
 
 						<div class="form-group">
-							<button type="submit" class="btn btn-success">Save</button>
+							<button type="submit" class="btn btn-success" name="new-client-add-action">Save</button>
 						</div>
 						<!--<input type="hidden" name="new-app-client-id">-->
 					</form>
