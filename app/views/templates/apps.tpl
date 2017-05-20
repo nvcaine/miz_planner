@@ -65,14 +65,7 @@
 			<div class="col-xs-2 app-item" data-toggle="modal" data-target="#add-appointment-popup" data-day="{$day}" data-hour="{$hour}">
 				{foreach from=$apps item=app}
 					{if $day == $app->day && $hour == $app->hour}
-					{if $app->status == 'new'}
-						{assign var='buttonClass' value='info'}
-					{elseif $app->status == 'done'}
-						{assign var='buttonClass' value='success'}
-					{else}
-						{assign var='buttonClass' value='warning'}
-					{/if}
-					<button class="btn btn-{$buttonClass} app-item-inner" data-toggle="modal" data-target="#edit-appointment-popup" data-status="{$app->status}" data-appid="{$app->id}">
+					<button class="app-item-inner btn btn-{$app->buttonClass} btn-sm" data-toggle="modal" data-target="#edit-appointment-popup" data-status="{$app->status}" data-appid="{$app->id}">
 						{$app->client}
 					</button>
 					{/if}
