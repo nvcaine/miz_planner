@@ -25,6 +25,7 @@ class ClientsSection extends AbstractMenuSection {
 	private function showView($params) {
 
 		$this->init();
+		$this->loadClients();
 		$this->view->display('clients');
 	}
 
@@ -38,6 +39,7 @@ class ClientsSection extends AbstractMenuSection {
 
 		$clients = json_decode(file_get_contents('json/clients.json'));
 		$newClient = array(
+			'id' => time(),
 			'first_name' => $params['new-client-first-name'],
 			'last_name' => $params['new-client-last-name'],
 			'birth_date' => $params['new-client-birthdate'],
@@ -50,5 +52,11 @@ class ClientsSection extends AbstractMenuSection {
 		$clients[] = $newClient;
 
 		file_put_contents('json/clients.json', json_encode($clients, JSON_PRETTY_PRINT));
+	}
+
+	private function loadClients() {
+
+		$clients = json_decode(file_get_contents('json/clients.json'));
+		$this->view->assign('clients', $clients);
 	}
 }

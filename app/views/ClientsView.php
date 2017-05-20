@@ -11,6 +11,8 @@ class ClientsView extends AbstractView {
 			'js/clients.js'
 		));
 
+		$this->appFacade->assignSmartyVariable('clients', $this->assignedVariables->clients);
+
 		if(isset($this->assignedVariables->menuItems))
 			$this->appFacade->assignSmartyVariable('menuItems', $this->assignedVariables->menuItems);
 
