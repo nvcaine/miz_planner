@@ -22,6 +22,14 @@
 				<span class="glyphicon glyphicon-plus"></span> Add client
 			</button>
 		</div>
+
+		{foreach from=$clients item=client}
+		<div class="row">
+			<div class="col-xs-6">{$client->first_name} {$client->last_name}</div>
+			<div class="col-xs-3">{$client->birth_date}</div>
+			<div class="col-xs-3">{$client->date_added}</div>
+		</div>
+		{/foreach}
 	</main>
 
 	{include file='popups/add-client-popup.tpl'}
