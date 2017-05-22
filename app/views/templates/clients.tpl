@@ -23,19 +23,18 @@
 			</button>
 		</div>
 
-		{foreach from=$clients item=client}
-		<div class="row" style="background-color: {cycle values='#FFFFFF,#DDDDDD'}">
-			<div class="col-xs-8">
-				<h4>{$client->first_name} {$client->last_name}</h4>
-				{if isset($client->phone)}
-				<p>{$client->phone}</p>
-				{/if}
-				<p>{$client->birth_date}</p>
-			</div>
-			<!--<div class="col-xs-3">{$client->birth_date}</div>-->
-			<div class="col-xs-4">{$client->date_added}</div>
+		<div class="row">
+		{foreach from=$clients key=index item=client}
+		{if $index % 4 == 0 && $index > 0}
 		</div>
+		<div class="row">
+		{/if}
+			{if $index % 2 == 0 && $index > 0}
+			<div class="clearfix visible-xs"></div>
+			{/if}
+			{include file='items/client-item.tpl' client=$client index=$index}
 		{/foreach}
+		</div>
 	</main>
 
 	{include file='popups/add-client-popup.tpl'}
