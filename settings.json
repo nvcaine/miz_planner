@@ -20,5 +20,8 @@
 		"sectionName": "logout",
 		"title": "MIZ Planner - Logout",
 		"menuLabel": "Logout"
+	},{
+		"sectionName": "apps_auto",
+		"title": "MIZ Planner"
 	}]
 }

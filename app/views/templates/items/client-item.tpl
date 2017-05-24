@@ -11,7 +11,9 @@
 		{if isset($client->phone)}
 		<p><span class="glyphicon glyphicon-phone"></span>&nbsp;&nbsp;{$client->phone}</p>
 		{/if}
+		{if isset($client->birth_date)}
 		<p><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;{$client->birth_date}</p>
+		{/if}
 		{if isset($client->mail)}
 		<p><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;{$client->mail}</p>
 		{/if}
