@@ -3,3 +3,4 @@ libs/
 app/views/templates/compile/
 assets/
 json/apps.json
+json/clients.json

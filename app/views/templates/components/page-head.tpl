@@ -14,6 +14,10 @@
 
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'>
 
+	{if isset($includeDatepicker)}
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css">
+	{/if}
+
 	<link rel="icon" type="image/png" sizes="96x96" href="{$appURL}assets/favicon.png">
 	{if isset($styles)}
 		{foreach from=$styles item=style}
