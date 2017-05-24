@@ -22,7 +22,9 @@
 						<div class="form-group-lg">
 							<input name="new-client-phone" type="text" class="form-control validate" placeholder="Phone number">
 						</div>
-
+						<div class="form-group-lg">
+							<input name="new-client-mail" type="text" class="form-control validate" placeholder="E-mail">
+						</div>
 						<p><br />* Required</p>
 
 						<div class="form-group">

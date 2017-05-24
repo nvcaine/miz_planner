@@ -14,9 +14,8 @@
 			<h2>Manage clients</h2>
 		</div>
 
-		<p>
-			This section is dedicated to client management and analytics.
-		</p>
+		<p>This section is dedicated to client management and analytics</p>
+
 		<div>
 			<button class="btn btn-success" data-toggle="modal" data-target="#add-client-popup">
 				<span class="glyphicon glyphicon-plus"></span> Add client

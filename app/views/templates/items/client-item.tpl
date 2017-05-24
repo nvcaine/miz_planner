@@ -6,15 +6,15 @@
 		</div>
 
 		<p style="text-align:center; font-size:1.3em;padding:10px;">
-			<strong>{$index} - {$client->first_name} {$client->last_name}</strong>
+			<strong>{$client->first_name} {$client->last_name}</strong>
 		</p>
 		{if isset($client->phone)}
-		<p><span class="glyphicon glyphicon-phone"></span> {$client->phone}</p>
+		<p><span class="glyphicon glyphicon-phone"></span>&nbsp;&nbsp;{$client->phone}</p>
 		{/if}
-		<p><span class="glyphicon glyphicon-calendar"></span> {$client->birth_date}</p>
+		<p><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;{$client->birth_date}</p>
 		{if isset($client->mail)}
-		<p><span class="glyphicon glyphicon-envelope"></span> {$client->mail}</p>
+		<p><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;{$client->mail}</p>
 		{/if}
-		<p><span class="glyphicon glyphicon-tags"></span> {$client->date_added}</p>
+		<p><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;{$client->date_added}</p>
 	</div>
 </div>

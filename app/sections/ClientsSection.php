@@ -46,8 +46,11 @@ class ClientsSection extends AbstractMenuSection {
 			'date_added' => date('m/d/Y')
 		);
 
-		if(isset($params['new-client-phone']))
+		if(isset($params['new-client-phone']) && $params['new-client-phone'] != '')
 			$newClient['phone'] = $params['new-client-phone'];
+
+		if(isset($params['new-client-mail']) && $params['new-client-phone'] != '')
+			$newClient['mail'] = $params['new-client-mail'];
 
 		$clients[] = $newClient;
 
