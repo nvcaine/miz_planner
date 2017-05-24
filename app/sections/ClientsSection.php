@@ -42,9 +42,11 @@ class ClientsSection extends AbstractMenuSection {
 			'id' => time(),
 			'first_name' => $params['new-client-first-name'],
 			'last_name' => $params['new-client-last-name'],
-			'birth_date' => $params['new-client-birthdate'],
 			'date_added' => date('m/d/Y')
 		);
+
+		if(isset($params['new-client-birthdate']) && $params['new-client-birthdate'] != '')
+			$newClient['birth_date'] = $params['new-client-birthdate'];
 
 		if(isset($params['new-client-phone']) && $params['new-client-phone'] != '')
 			$newClient['phone'] = $params['new-client-phone'];

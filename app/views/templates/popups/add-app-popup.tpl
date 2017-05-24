@@ -12,14 +12,23 @@
 					<p>
 						<form method="post">
 							<div class="form-group">
-								<input name="new-app-client" type="text" class="form-control validate" placeholder="Client name" required>
+								<div id="client-dropdown-wrapper" class="dropdown">
+									<input name="new-app-client" type="text" class="form-control validate" placeholder="Client name (first last)" required autocomplete="off" data-toggle="dropdown">
+									<ul id="client-autocomplete-dropdown" class="dropdown-menu" style="width:100%;">
+										<li style="padding-right:10px;">
+											<button type="button" class="close" data-toggle="dropdown">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</li>
+									</ul>
+								</div>
 							</div>
 							<div class="form-group">
 								<button type="submit" class="btn btn-success">Save</button>
 							</div>
 							<input type="hidden" name="new-app-hour">
 							<input type="hidden" name="new-app-day">
-							<!--<input type="hidden" name="new-app-client-id">-->
+							<input type="hidden" name="new-app-client-id" value="{$smarty.now}">
 						</form>
 					</p>
 				</div>

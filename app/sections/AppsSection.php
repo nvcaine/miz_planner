@@ -39,12 +39,14 @@ class AppsSection extends AbstractMenuSection {
 					'id' => time(),
 					'hour' => $params['new-app-hour'],
 					'day' => $params['new-app-day'],
-					'client' => $params['new-app-client'],
+					'client' => intval($params['new-app-client-id']),
 					'status' => 'new'
 				);
 			}
 
 			file_put_contents('json/apps.json', json_encode($existingApps, JSON_PRETTY_PRINT));
+
+			$this->checkIfNewClient($params);
 
 			$this->showView($params);
 		}
@@ -114,10 +116,41 @@ class AppsSection extends AbstractMenuSection {
 	}
 
 	private function getAppointments() {
-		return json_decode(file_get_contents('json/apps.json'));
+
+		$apps = json_decode(file_get_contents('json/apps.json'));
+		$clients = json_decode(file_get_contents('json/clients.json'));
+
+		foreach($apps as $index => $app)
+			foreach($clients as $client)
+				if($client->id == $app->client)
+					$apps[$index]->client = $client->first_name . ' ' . $client->last_name;
+
+		return $apps;
 	}
 
 	private function getMaxWeek() {
 		return (strtotime('2017W53') !== false) ? 53 : 52;
+	}
+
+	private function checkIfNewClient($params) {
+		$clients = json_decode(file_get_contents('json/clients.json'));
+
+		foreach($clients as $client)
+			if($client->id == $params['new-app-client-id'])
+				return;
+
+		$names = explode(' ', $params['new-app-client']);
+
+		if(isset($names[0]) && $names[0] != '' && isset($names[1]) && $names[1] != '') {
+
+			$clients[] = array(
+				'id' => intval($params['new-app-client-id']),
+				'first_name' => ucfirst($names[0]),
+				'last_name' => ucfirst($names[1]),
+				'date_added' => date('m/d/Y')
+			);
+
+			file_put_contents('json/clients.json', json_encode($clients, JSON_PRETTY_PRINT));
+		}
 	}
 }
