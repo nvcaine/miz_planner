@@ -23,7 +23,7 @@ $( function() {
 		var app_id = target.data('appid');
 		var hour = target.parent().data('hour');
 		var day = target.parent().data('day');
-		var client = appTarget.html();
+		var client = target.data('fullname');
 
 		$(this).find('#app-status-label').html(status);
 		$(this).find('#edit-app-client-label').html(client);

@@ -42,11 +42,11 @@ class AppsSection extends AbstractMenuSection {
 					'client' => intval($params['new-app-client-id']),
 					'status' => 'new'
 				);
+	
+				$this->checkIfNewClient($params);
 			}
 
 			file_put_contents('json/apps.json', json_encode($existingApps, JSON_PRETTY_PRINT));
-
-			$this->checkIfNewClient($params);
 
 			$this->showView($params);
 		}
@@ -122,8 +122,11 @@ class AppsSection extends AbstractMenuSection {
 
 		foreach($apps as $index => $app)
 			foreach($clients as $client)
-				if($client->id == $app->client)
+				if($client->id == $app->client) {
 					$apps[$index]->client = $client->first_name . ' ' . $client->last_name;
+					$apps[$index]->client_short = $client->first_name[0] . '. ' . $client->last_name;
+
+				}
 
 		return $apps;
 	}

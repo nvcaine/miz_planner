@@ -22,7 +22,7 @@
 }
 
 .app-item-inner {
-	/*height: 40px;*/
+	height: 40px;
 	margin: 2px 0 0 0;
 	padding: 2px 2px !important;
 	width: 100%;
@@ -32,4 +32,14 @@
 
 .edit-status-option {
 	width: 100%;
+}
+
+@media(max-width: 479px) {
+	.apps-wrapper {
+		overflow: scroll;
+	}
+
+	.apps-container {
+		width: 300%;
+	}
 }
