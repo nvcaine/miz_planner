@@ -61,7 +61,9 @@ class ClientsSection extends AbstractMenuSection {
 
 	private function loadClients() {
 
-		$clients = json_decode(file_get_contents('json/clients.json'));
+		//$clients = json_decode(file_get_contents('json/clients.json'));
+		$db = DBWrapper::cloneInstance();
+		$clients = $db->query('SELECT * FROM clients ORDER BY last_name');
 		$this->view->assign('clients', $clients);
 	}
 }

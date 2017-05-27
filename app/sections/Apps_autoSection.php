@@ -9,7 +9,10 @@ class Apps_autoSection extends AbstractSection {
 
 	private function getResults($query) {
 
-		$clients = json_decode(file_get_contents('json/clients.json'));
+		$db = DBWrapper::cloneInstance();
+		$query = "SELECT * FROM clients WHERE last_name LIKE '$query%' OR first_name LIKE '$query%' ORDER BY last_name";
+		return $db->query($query);
+		/*$clients = json_decode(file_get_contents('json/clients.json'));
 		$result = array();
 
 		foreach($clients as $client)
@@ -21,7 +24,7 @@ class Apps_autoSection extends AbstractSection {
 				$result[] = $client;
 
 		usort($result, array($this, "clientCompare"));
-		return $result;
+		return $result;*/
 	}
 
 	private function clientCompare($c1, $c2) {
