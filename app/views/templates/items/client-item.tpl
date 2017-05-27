@@ -17,6 +17,9 @@
 		{if isset($client->mail)}
 		<p><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;{$client->mail}</p>
 		{/if}
+		{if isset($client->address)}
+		<p><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;{$client->address}</p>
+		{/if}
 		<p><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;{$client->date_added}</p>
 	</div>
 </div>

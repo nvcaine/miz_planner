@@ -1,5 +1,5 @@
 $( function() {
-	$('input[name=new-client-birthdate]').datepicker();
+	$('input[name=new-client-birthdate]').datepicker({format: 'yyyy.mm.dd'});
 
 	$('#add-client-popup').on('hidden.bs.modal', function(event) {
 		$(this).find('input[name=new-client-first-name]').val('');
