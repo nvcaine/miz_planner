@@ -37,26 +37,8 @@ class ClientsSection extends AbstractMenuSection {
 
 	private function addNewClient($params) {
 
-		$clients = json_decode(file_get_contents('json/clients.json'));
-		$newClient = array(
-			'id' => time(),
-			'first_name' => $params['new-client-first-name'],
-			'last_name' => $params['new-client-last-name'],
-			'date_added' => date('m/d/Y')
-		);
-
-		if(isset($params['new-client-birthdate']) && $params['new-client-birthdate'] != '')
-			$newClient['birth_date'] = $params['new-client-birthdate'];
-
-		if(isset($params['new-client-phone']) && $params['new-client-phone'] != '')
-			$newClient['phone'] = $params['new-client-phone'];
-
-		if(isset($params['new-client-mail']) && $params['new-client-phone'] != '')
-			$newClient['mail'] = $params['new-client-mail'];
-
-		$clients[] = $newClient;
-
-		file_put_contents('json/clients.json', json_encode($clients, JSON_PRETTY_PRINT));
+		$proxy = new ClientsProxy(DBWrapper::cloneInstance());
+		$proxy->addClient($params);
 	}
 
 	private function loadClients() {
