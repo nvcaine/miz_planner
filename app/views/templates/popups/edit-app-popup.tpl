@@ -26,18 +26,17 @@
 										<div class="btn btn-success edit-status-option" data-status="done">done</div>
 									</li>
 									<li>
-										<div class="btn btn-warning edit-status-option" data-status="canceled">canceled</div>
+										<div class="btn btn-warning edit-status-option" data-status="cancelled">cancelled</div>
 									</li>
 								</ul>
 							</div>
 						</div>
 						<div class="form-group">
-							<button type="submit" class="btn btn-success">Save</button>
+							<button type="submit" name="edit-app-action" class="btn btn-success">Save</button>
 							<input type="submit" class="btn btn-danger" name="delete-app-action" value="Delete" onclick="return confirm('Are you sure you want to delete this appointment?');">
 						</div>
 						<input type="hidden" name="edit-app-id">
 						<input type="hidden" name="edit-app-status">
-						<input type="hidden" name="edit-app-action" value="true">
 					</form>
 				</div>
 				<div class="modal-footer">

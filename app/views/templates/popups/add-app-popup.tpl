@@ -24,11 +24,11 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<button type="submit" class="btn btn-success">Save</button>
+								<button id="submit-form" type="submit" class="btn btn-success" disabled>Save</button>
 							</div>
 							<input type="hidden" name="new-app-hour">
 							<input type="hidden" name="new-app-day">
-							<input type="hidden" name="new-app-client-id" value="{$smarty.now}">
+							<input type="hidden" name="new-app-client-id" value="-1">
 						</form>
 					</p>
 				</div>

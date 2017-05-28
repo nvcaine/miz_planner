@@ -12,6 +12,21 @@ class AppsProxy extends AbstractProxy {
 		$this->db->query($query, $values, null, false);
 	}
 
+	public function deleteApp($app_id) {
+		$query = 'DELETE FROM apps WHERE app_id = :app_id';
+		$this->db->query($query, array('app_id' => $app_id), null, false);
+	}
+
+	public function updateApp($app_id, $status) {
+		$query = "UPDATE apps SET status='$status' WHERE app_id = $app_id";
+		$values = array(
+			'status' => $status,
+			'app_id' => $app_id
+		);
+
+		$this->db->query($query, null, null, false);
+	}
+
 	public function getAppointmentsForWeek($week) {
 
 		$start = $this->getDateFromWeekday($week, 'monday');

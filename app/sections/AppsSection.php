@@ -20,42 +20,15 @@ class AppsSection extends AbstractMenuSection {
 
 		} else {
 
-			$existingApps = json_decode(file_get_contents('json/apps.json'));
-
-			if(isset($params['edit-app-action'])) {
-				foreach($existingApps as $key => $app)
-					if($app->id == $params['edit-app-id']) {
-						if(isset($params['delete-app-action'])) {
-							unset($existingApps[$key]);
-							$existingApps = array_values($existingApps);
-						} else {
-							$existingApps[$key]->status = $params['edit-app-status'];
-						}
-						break;
-					}
-			} else {
-
-				/*$existingApps[] = array(
-					'id' => time(),
-					'hour' => $params['new-app-hour'],
-					'day' => $params['new-app-day'],
-					'client' => intval($params['new-app-client-id']),
-					'status' => 'new'
-				);*/
+			if(isset($params['edit-app-action']))
+				$this->updateApp($params);
+			else if(isset($params['delete-app-action']))
+				$this->deleteApp($params);
+			else
 				$this->addApp($params);
-	
-				//$this->checkIfNewClient($params);
-			}
-
-			//file_put_contents('json/apps.json', json_encode($existingApps, JSON_PRETTY_PRINT));
 
 			$this->showView($params);
 		}
-	}
-
-	private function addApp($params) {
-		$appsProxy = new AppsProxy(DBWrapper::cloneInstance());
-		$appsProxy->addApp($params['new-app-client-id'], $params['new-app-day'], $params['new-app-hour']);
 	}
 
 	private function showView($params) {
@@ -126,45 +99,26 @@ class AppsSection extends AbstractMenuSection {
 	}
 
 	private function getAppointments($week) {
-
-		/*$apps = json_decode(file_get_contents('json/apps.json'));
-		$clients = json_decode(file_get_contents('json/clients.json'));
-
-		foreach($apps as $index => $app)
-			foreach($clients as $client)
-				if($client->id == $app->client) {
-					$apps[$index]->client = $client->first_name . ' ' . $client->last_name;
-					$apps[$index]->client_short = $client->first_name[0] . '. ' . $client->last_name;
-
-				}*/
-		$appsProxy = new AppsProxy(DBWrapper::cloneInstance());
-
-		return $appsProxy->getAppointmentsForWeek($week);
+		$proxy = new AppsProxy(DBWrapper::cloneInstance());
+		return $proxy->getAppointmentsForWeek($week);
 	}
 
 	private function getMaxWeek() {
 		return (strtotime('2017W53') !== false) ? 53 : 52;
 	}
 
-	private function checkIfNewClient($params) {
-		$clients = json_decode(file_get_contents('json/clients.json'));
+	private function addApp($params) {
+		$proxy = new AppsProxy(DBWrapper::cloneInstance());
+		$proxy->addApp($params['new-app-client-id'], $params['new-app-day'], $params['new-app-hour']);
+	}
 
-		foreach($clients as $client)
-			if($client->id == $params['new-app-client-id'])
-				return;
+	private function deleteApp($params) {
+		$proxy = new AppsProxy(DBWrapper::cloneInstance());
+		$proxy->deleteApp($params['edit-app-id']);
+	}
 
-		$names = explode(' ', $params['new-app-client']);
-
-		if(isset($names[0]) && $names[0] != '' && isset($names[1]) && $names[1] != '') {
-
-			$clients[] = array(
-				'id' => intval($params['new-app-client-id']),
-				'first_name' => ucfirst($names[0]),
-				'last_name' => ucfirst($names[1]),
-				'date_added' => date('m/d/Y')
-			);
-
-			file_put_contents('json/clients.json', json_encode($clients, JSON_PRETTY_PRINT));
-		}
+	private function updateApp($params) {
+		$proxy = new AppsProxy(DBWrapper::cloneInstance());
+		$proxy->updateApp($params['edit-app-id'], $params['edit-app-status']);
 	}
 }

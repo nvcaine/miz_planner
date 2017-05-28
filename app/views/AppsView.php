@@ -44,7 +44,7 @@ class AppsView extends AbstractView {
 		switch($status) {
 			case 'done':
 				return 'success';
-			case 'canceled':
+			case 'cancelled':
 				return 'warning';
 			default:
 				return 'info';

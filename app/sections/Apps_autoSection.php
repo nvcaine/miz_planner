@@ -9,6 +9,9 @@ class Apps_autoSection extends AbstractSection {
 
 	private function getResults($query) {
 
+		if(!isset($query) || $query == '')
+			return;
+
 		$db = DBWrapper::cloneInstance();
 		$query = "SELECT * FROM clients WHERE last_name LIKE '$query%' OR first_name LIKE '$query%' OR CONCAT(first_name, ' ', last_name) LIKE '$query%' ORDER BY last_name";
 		return $db->query($query);

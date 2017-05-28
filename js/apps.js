@@ -15,6 +15,7 @@ $( function() {
 		$(this).find('input[name=new-app-day]').val(day);
 		$(this).find('input[name=new-app-client]').val('');
 		$('#client-autocomplete-dropdown').find('.autocomplete-result').remove();
+		$('#submit-form').prop('disabled', true);
 	});
 
 	$('#edit-appointment-popup').on('show.bs.modal', function(event) {
@@ -61,9 +62,10 @@ $( function() {
 	});
 
 	$('#client-autocomplete-dropdown').on('click', '.client-autocomplete-link', function() {
-		$('input[name=new-app-client]').val($(this).html());
+		$('input[name=new-app-client]').val($(this).text());
 		$('input[name=new-app-client-id]').val($(this).data('client_id'));
 		$('#client-autocomplete-dropdown').dropdown('toggle');
+		$('#submit-form').prop('disabled', false);
 		return false;
 	});
 });
@@ -74,7 +76,7 @@ function getButtonClassByStatus(status) {
 
 	if(status == 'done')
 		buttonStatusClass = 'btn-success';
-	else if(status == 'canceled')
+	else if(status == 'cancelled')
 		buttonStatusClass = 'btn-warning';
 
 	return buttonStatusClass;
@@ -85,17 +87,20 @@ function getAutocompleteResults() {
 	var dropdown = $('#client-autocomplete-dropdown');
 	dropdown.find('.autocomplete-result').remove();
 
+
 	var newClientId = Math.round(new Date().getTime() / 1000);
 	$('input[name=new-app-client-id]').val(newClientId);
 
-	$.get(serviceURL, {query: $('input[name=new-app-client]').val()}, function(data) {
-		if(data.length > 0) {
-			//$('#client-autocomplete-dropdown').dropdown('toggle');
+	var query = $('input[name=new-app-client]').val();
+
+	$.get(serviceURL, {query: query}, function(data) {
+		if(data !== undefined && data !== null && data.length > 0) {
 			$.each(data, function(index, item) {
 				var htmlElement = $('<li class="autocomplete-result"></li>');
+				var fullName = item.first_name + ' ' + item.last_name;
 				htmlElement.html(
-					'<a href="#" class="client-autocomplete-link" data-client_id="' + item.id + '">' +
-						item.first_name + ' ' + item.last_name +
+					'<a href="#" class="client-autocomplete-link" data-client_id="' + item.client_id + '">' +
+						getHighightedAutocompleteLabel(fullName, query) +
 					'</a>'
 				);
 				dropdown.append(htmlElement);
@@ -104,6 +109,11 @@ function getAutocompleteResults() {
 	});
 }
 
-function updateClientName() {
-	$('input[name=new-app-client]').val()
+function getHighightedAutocompleteLabel(name, query) {
+
+	var startIndex = name.toLowerCase().indexOf(query.toLowerCase());
+
+	return name.substring(0, startIndex) +
+		'<strong>' + name.substring(startIndex, startIndex + query.length) + '</strong>' +
+		name.substring(startIndex + query.length);
 }
