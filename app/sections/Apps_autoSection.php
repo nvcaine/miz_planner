@@ -12,8 +12,7 @@ class Apps_autoSection extends AbstractSection {
 		if(!isset($query) || $query == '')
 			return;
 
-		$db = DBWrapper::cloneInstance();
-		$query = "SELECT * FROM clients WHERE last_name LIKE '$query%' OR first_name LIKE '$query%' OR CONCAT(first_name, ' ', last_name) LIKE '$query%' ORDER BY last_name";
-		return $db->query($query);
+		$proxy = new ClientsProxy(DBWrapper::cloneInstance());
+		return $proxy->getAutocompleteResults($query);
 	}
 }

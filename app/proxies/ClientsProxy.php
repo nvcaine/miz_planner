@@ -1,8 +1,15 @@
 <?php
 class ClientsProxy extends AbstractProxy {
 
+	const TABLE = 'miz_clients';
+
 	public function getClients() {
-		return $this->db->query('SELECT * FROM clients ORDER BY last_name');
+		return $this->db->query('SELECT * FROM ' . self::TABLE . ' ORDER BY last_name');
+	}
+
+	public function getAutocompleteResults($query) {
+		$sqlQuery = "SELECT * FROM " . self::TABLE . " WHERE last_name LIKE '$query%' OR first_name LIKE '$query%' OR CONCAT(first_name, ' ', last_name) LIKE '$query%' ORDER BY last_name";
+		return $this->db->query($sqlQuery);
 	}
 
 	public function addClient($params) {
@@ -40,7 +47,7 @@ class ClientsProxy extends AbstractProxy {
 			$tokens[] = ':address';
 		}
 
-		$query = 'INSERT INTO clients (' . implode(',', $fields) . ') VALUES (' . implode(',', $tokens) . ')';
+		$query = 'INSERT INTO ' . self::TABLE . ' (' . implode(',', $fields) . ') VALUES (' . implode(',', $tokens) . ')';
 		$this->db->query($query, $values, null, false);
 	}
 }
