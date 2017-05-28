@@ -1,6 +1,10 @@
 <?php
 class ClientsProxy extends AbstractProxy {
 
+	public function getClients() {
+		return $this->db->query('SELECT * FROM clients ORDER BY last_name');
+	}
+
 	public function addClient($params) {
 
 		$values = array(
