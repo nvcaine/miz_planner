@@ -35,21 +35,27 @@ class AppsSection extends AbstractMenuSection {
 					}
 			} else {
 
-				$existingApps[] = array(
+				/*$existingApps[] = array(
 					'id' => time(),
 					'hour' => $params['new-app-hour'],
 					'day' => $params['new-app-day'],
 					'client' => intval($params['new-app-client-id']),
 					'status' => 'new'
-				);
+				);*/
+				$this->addApp($params);
 	
-				$this->checkIfNewClient($params);
+				//$this->checkIfNewClient($params);
 			}
 
-			file_put_contents('json/apps.json', json_encode($existingApps, JSON_PRETTY_PRINT));
+			//file_put_contents('json/apps.json', json_encode($existingApps, JSON_PRETTY_PRINT));
 
 			$this->showView($params);
 		}
+	}
+
+	private function addApp($params) {
+		$appsProxy = new AppsProxy(DBWrapper::cloneInstance());
+		$appsProxy->addApp($params['new-app-client-id'], $params['new-app-day'], $params['new-app-hour']);
 	}
 
 	private function showView($params) {
@@ -84,7 +90,7 @@ class AppsSection extends AbstractMenuSection {
 			$this->view->assign('nextWeek', $currentWeek + 1);
 		}
 
-		$this->view->assign('apps', $this->getAppointments());
+		$this->view->assign('apps', $this->getAppointments($currentWeek));
 	}
 
 	private function getWeekdays($week) {
@@ -108,16 +114,20 @@ class AppsSection extends AbstractMenuSection {
 		$result = array();
 
 		for($i = $start; $i <= $end; $i++) {
-			$result[] = $i . ':00';
-			$result[] = $i . ':30';
+			$hour = $i;
+			if($i < 10)
+				$hour = '0' . $i;
+
+			$result[] = $hour . ':00';
+			$result[] = $hour . ':30';
 		}
 
 		return $result;
 	}
 
-	private function getAppointments() {
+	private function getAppointments($week) {
 
-		$apps = json_decode(file_get_contents('json/apps.json'));
+		/*$apps = json_decode(file_get_contents('json/apps.json'));
 		$clients = json_decode(file_get_contents('json/clients.json'));
 
 		foreach($apps as $index => $app)
@@ -126,9 +136,10 @@ class AppsSection extends AbstractMenuSection {
 					$apps[$index]->client = $client->first_name . ' ' . $client->last_name;
 					$apps[$index]->client_short = $client->first_name[0] . '. ' . $client->last_name;
 
-				}
+				}*/
+		$appsProxy = new AppsProxy(DBWrapper::cloneInstance());
 
-		return $apps;
+		return $appsProxy->getAppointmentsForWeek($week);
 	}
 
 	private function getMaxWeek() {
