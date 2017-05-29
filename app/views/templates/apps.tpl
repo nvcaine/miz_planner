@@ -72,11 +72,20 @@
 						<div class="top-info"><span>{$day}</span></div>
 
 						<ul>
-							<li class="single-event" data-start="09:30" data-end="10:45" data-content="event-abs-circuit" data-event="event-1">
+						{foreach from=$apps item=app}
+							{if $app.day == $day}
+							<li class="single-event" data-start="{$app.start_time}" data-end="{$app.end_time}" data-content="event-abs-circuit" data-event="event-1">
+								<a href="#0">
+									<em class="event-name">{$app.first_name[0]}. {$app.last_name}</em>
+								</a>
+							</li>
+							{/if}
+						{/foreach}
+							<!--<li class="single-event" data-start="09:30" data-end="10:45" data-content="event-abs-circuit" data-event="event-1">
 								<a href="#0">
 									<em class="event-name">Abs Circuit</em>
 								</a>
-							</li>
+							</li>-->
 						</ul>
 					</li>
 					{/foreach}
