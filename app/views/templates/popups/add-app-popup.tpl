@@ -7,8 +7,8 @@
 				</button>
 				<h4 class="modal-title" id="myModalLabel">Add appointment</h4>
 				<div class="modal-body">
-					<p>Hour: <span id="app-hour-label"></span></p>
-					<p>Day: <span id="app-day-label"></span></p>
+					<!--<p>Hour: <span id="app-hour-label"></span></p>
+					<p>Day: <span id="app-day-label"></span></p>-->
 					<p>
 						<form method="post">
 							<div class="form-group">
@@ -24,9 +24,15 @@
 								</div>
 							</div>
 							<div class="form-group">
+								<input type="text" class="form-control" name="new-app-start" placeholder="Start time (HH:MM)">
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control" name="new-app-end" placeholder="End time (HH:MM)">
+							</div>
+							<div class="form-group">
 								<button id="submit-form" type="submit" class="btn btn-success" disabled>Save</button>
 							</div>
-							<input type="hidden" name="new-app-hour">
+							<!--<input type="hidden" name="new-app-hour">-->
 							<input type="hidden" name="new-app-day">
 							<input type="hidden" name="new-app-client-id" value="-1">
 						</form>

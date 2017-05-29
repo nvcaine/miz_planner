@@ -109,7 +109,7 @@ class AppsSection extends AbstractMenuSection {
 
 	private function addApp($params) {
 		$proxy = new AppsProxy(DBWrapper::cloneInstance());
-		$proxy->addApp($params['new-app-client-id'], $params['new-app-day'], $params['new-app-hour']);
+		$proxy->addApp($params['new-app-client-id'], $params['new-app-day'], $params['new-app-start'], $params['new-app-end']);
 	}
 
 	private function deleteApp($params) {

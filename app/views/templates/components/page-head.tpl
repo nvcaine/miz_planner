@@ -12,6 +12,11 @@
 	<link href="{$appURL}/libs/material/css/material.min.css" rel="stylesheet">
 	<link href="{$appURL}/libs/material/css/ripples.min.css" rel="stylesheet">
 
+	{if isset($includeSchedule)}
+	<link href="{$appURL}libs/schedule-template/css/reset.css" rel="stylesheet">
+	<link href="{$appURL}libs/schedule-template/css/schedule-template.css" rel="stylesheet">
+	{/if}
+
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'>
 
 	{if isset($includeDatepicker)}

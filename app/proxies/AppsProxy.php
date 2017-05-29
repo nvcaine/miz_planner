@@ -3,12 +3,14 @@ class AppsProxy extends AbstractProxy {
 
 	const TABLE = 'miz_apps';
 
-	public function addApp($clientId, $day, $hour) {
+	public function addApp($clientId, $day, $startTime, $endTime) {
 
 		$query = 'INSERT INTO ' . self::TABLE . ' (client_id, date) VALUES (:client_id, :date)';
 		$values = array(
 			'client_id' => $clientId,
-			'date' => date('Y-m-d H:i:s', strtotime($day . ' ' . $hour))
+			'date' => date('Y-m-d', strtotime($day)),
+			'start_time' => $startTime,
+			'start_end' => $endTime,
 		);
 
 		$this->db->query($query, $values, null, false);
@@ -41,7 +43,7 @@ class AppsProxy extends AbstractProxy {
 	}
 
 	private function getDateFromWeekday($week, $weekday) {
-		return date('Y-m-d H:i:s', strtotime($weekday, strtotime('2017W' . $week)));
+		return date('Y-m-d', strtotime($weekday, strtotime('2017W' . $week)));
 	}
 
 	private function parseApps($apps) {
@@ -50,7 +52,6 @@ class AppsProxy extends AbstractProxy {
 
 		foreach($apps as $app) {
 			$app['day'] = date('D M d', strtotime($app['date']));
-			$app['hour'] = date('H:i', strtotime($app['date']));
 			$result[] = $app;
 		}
 

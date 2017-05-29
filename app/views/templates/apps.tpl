@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-{include file='components/page-head.tpl'}
+{include file='components/page-head.tpl' includeSchedule='true'}
 
 <body>
 
@@ -48,9 +48,63 @@
 				</a>
 				{/if}
 			</div>
+
+			<div>
+				<button class="btn btn-success btn-lg" data-toggle="modal" data-target="#add-appointment-popup">
+					Add appointment
+				</button>
+			</div>
 		</div>
 
-		<div class="apps-wrapper">
+		<div class="cd-schedule loading">
+			<div class="timeline">
+				<ul>
+				{foreach from=$hours item=hour}
+					<li><span>{$hour}</span></li>
+				{/foreach}
+				</ul>
+			</div> <!-- .timeline -->
+
+			<div class="events">
+				<ul>
+					{foreach from=$weekdays item=day}
+					<li class="events-group">
+						<div class="top-info"><span>{$day}</span></div>
+
+						<ul>
+							<li class="single-event" data-start="09:30" data-end="10:45" data-content="event-abs-circuit" data-event="event-1">
+								<a href="#0">
+									<em class="event-name">Abs Circuit</em>
+								</a>
+							</li>
+						</ul>
+					</li>
+					{/foreach}
+				</ul>
+			</div>
+
+
+			<div class="event-modal">
+				<header class="header">
+					<div class="content">
+						<span class="event-date"></span>
+						<h3 class="event-name"></h3>
+					</div>
+
+					<div class="header-bg"></div>
+				</header>
+
+				<div class="body">
+					<div class="event-info"></div>
+					<div class="body-bg"></div>
+				</div>
+
+				<a href="#0" class="close">Close</a>
+			</div>
+
+
+		</div>
+		<!--<div class="apps-wrapper">
 		<div class="apps-container">
 			<div class="row">
 				<div class="col-xs-2 day-container"><strong>Hours / Days</strong></div>
@@ -77,7 +131,7 @@
 			</div>
 			{/foreach}
 		</div>
-		</div>
+		</div>-->
 	</main>
 
 	{include file='popups/add-app-popup.tpl'}
@@ -86,7 +140,8 @@
 
 	{include file='components/footer.tpl'}
 
-	{include file='components/page-footer.tpl'}
+	{include file='components/page-footer.tpl' includeSchedule='true'}
+
 </body>
 
 </html>
