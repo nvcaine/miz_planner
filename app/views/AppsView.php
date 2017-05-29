@@ -34,7 +34,7 @@ class AppsView extends AbstractView {
 	private function parseApps($apps) {
 
 		foreach($apps as $key => $app)
-			$apps[$key]->buttonClass = $this->getHTMLClassByStatus($app->status);
+			$apps[$key]['buttonClass'] = $this->getHTMLClassByStatus($app['status']);
 
 		return $apps;
 	}
@@ -44,7 +44,7 @@ class AppsView extends AbstractView {
 		switch($status) {
 			case 'done':
 				return 'success';
-			case 'canceled':
+			case 'cancelled':
 				return 'warning';
 			default:
 				return 'info';

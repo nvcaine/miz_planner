@@ -65,13 +65,13 @@
 				<div class="col-xs-2 hour-container">{$hour}</div>
 				{foreach from=$weekdays item=day}
 				<div class="col-xs-2 app-item" data-toggle="modal" data-target="#add-appointment-popup" data-day="{$day}" data-hour="{$hour}">
-					{foreach from=$apps item=app}
-						{if $day == $app->day && $hour == $app->hour}
-						<button class="app-item-inner btn btn-{$app->buttonClass} btn-sm" data-toggle="modal" data-target="#edit-appointment-popup" data-status="{$app->status}" data-appid="{$app->id}" data-fullname="{$app->client}">
-							{$app->client_short}
-						</button>
-						{/if}
-					{/foreach}
+				{foreach from=$apps item=app}
+					{if $day == $app.day && $hour == $app.hour}
+					<button class="app-item-inner btn btn-{$app.buttonClass} btn-sm" data-toggle="modal" data-target="#edit-appointment-popup" data-status="{$app.status}" data-appid="{$app.app_id}" data-fullname="{$app.first_name} {$app.last_name}">
+						{$app.first_name[0]}. {$app.last_name}
+					</button>
+					{/if}
+				{/foreach}
 				</div>
 				{/foreach}
 			</div>

@@ -11,19 +11,22 @@
 				<p>
 					<form method="post">
 						<div class="form-group-lg">
-							<input name="new-client-first-name" type="text" class="form-control validate" placeholder="First name*" required>
+							<input name="new-client-first-name" type="text" class="form-control validate" placeholder="First name *" required>
 						</div>
 						<div class="form-group-lg">
-							<input name="new-client-last-name" type="text" class="form-control validate" placeholder="Last name*" required>
+							<input name="new-client-last-name" type="text" class="form-control validate" placeholder="Last name *" required>
 						</div>
 						<div class="form-group-lg">
-							<input name="new-client-birthdate" type="text" class="form-control validate" placeholder="Birthdate">
+							<input name="new-client-birthday" type="text" class="form-control validate" placeholder="Birthdate *" required>
+						</div>
+						<div class="form-group-lg">
+							<input name="new-client-address" type="text" class="form-control validate" placeholder="Street number code city country">
 						</div>
 						<div class="form-group-lg">
 							<input name="new-client-phone" type="text" class="form-control validate" placeholder="Phone number">
 						</div>
 						<div class="form-group-lg">
-							<input name="new-client-mail" type="text" class="form-control validate" placeholder="E-mail">
+							<input name="new-client-email" type="text" class="form-control validate" placeholder="E-mail">
 						</div>
 						<p><br />* Required</p>
 

@@ -6,17 +6,20 @@
 		</div>
 
 		<p style="text-align:center; font-size:1.3em;padding:10px;">
-			<strong>{$client->first_name} {$client->last_name}</strong>
+			<strong>{$client.first_name} {$client.last_name}</strong>
 		</p>
-		{if isset($client->phone)}
-		<p><span class="glyphicon glyphicon-phone"></span>&nbsp;&nbsp;{$client->phone}</p>
+		{if isset($client.phone)}
+		<p><span class="glyphicon glyphicon-phone"></span>&nbsp;&nbsp;{$client.phone}</p>
 		{/if}
-		{if isset($client->birth_date)}
-		<p><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;{$client->birth_date}</p>
+		{if isset($client.birth_date)}
+		<p><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;{$client.birth_date}</p>
 		{/if}
-		{if isset($client->mail)}
-		<p><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;{$client->mail}</p>
+		{if isset($client.mail)}
+		<p><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;{$client.mail}</p>
 		{/if}
-		<p><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;{$client->date_added}</p>
+		{if isset($client.address)}
+		<p><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;{$client.address}</p>
+		{/if}
+		<p><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;{$client.added}</p>
 	</div>
 </div>
