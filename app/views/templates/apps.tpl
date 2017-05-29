@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-{include file='components/page-head.tpl' includeSchedule='true'}
+{include file='components/page-head.tpl' includeSchedule='true' includeDatepicker='true'}
 
 <body>
 
@@ -140,7 +140,7 @@
 
 	{include file='components/footer.tpl'}
 
-	{include file='components/page-footer.tpl' includeSchedule='true'}
+	{include file='components/page-footer.tpl' includeSchedule='true' includeDatepicker='true'}
 
 </body>
 

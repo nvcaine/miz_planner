@@ -4,6 +4,7 @@
 
 {if isset($includeDatepicker)}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+<script src="{$appURL}/libs/datetimepicker/datetimepicker.min.js"></script>
 {/if}
 
 <script src="{$appURL}/libs/material/js/ripples.min.js"></script>

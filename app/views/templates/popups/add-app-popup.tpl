@@ -24,16 +24,19 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<input type="text" class="form-control" name="new-app-start" placeholder="Start time (HH:MM)">
+								<input type="text" class="form-control" name="new-app-date" placeholder="Date" readonly>
 							</div>
 							<div class="form-group">
-								<input type="text" class="form-control" name="new-app-end" placeholder="End time (HH:MM)">
+								<input type="text" class="form-control form-datetime" name="new-app-start" placeholder="Start time (HH:MM)" readonly>
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control" name="new-app-end" placeholder="End time (HH:MM)" readonly>
 							</div>
 							<div class="form-group">
 								<button id="submit-form" type="submit" class="btn btn-success" disabled>Save</button>
 							</div>
-							<!--<input type="hidden" name="new-app-hour">-->
-							<input type="hidden" name="new-app-day">
+							<!--<input type="hidden" name="new-app-hour">
+							<input type="hidden" name="new-app-day">-->
 							<input type="hidden" name="new-app-client-id" value="-1">
 						</form>
 					</p>

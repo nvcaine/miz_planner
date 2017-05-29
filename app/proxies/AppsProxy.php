@@ -5,12 +5,12 @@ class AppsProxy extends AbstractProxy {
 
 	public function addApp($clientId, $day, $startTime, $endTime) {
 
-		$query = 'INSERT INTO ' . self::TABLE . ' (client_id, date) VALUES (:client_id, :date)';
+		$query = 'INSERT INTO ' . self::TABLE . ' (client_id, date, start_time, end_time) VALUES (:client_id, :date, :start_time, :end_time)';
 		$values = array(
 			'client_id' => $clientId,
-			'date' => date('Y-m-d', strtotime($day)),
+			'date' => $day,
 			'start_time' => $startTime,
-			'start_end' => $endTime,
+			'end_time' => $endTime,
 		);
 
 		$this->db->query($query, $values, null, false);

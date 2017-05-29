@@ -6,9 +6,11 @@ $( function() {
 	var appTarget;
 
 	$('#add-appointment-popup').on('show.bs.modal', function(event) {
-		$(this).find('input[name=new-app-client]').val('');
-		$('#client-autocomplete-dropdown').find('.autocomplete-result').remove();
-		$('#submit-form').prop('disabled', true);
+		if($(event.target).is('#add-appointment-popup')) {
+			$(this).find('input[name=new-app-client]').val('');
+			$('#client-autocomplete-dropdown').find('.autocomplete-result').remove();
+			$('#submit-form').prop('disabled', true);
+		}
 	});
 
 	$('#edit-appointment-popup').on('show.bs.modal', function(event) {
@@ -60,6 +62,13 @@ $( function() {
 		$('#client-autocomplete-dropdown').dropdown('toggle');
 		$('#submit-form').prop('disabled', false);
 		return false;
+	});
+
+	var dateInput = $('input[name=new-app-date]');
+	dateInput.datepicker({format: 'yyyy-mm-dd', autoclose: true});
+	dateInput.on('changeDate', function() {
+		$('input[name=new-app-start]').datetimepicker({format: 'hh:ii', autoclose: true, initialDate: new Date(dateInput.val()), startView: 1});
+		$('input[name=new-app-end]').datetimepicker({format: 'hh:ii', autoclose: true, initialDate: new Date(dateInput.val()), startView: 1});
 	});
 });
 
