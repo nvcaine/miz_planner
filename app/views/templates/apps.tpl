@@ -9,7 +9,7 @@
 		{include file='components/menu.tpl'}
 	</header>
 
-	<main class="container">
+	<div class="container">
 		<div class="page-header">
 			<h2>Manage appointments</h2>
 		</div>
@@ -55,58 +55,58 @@
 				</button>
 			</div>
 		</div>
+	</div>
 
-		<div class="cd-schedule loading">
-			<div class="timeline">
-				<ul>
-				{foreach from=$hours item=hour}
-					<li><span>{$hour}</span></li>
-				{/foreach}
-				</ul>
-			</div> <!-- .timeline -->
+	<div class="cd-schedule loading">
+		<div class="timeline">
+			<ul>
+			{foreach from=$hours item=hour}
+				<li><span>{$hour}</span></li>
+			{/foreach}
+			</ul>
+		</div> <!-- .timeline -->
 
-			<div class="events">
-				<ul>
-					{foreach from=$weekdays item=day}
-					<li class="events-group">
-						<div class="top-info"><span>{$day}</span></div>
+		<div class="events">
+			<ul>
+				{foreach from=$weekdays item=day}
+				<li class="events-group">
+					<div class="top-info"><span>{$day}</span></div>
 
-						<ul>
-						{foreach from=$apps item=app}
-							{if $app.day == $day}
-							<li class="single-event" data-start="{$app.start_time}" data-end="{$app.end_time}" data-content="event-abs-circuit" data-event="event-1">
-								<a href="#0">
-									<strong class="event-name">{$app.first_name[0]}. {$app.last_name}</strong>
-								</a>
-							</li>
-							{/if}
-						{/foreach}
-						</ul>
-					</li>
+					<ul>
+					{foreach from=$apps item=app}
+						{if $app.day == $day}
+						<li class="single-event" data-start="{$app.start_time}" data-end="{$app.end_time}" data-content="event-abs-circuit" data-event="event-1">
+							<a href="#0">
+								<strong class="event-name">{$app.first_name[0]}. {$app.last_name}</strong>
+							</a>
+						</li>
+						{/if}
 					{/foreach}
-				</ul>
-			</div>
+					</ul>
+				</li>
+				{/foreach}
+			</ul>
+		</div>
 
 
-			<div class="event-modal">
-				<header class="header">
-					<div class="content">
-						<span class="event-date"></span>
-						<h3 class="event-name"></h3>
-					</div>
-
-					<div class="header-bg"></div>
-				</header>
-
-				<div class="body">
-					<div class="event-info"></div>
-					<div class="body-bg"></div>
+		<div class="event-modal">
+			<header class="header">
+				<div class="content">
+					<span class="event-date"></span>
+					<h3 class="event-name"></h3>
 				</div>
 
-				<a href="#0" class="close">Close</a>
-			</div> <!--event-modal-->
-		</div> <!--cd-schedule-->
-	</main>
+				<div class="header-bg"></div>
+			</header>
+
+			<div class="body">
+				<div class="event-info"></div>
+				<div class="body-bg"></div>
+			</div>
+
+			<a href="#0" class="close">Close</a>
+		</div> <!--event-modal-->
+	</div> <!--cd-schedule-->
 
 	{include file='popups/add-app-popup.tpl'}
 
