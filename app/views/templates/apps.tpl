@@ -76,16 +76,11 @@
 							{if $app.day == $day}
 							<li class="single-event" data-start="{$app.start_time}" data-end="{$app.end_time}" data-content="event-abs-circuit" data-event="event-1">
 								<a href="#0">
-									<em class="event-name">{$app.first_name[0]}. {$app.last_name}</em>
+									<strong class="event-name">{$app.first_name[0]}. {$app.last_name}</strong>
 								</a>
 							</li>
 							{/if}
 						{/foreach}
-							<!--<li class="single-event" data-start="09:30" data-end="10:45" data-content="event-abs-circuit" data-event="event-1">
-								<a href="#0">
-									<em class="event-name">Abs Circuit</em>
-								</a>
-							</li>-->
 						</ul>
 					</li>
 					{/foreach}
@@ -109,38 +104,8 @@
 				</div>
 
 				<a href="#0" class="close">Close</a>
-			</div>
-
-
-		</div>
-		<!--<div class="apps-wrapper">
-		<div class="apps-container">
-			<div class="row">
-				<div class="col-xs-2 day-container"><strong>Hours / Days</strong></div>
-
-				{foreach from=$weekdays item=day}
-				<div class="col-xs-2 day-container">{$day}</div>
-				{/foreach}
-			</div>
-
-			{foreach from=$hours item=hour}
-			<div class="row" style="background-color: {cycle values='#FFFFFF,#DDDDDD'}">
-				<div class="col-xs-2 hour-container">{$hour}</div>
-				{foreach from=$weekdays item=day}
-				<div class="col-xs-2 app-item" data-toggle="modal" data-target="#add-appointment-popup" data-day="{$day}" data-hour="{$hour}">
-				{foreach from=$apps item=app}
-					{if $day == $app.day && $hour == $app.hour}
-					<button class="app-item-inner btn btn-{$app.buttonClass} btn-sm" data-toggle="modal" data-target="#edit-appointment-popup" data-status="{$app.status}" data-appid="{$app.app_id}" data-fullname="{$app.first_name} {$app.last_name}">
-						{$app.first_name[0]}. {$app.last_name}
-					</button>
-					{/if}
-				{/foreach}
-				</div>
-				{/foreach}
-			</div>
-			{/foreach}
-		</div>
-		</div>-->
+			</div> <!--event-modal-->
+		</div> <!--cd-schedule-->
 	</main>
 
 	{include file='popups/add-app-popup.tpl'}

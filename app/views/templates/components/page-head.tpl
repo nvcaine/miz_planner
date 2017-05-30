@@ -13,7 +13,6 @@
 	<link href="{$appURL}/libs/material/css/ripples.min.css" rel="stylesheet">
 
 	{if isset($includeSchedule)}
-	<link href="{$appURL}libs/schedule-template/css/reset.css" rel="stylesheet">
 	<link href="{$appURL}libs/schedule-template/css/schedule-template.css" rel="stylesheet">
 	{/if}
 
