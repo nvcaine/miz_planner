@@ -52,6 +52,8 @@ class AppsProxy extends AbstractProxy {
 
 		foreach($apps as $app) {
 			$app['day'] = date('D M d', strtotime($app['date']));
+			$app['start_time'] = date('H:i', strtotime($app['start_time']));
+			$app['end_time'] = date('H:i', strtotime($app['end_time']));
 			$result[] = $app;
 		}
 
