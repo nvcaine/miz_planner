@@ -8,6 +8,7 @@ $( function() {
 	$('#add-appointment-popup').on('show.bs.modal', function(event) {
 		if($(event.target).is('#add-appointment-popup')) {
 			$(this).find('input[name=new-app-client]').val('');
+			$(this).find('input[name=new-app-type]').val('');
 			$('#client-autocomplete-dropdown').find('.autocomplete-result').remove();
 			$('#submit-form').prop('disabled', true);
 		}
@@ -69,6 +70,12 @@ $( function() {
 	dateInput.on('changeDate', function() {
 		$('input[name=new-app-start]').datetimepicker({format: 'hh:ii', autoclose: true, initialDate: new Date(dateInput.val()), startView: 1});
 		$('input[name=new-app-end]').datetimepicker({format: 'hh:ii', autoclose: true, initialDate: new Date(dateInput.val()), startView: 1});
+	});
+
+	$('.app-type-option').click( function() {
+		$('input[name=new-app-type]').val($(this).text());
+		$('#app-type-dropdown').dropdown('toggle');
+		return false;
 	});
 });
 

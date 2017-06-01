@@ -54,6 +54,7 @@ class AppsSection extends AbstractMenuSection {
 		$this->view->assign('weekdays', $this->getWeekdays($currentWeek));
 		$this->view->assign('hours', $this->getHours($startHour, $endHour));
 		$this->view->assign('thisWeek', date('W'));
+		$this->view->assign('appTypes', json_decode(file_get_contents('json/types.json')));
 
 		if($currentWeek > 1) {
 			$this->view->assign('previousWeek', $currentWeek - 1);
@@ -99,8 +100,15 @@ class AppsSection extends AbstractMenuSection {
 	}
 
 	private function getAppointments($week) {
+
+		$types = json_decode(file_get_contents('json/types.json'));
 		$proxy = new AppsProxy(DBWrapper::cloneInstance());
-		return $proxy->getAppointmentsForWeek($week);
+		$apps = $proxy->getAppointmentsForWeek($week);
+
+		foreach($apps as $key => $app)
+			$apps[$key]['event_type'] = $this->getAppEventType($types, $app['type']);
+
+		return $apps;
 	}
 
 	private function getMaxWeek() {
@@ -109,7 +117,14 @@ class AppsSection extends AbstractMenuSection {
 
 	private function addApp($params) {
 		$proxy = new AppsProxy(DBWrapper::cloneInstance());
-		$proxy->addApp($params['new-app-client-id'], $params['new-app-date'], $params['new-app-start'], $params['new-app-end']);
+		$proxy->addApp(
+			$params['new-app-client-id'],
+			$params['new-app-date'],
+			$params['new-app-start'],
+			$params['new-app-end'],
+			$params['new-app-type'],
+			$params['new-app-notes']
+		);
 	}
 
 	private function deleteApp($params) {
@@ -120,5 +135,15 @@ class AppsSection extends AbstractMenuSection {
 	private function updateApp($params) {
 		$proxy = new AppsProxy(DBWrapper::cloneInstance());
 		$proxy->updateApp($params['edit-app-id'], $params['edit-app-status']);
+	}
+
+	private function getAppEventType($types, $appType) {
+
+		foreach($types as $type)
+			foreach($type->options as $option)
+				if($option->name == $appType)
+					return $type->code;
+
+		return 0;
 	}
 }

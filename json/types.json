@@ -1,0 +1,39 @@
+[{
+	"category": "Klassische Massagen",
+	"code": 1,
+	"color": "#577F92",
+	"options" : [
+		{"name": "Ganzkörper-Massage"},
+		{"name": "Teilkörper-Massage"},
+		{"name": "Anti-Stress-Massage"},
+		{"name": "Fußreflexzonen-Massage"},
+		{"name": "Gesichts-Massage"},
+		{"name": "Hot Stone-Massage"},
+		{"name": "Massage für Beine und Füße"}
+	]
+}, {
+	"category": "Fernöstliche Massagen",
+	"code": 2,
+	"color": "#513E63",
+	"options" : [
+		{"name": "Chinesische Kopf-Massage"},
+		{"name": "Indische Warmöl-Massage (Abhyanga)"},
+		{"name": "Thai-Yoga-Massage"},
+		{"name": "Bambus-Massage"}
+	]
+}, {
+	"category": "Therapien & Behandlungen",
+	"code": 4,
+	"color": "#F6B067",
+	"options" : [
+		{"name": "Triggerpunkt-Therapie"},
+		{"name": "Lymphdrainage-Behandlung"},
+		{"name": "Kinesiotape-Therapie"},
+		{"name": "Individual-Behandlung"},
+		{"name": "Stromtherapie (TENS)"},
+		{"name": "Ultraschall- Therapie"},
+		{"name": "Moor-Packungen"},
+		{"name": "Schmerz-Behandlung"},
+		{"name": "Schmerz-Behandlung + Massage"}
+	]
+}]
