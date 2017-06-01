@@ -3,12 +3,14 @@ class AppsProxy extends AbstractProxy {
 
 	const TABLE = 'miz_apps';
 
-	public function addApp($clientId, $day, $hour) {
+	public function addApp($clientId, $day, $startTime, $endTime) {
 
-		$query = 'INSERT INTO ' . self::TABLE . ' (client_id, date) VALUES (:client_id, :date)';
+		$query = 'INSERT INTO ' . self::TABLE . ' (client_id, date, start_time, end_time) VALUES (:client_id, :date, :start_time, :end_time)';
 		$values = array(
 			'client_id' => $clientId,
-			'date' => date('Y-m-d H:i:s', strtotime($day . ' ' . $hour))
+			'date' => $day,
+			'start_time' => $startTime,
+			'end_time' => $endTime,
 		);
 
 		$this->db->query($query, $values, null, false);
@@ -40,8 +42,17 @@ class AppsProxy extends AbstractProxy {
 		return $this->parseApps($apps);
 	}
 
+	public function getAppointmentById($app_id) {
+
+		$query = 'SELECT * FROM ' . self::TABLE . ' RIGHT JOIN miz_clients ON miz_apps.client_id = miz_clients.client_id';
+		$where = 'WHERE app_id = :app_id';
+		$apps = $this->db->query($query . ' ' . $where, array('app_id' => $app_id));
+
+		return $this->parseApps($apps)[0];
+	}
+
 	private function getDateFromWeekday($week, $weekday) {
-		return date('Y-m-d H:i:s', strtotime($weekday, strtotime('2017W' . $week)));
+		return date('Y-m-d', strtotime($weekday, strtotime('2017W' . $week)));
 	}
 
 	private function parseApps($apps) {
@@ -50,10 +61,22 @@ class AppsProxy extends AbstractProxy {
 
 		foreach($apps as $app) {
 			$app['day'] = date('D M d', strtotime($app['date']));
-			$app['hour'] = date('H:i', strtotime($app['date']));
+			$app['start_time'] = date('H:i', strtotime($app['start_time']));
+			$app['end_time'] = date('H:i', strtotime($app['end_time']));
+			$app['client_age'] = $this->getAgeFromDate($app['birthday']);
 			$result[] = $app;
 		}
 
 		return $result;
+	}
+
+	private function getAgeFromDate($date) {
+
+		$birthDate = explode("-", $date);
+		$age = (date("md", date("U", mktime(0, 0, 0, $birthDate[1], $birthDate[2], $birthDate[0]))) > date("md")
+			? ((date("Y") - $birthDate[0]) - 1)
+			: (date("Y") - $birthDate[0]));
+
+		return $age;
 	}
 }

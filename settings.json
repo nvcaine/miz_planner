@@ -23,5 +23,8 @@
 	},{
 		"sectionName": "apps_auto",
 		"title": "MIZ Planner"
+	},{
+		"sectionName": "app_details",
+		"title": "MIZ Planner"
 	}]
 }

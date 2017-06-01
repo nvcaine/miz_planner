@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-{include file='components/page-head.tpl'}
+{include file='components/page-head.tpl' includeSchedule='true' includeDatepicker='true'}
 
 <body>
 
@@ -9,7 +9,7 @@
 		{include file='components/menu.tpl'}
 	</header>
 
-	<main class="container">
+	<div class="container">
 		<div class="page-header">
 			<h2>Manage appointments</h2>
 		</div>
@@ -48,37 +48,65 @@
 				</a>
 				{/if}
 			</div>
-		</div>
 
-		<div class="apps-wrapper">
-		<div class="apps-container">
-			<div class="row">
-				<div class="col-xs-2 day-container"><strong>Hours / Days</strong></div>
-
-				{foreach from=$weekdays item=day}
-				<div class="col-xs-2 day-container">{$day}</div>
-				{/foreach}
+			<div>
+				<button class="btn btn-success btn-lg" data-toggle="modal" data-target="#add-appointment-popup">
+					Add appointment
+				</button>
 			</div>
+		</div>
+	</div>
 
+	<div class="cd-schedule loading">
+		<div class="timeline">
+			<ul>
 			{foreach from=$hours item=hour}
-			<div class="row" style="background-color: {cycle values='#FFFFFF,#DDDDDD'}">
-				<div class="col-xs-2 hour-container">{$hour}</div>
-				{foreach from=$weekdays item=day}
-				<div class="col-xs-2 app-item" data-toggle="modal" data-target="#add-appointment-popup" data-day="{$day}" data-hour="{$hour}">
-				{foreach from=$apps item=app}
-					{if $day == $app.day && $hour == $app.hour}
-					<button class="app-item-inner btn btn-{$app.buttonClass} btn-sm" data-toggle="modal" data-target="#edit-appointment-popup" data-status="{$app.status}" data-appid="{$app.app_id}" data-fullname="{$app.first_name} {$app.last_name}">
-						{$app.first_name[0]}. {$app.last_name}
-					</button>
-					{/if}
-				{/foreach}
-				</div>
-				{/foreach}
-			</div>
+				<li><span>{$hour}</span></li>
 			{/foreach}
+			</ul>
+		</div> <!-- .timeline -->
+
+		<div class="events">
+			<ul>
+				{foreach from=$weekdays item=day}
+				<li class="events-group">
+					<div class="top-info"><span>{$day}</span></div>
+
+					<ul>
+					{foreach from=$apps item=app}
+						{if $app.day == $day}
+						<li class="single-event" data-start="{$app.start_time}" data-end="{$app.end_time}" data-content="{$appURL}app_details/?app_id={$app.app_id}" data-event="event-1">
+							<a href="#0">
+								<strong class="event-name">{$app.first_name[0]}. {$app.last_name}</strong>
+							</a>
+						</li>
+						{/if}
+					{/foreach}
+					</ul>
+				</li>
+				{/foreach}
+			</ul>
 		</div>
-		</div>
-	</main>
+
+		<div class="event-modal">
+			<header class="header">
+				<div class="content">
+					<span class="event-date"></span>
+					<h3 class="event-name"></h3>
+				</div>
+
+				<div class="header-bg"></div>
+			</header>
+
+			<div class="body">
+				<div class="event-info"></div>
+				<div class="body-bg"></div>
+			</div>
+
+			<a href="#0" class="close">Close</a>
+		</div> <!--event-modal-->
+		<div class="cover-layer"></div>
+	</div> <!--cd-schedule-->
 
 	{include file='popups/add-app-popup.tpl'}
 
@@ -86,7 +114,8 @@
 
 	{include file='components/footer.tpl'}
 
-	{include file='components/page-footer.tpl'}
+	{include file='components/page-footer.tpl' includeSchedule='true' includeDatepicker='true'}
+
 </body>
 
 </html>

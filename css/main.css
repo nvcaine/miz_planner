@@ -75,3 +75,11 @@ a, a:hover, a:focus {
 .white {
     color: #FFFFFF !important;
 }
+
+a, a:hover {
+    text-decoration: none;
+}
+
+ol, ul {
+    list-style: none;
+}

@@ -4,10 +4,16 @@
 
 {if isset($includeDatepicker)}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+<script src="{$appURL}/libs/datetimepicker/datetimepicker.min.js"></script>
 {/if}
 
 <script src="{$appURL}/libs/material/js/ripples.min.js"></script>
 <script src="{$appURL}/libs/material/js/material.min.js"></script>
+
+{if isset($includeSchedule)}
+<script src="{$appURL}/libs/schedule-template/js/modernizr.js"></script>
+<script src="{$appURL}/libs/schedule-template/js/schedule-template.js"></script>
+{/if}
 
 {if isset($scripts)}
 	{foreach from=$scripts item=script}

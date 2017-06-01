@@ -12,10 +12,15 @@
 	<link href="{$appURL}/libs/material/css/material.min.css" rel="stylesheet">
 	<link href="{$appURL}/libs/material/css/ripples.min.css" rel="stylesheet">
 
+	{if isset($includeSchedule)}
+	<link href="{$appURL}libs/schedule-template/css/schedule-template.css" rel="stylesheet">
+	{/if}
+
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'>
 
 	{if isset($includeDatepicker)}
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css">
+	<link href="{$appURL}/libs/datetimepicker/datetimepicker.min.css" rel="stylesheet">
 	{/if}
 
 	<link rel="icon" type="image/png" sizes="96x96" href="{$appURL}assets/favicon.png">
