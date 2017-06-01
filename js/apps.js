@@ -8,6 +8,7 @@ $( function() {
 	$('#add-appointment-popup').on('show.bs.modal', function(event) {
 		if($(event.target).is('#add-appointment-popup')) {
 			$(this).find('input[name=new-app-client]').val('');
+			$(this).find('input[name=new-app-type]').val('');
 			$('#client-autocomplete-dropdown').find('.autocomplete-result').remove();
 			$('#submit-form').prop('disabled', true);
 		}

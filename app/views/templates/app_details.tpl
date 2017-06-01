@@ -31,6 +31,7 @@
 		<br />
 		<span class="glyphicon glyphicon-comment"></span>&nbsp;&nbsp;
 		{$app.notes}
+		<br /><br />
 	</p>
 	<form method="post">
 		<div class="form-group">

@@ -24,10 +24,12 @@
 
 							<div class="form-group">
 								<div class="dropdown">
-									<input name="new-app-type" type="text"  class="form-control" placeholder="Select type" data-toggle="dropdown" readonly>
+									<input name="new-app-type" type="text" class="form-control" placeholder="Select type" data-toggle="dropdown" readonly>
 									<ul id="app-type-dropdown" class="dropdown-menu" style="width:100%;">
 										{foreach from=$app_types item=type}
-										<li class="dropdown-header">{$type->category}</li>
+										<li class="dropdown-header" style="background-color:{$type->color};color:white;font-weight:bold;">
+											{$type->category}
+										</li>
 											{foreach from=$type->options item=option}
 											<li>
 												<a href="#" class="app-type-option">{$option->name}</a>

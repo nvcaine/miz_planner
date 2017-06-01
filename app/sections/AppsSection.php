@@ -100,8 +100,15 @@ class AppsSection extends AbstractMenuSection {
 	}
 
 	private function getAppointments($week) {
+
+		$types = json_decode(file_get_contents('json/types.json'));
 		$proxy = new AppsProxy(DBWrapper::cloneInstance());
-		return $proxy->getAppointmentsForWeek($week);
+		$apps = $proxy->getAppointmentsForWeek($week);
+
+		foreach($apps as $key => $app)
+			$apps[$key]['event_type'] = $this->getAppEventType($types, $app['type']);
+
+		return $apps;
 	}
 
 	private function getMaxWeek() {
@@ -128,5 +135,15 @@ class AppsSection extends AbstractMenuSection {
 	private function updateApp($params) {
 		$proxy = new AppsProxy(DBWrapper::cloneInstance());
 		$proxy->updateApp($params['edit-app-id'], $params['edit-app-status']);
+	}
+
+	private function getAppEventType($types, $appType) {
+
+		foreach($types as $type)
+			foreach($type->options as $option)
+				if($option->name == $appType)
+					return $type->code;
+
+		return 0;
 	}
 }
