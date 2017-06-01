@@ -54,6 +54,7 @@ class AppsSection extends AbstractMenuSection {
 		$this->view->assign('weekdays', $this->getWeekdays($currentWeek));
 		$this->view->assign('hours', $this->getHours($startHour, $endHour));
 		$this->view->assign('thisWeek', date('W'));
+		$this->view->assign('appTypes', json_decode(file_get_contents('json/types.json')));
 
 		if($currentWeek > 1) {
 			$this->view->assign('previousWeek', $currentWeek - 1);
@@ -109,7 +110,14 @@ class AppsSection extends AbstractMenuSection {
 
 	private function addApp($params) {
 		$proxy = new AppsProxy(DBWrapper::cloneInstance());
-		$proxy->addApp($params['new-app-client-id'], $params['new-app-date'], $params['new-app-start'], $params['new-app-end']);
+		$proxy->addApp(
+			$params['new-app-client-id'],
+			$params['new-app-date'],
+			$params['new-app-start'],
+			$params['new-app-end'],
+			$params['new-app-type'],
+			$params['new-app-notes']
+		);
 	}
 
 	private function deleteApp($params) {

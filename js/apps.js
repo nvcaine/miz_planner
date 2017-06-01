@@ -70,6 +70,12 @@ $( function() {
 		$('input[name=new-app-start]').datetimepicker({format: 'hh:ii', autoclose: true, initialDate: new Date(dateInput.val()), startView: 1});
 		$('input[name=new-app-end]').datetimepicker({format: 'hh:ii', autoclose: true, initialDate: new Date(dateInput.val()), startView: 1});
 	});
+
+	$('.app-type-option').click( function() {
+		$('input[name=new-app-type]').val($(this).text());
+		$('#app-type-dropdown').dropdown('toggle');
+		return false;
+	});
 });
 
 function getButtonClassByStatus(status) {

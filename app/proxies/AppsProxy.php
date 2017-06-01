@@ -3,14 +3,18 @@ class AppsProxy extends AbstractProxy {
 
 	const TABLE = 'miz_apps';
 
-	public function addApp($clientId, $day, $startTime, $endTime) {
+	public function addApp($clientId, $day, $startTime, $endTime, $type, $notes) {
 
-		$query = 'INSERT INTO ' . self::TABLE . ' (client_id, date, start_time, end_time) VALUES (:client_id, :date, :start_time, :end_time)';
+		$query = 'INSERT INTO ' . self::TABLE .
+			' (client_id, date, start_time, end_time, type, notes) VALUES (:client_id, :date, :start_time, :end_time, :type, :notes)';
+	
 		$values = array(
 			'client_id' => $clientId,
 			'date' => $day,
 			'start_time' => $startTime,
 			'end_time' => $endTime,
+			'type' => $type,
+			'notes' => $notes
 		);
 
 		$this->db->query($query, $values, null, false);

@@ -11,7 +11,7 @@
 						<form method="post">
 							<div class="form-group">
 								<div id="client-dropdown-wrapper" class="dropdown">
-									<input name="new-app-client" type="text" class="form-control validate" placeholder="Client name (first last)" required autocomplete="off" data-toggle="dropdown">
+									<input name="new-app-client" type="text" class="form-control validate" placeholder="Client name" required autocomplete="off" data-toggle="dropdown">
 									<ul id="client-autocomplete-dropdown" class="dropdown-menu" style="width:100%;">
 										<li style="padding-right:10px;">
 											<button type="button" class="close" data-toggle="dropdown">
@@ -21,6 +21,23 @@
 									</ul>
 								</div>
 							</div>
+
+							<div class="form-group">
+								<div class="dropdown">
+									<input name="new-app-type" type="text"  class="form-control" placeholder="Select type" data-toggle="dropdown" readonly>
+									<ul id="app-type-dropdown" class="dropdown-menu" style="width:100%;">
+										{foreach from=$app_types item=type}
+										<li class="dropdown-header">{$type->category}</li>
+											{foreach from=$type->options item=option}
+											<li>
+												<a href="#" class="app-type-option">{$option->name}</a>
+											</li>
+											{/foreach}
+										{/foreach}
+									</ul>
+								</div>
+							</div>
+
 							<div class="form-group">
 								<input type="text" class="form-control" name="new-app-date" placeholder="Date" readonly>
 							</div>
@@ -30,6 +47,11 @@
 							<div class="form-group">
 								<input type="text" class="form-control" name="new-app-end" placeholder="End time (HH:MM)" readonly>
 							</div>
+
+							<div class="form-group">
+								<textarea class="form-control" name="new-app-notes" placeholder="Notes" rows="5"></textarea>
+							</div>
+
 							<div class="form-group">
 								<button id="submit-form" type="submit" class="btn btn-success" disabled>Save</button>
 							</div>
