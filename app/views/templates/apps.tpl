@@ -75,7 +75,7 @@
 					<ul>
 					{foreach from=$apps item=app}
 						{if $app.day == $day}
-						<li class="single-event" data-start="{$app.start_time}" data-end="{$app.end_time}" data-content="event-abs-circuit" data-event="event-1">
+						<li class="single-event" data-start="{$app.start_time}" data-end="{$app.end_time}" data-content="{$appURL}app_details/?app_id={$app.app_id}" data-event="event-1">
 							<a href="#0">
 								<strong class="event-name">{$app.first_name[0]}. {$app.last_name}</strong>
 							</a>
@@ -87,7 +87,6 @@
 				{/foreach}
 			</ul>
 		</div>
-
 
 		<div class="event-modal">
 			<header class="header">
@@ -106,6 +105,7 @@
 
 			<a href="#0" class="close">Close</a>
 		</div> <!--event-modal-->
+		<div class="cover-layer"></div>
 	</div> <!--cd-schedule-->
 
 	{include file='popups/add-app-popup.tpl'}

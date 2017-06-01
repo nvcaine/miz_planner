@@ -42,6 +42,15 @@ class AppsProxy extends AbstractProxy {
 		return $this->parseApps($apps);
 	}
 
+	public function getAppointmentById($app_id) {
+
+		$query = 'SELECT * FROM ' . self::TABLE . ' RIGHT JOIN miz_clients ON miz_apps.client_id = miz_clients.client_id';
+		$where = 'WHERE app_id = :app_id';
+		$apps = $this->db->query($query . ' ' . $where, array('app_id' => $app_id));
+
+		return $this->parseApps($apps)[0];
+	}
+
 	private function getDateFromWeekday($week, $weekday) {
 		return date('Y-m-d', strtotime($weekday, strtotime('2017W' . $week)));
 	}
@@ -54,9 +63,20 @@ class AppsProxy extends AbstractProxy {
 			$app['day'] = date('D M d', strtotime($app['date']));
 			$app['start_time'] = date('H:i', strtotime($app['start_time']));
 			$app['end_time'] = date('H:i', strtotime($app['end_time']));
+			$app['client_age'] = $this->getAgeFromDate($app['birthday']);
 			$result[] = $app;
 		}
 
 		return $result;
+	}
+
+	private function getAgeFromDate($date) {
+
+		$birthDate = explode("-", $date);
+		$age = (date("md", date("U", mktime(0, 0, 0, $birthDate[1], $birthDate[2], $birthDate[0]))) > date("md")
+			? ((date("Y") - $birthDate[0]) - 1)
+			: (date("Y") - $birthDate[0]));
+
+		return $age;
 	}
 }
