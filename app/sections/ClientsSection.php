@@ -31,14 +31,16 @@ class ClientsSection extends AbstractMenuSection {
 
 	private function handlePostRequest($params) {
 
-		if(isset($params['new-client-add-action']))
-			$this->addNewClient($params);
-	}
-
-	private function addNewClient($params) {
-
 		$proxy = new ClientsProxy(DBWrapper::cloneInstance());
-		$proxy->addClient($params);
+
+		if(isset($params['new-client-add-action']))
+			$proxy->addClient($params);
+
+		if(isset($params['edit-client-action']))
+			$proxy->updateClient($params);
+
+		if(isset($params['delete-client-action']))
+			$proxy->deleteClient($params);
 	}
 
 	private function loadClients() {

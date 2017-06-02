@@ -4,7 +4,8 @@ class ClientsView extends AbstractView {
 	public function display($template) {
 		$this->addStyles(array(
 			'css/main.css',
-			'css/sticky.css'
+			'css/sticky.css',
+			'css/clients.css'
 		));
 
 		$this->addExternalScripts(array(

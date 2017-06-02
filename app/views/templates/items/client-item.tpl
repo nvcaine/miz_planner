@@ -1,21 +1,28 @@
-<div class="col-xs-6 col-sm-3">
+<div class="col-xs-6 col-sm-3 client-wrapper">
 
-	<div style="background-color:#FFFFFF;padding:10px;margin-bottom:20px;">
-		<div style="text-align:center;">
-			<span class="glyphicon glyphicon-user" style="font-size:50px;padding:10px;border:1px solid #CCCCCC;"></span>
+	<div class="edit-button-container">
+		<button class="btn btn-primary edit_client" data-client_id="{$client.client_id}" data-client_first="{$client.first_name}" data-client_last="{$client.last_name}" data-client_birthday="{$client.birthday}" data-client_email="{$client.email}"
+		data-client_phone="{$client.phone}" data-client_address="{$client.address}" data-toggle="modal" data-target="#edit-client-popup">
+			<span class="glyphicon glyphicon-pencil"></span>
+		</button>
+	</div>
+
+	<div class="client-main">
+		<div class="center">
+			<span class="glyphicon glyphicon-user default-avatar"></span>
 		</div>
 
-		<p style="text-align:center; font-size:1.3em;padding:10px;">
+		<p class="center client-name">
 			<strong>{$client.first_name} {$client.last_name}</strong>
 		</p>
 		{if isset($client.phone)}
 		<p><span class="glyphicon glyphicon-phone"></span>&nbsp;&nbsp;{$client.phone}</p>
 		{/if}
-		{if isset($client.birth_date)}
-		<p><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;{$client.birth_date}</p>
+		{if isset($client.birthday)}
+		<p><span class="glyphicon glyphicon-gift"></span>&nbsp;&nbsp;{$client.birthday}</p>
 		{/if}
-		{if isset($client.mail)}
-		<p><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;{$client.mail}</p>
+		{if isset($client.email)}
+		<p><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;{$client.email}</p>
 		{/if}
 		{if isset($client.address)}
 		<p><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;{$client.address}</p>
