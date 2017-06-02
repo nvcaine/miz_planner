@@ -50,4 +50,28 @@ class ClientsProxy extends AbstractProxy {
 		$query = 'INSERT INTO ' . self::TABLE . ' (' . implode(',', $fields) . ') VALUES (' . implode(',', $tokens) . ')';
 		$this->db->query($query, $values, null, false);
 	}
+
+	public function updateClient($params) {
+		$values = array(
+			':first_name' => $params['edit-client-first-name'],
+			':last_name' => $params['edit-client-last-name'],
+			':birthday' => $params['edit-client-birthday'],
+			':phone' => $params['edit-client-phone'],
+			':email' => $params['edit-client-email'],
+			':address' => $params['edit-client-address']
+		);
+		$fields = array('first_name', 'last_name', 'birthday', 'phone', 'email', 'address');
+
+		$pairs = array();
+		foreach($fields as $field)
+			$pairs[] = $field . '=:' . $field;
+
+		$query = 'UPDATE ' . self::TABLE . ' SET ' . implode(',', $pairs) . ' WHERE client_id='.$params['edit-client-id'];
+		$this->db->query($query, $values, null, false);
+	}
+
+	public function deleteClient($params) {
+		$query = 'DELETE FROM ' . self::TABLE . ' WHERE client_id = :client_id';
+		$this->db->query($query, array('client_id' => $params['edit-client-id']), null, false);
+	}
 }
