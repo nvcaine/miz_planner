@@ -44,8 +44,7 @@
 				{/if}
 
 				{if $week != $thisWeek}
-				<a href="{$appURL}apps/" class="btn btn-primary btn-sm">This week</span>
-				</a>
+				<a href="{$appURL}apps/" class="btn btn-primary btn-sm">This week</a>
 				{/if}
 			</div>
 
