@@ -23,6 +23,10 @@ function initAddAppPopup() {
 	
 			$(this).find('input[name=new-app-client]').val('');
 			$(this).find('input[name=new-app-type]').val('');
+			$(this).find('input[name=new-app-date]').val('');
+			$(this).find('input[name=new-app-start]').val('');
+			$(this).find('input[name=new-app-end]').val('');
+
 			$('#client-autocomplete-dropdown').find('.autocomplete-result').remove();
 			$('#submit-form').prop('disabled', true);
 		}
@@ -33,19 +37,43 @@ function initDatepickers() {
 
 	var dateInput = $('input[name=new-app-date]');
 
-	dateInput.datepicker({format: 'yyyy-mm-dd', autoclose: true});
-	dateInput.on('changeDate', function() {
-		$('input[name=new-app-start]').datetimepicker({
+	dateInput.datepicker({
+
+		format: 'yyyy-mm-dd',
+		autoclose: true
+
+	}).on('changeDate', function() {
+
+		var startTimeInput = $('input[name=new-app-start]');
+
+		startTimeInput.datetimepicker({
+
 			format: 'hh:ii',
 			autoclose: true,
 			initialDate: new Date(dateInput.val()),
-			startView: 1
-		});
-		$('input[name=new-app-end]').datetimepicker({
-			format: 'hh:ii',
-			autoclose: true,
-			initialDate: new Date(dateInput.val()),
-			startView: 1
+			startView: 1,
+			hoursDisabled: [0, 1, 2, 3, 4, 5, 6, 7, 20, 21, 22, 23]
+
+		}).on('changeDate', function() {
+
+			var hours = [];
+			var maxHour = startTimeInput.val().split(':')[0];
+
+			for(var i = 0; i < maxHour; i++)
+				hours.push(i);
+
+			for(var i = 20; i <= 23; i++)
+				hours.push(i);
+
+			$('input[name=new-app-end]').datetimepicker({
+
+				format: 'hh:ii',
+				autoclose: true,
+				initialDate: new Date(dateInput.val()),
+				startView: 1,
+				hoursDisabled: hours
+
+			});
 		});
 	});
 }
