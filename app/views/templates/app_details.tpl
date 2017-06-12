@@ -40,5 +40,6 @@
 			</button>
 		</div>
 		<input type="hidden" name="edit-app-id" value="{$app.app_id}">
+		<input type="hidden" name="week" value="{$week}">
 	</form>
 </div>
