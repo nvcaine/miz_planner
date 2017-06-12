@@ -1,60 +1,65 @@
-var autocompleteTimer;
 var serviceURL = 'http://localhost/miz_planner/apps_auto/';
 
 $( function() {
 
-	var appTarget;
+	initAddAppPopup();
+
+	initClientsAutocompleteDropdown(500);
+
+	initDatepickers();
+
+	$('.app-type-option').click( function() {
+		$('input[name=new-app-type]').val($(this).text());
+		$('#app-type-dropdown').dropdown('toggle');
+		return false;
+	});
+});
+
+function initAddAppPopup() {
 
 	$('#add-appointment-popup').on('show.bs.modal', function(event) {
+	
 		if($(event.target).is('#add-appointment-popup')) {
+	
 			$(this).find('input[name=new-app-client]').val('');
 			$(this).find('input[name=new-app-type]').val('');
 			$('#client-autocomplete-dropdown').find('.autocomplete-result').remove();
 			$('#submit-form').prop('disabled', true);
 		}
 	});
+}
 
-	$('#edit-appointment-popup').on('show.bs.modal', function(event) {
-		var target = appTarget;
-		var status = target.data('status');
-		var app_id = target.data('appid');
-		var hour = target.parent().data('hour');
-		var day = target.parent().data('day');
-		var client = target.data('fullname');
+function initDatepickers() {
 
-		$(this).find('#app-status-label').html(status);
-		$(this).find('#edit-app-client-label').html(client);
-		$(this).find('#edit-app-hour-label').html(hour);
-		$(this).find('#edit-app-day-label').html(day);
+	var dateInput = $('input[name=new-app-date]');
 
-		$(this).find('input[name=edit-app-id]').val(app_id);
-		$(this).find('input[name=edit-app-status]').val(status);
-		$(this).find('#app-status-list').attr('class', 'btn ' + getButtonClassByStatus(status) + ' dropdown-toggle');
+	dateInput.datepicker({format: 'yyyy-mm-dd', autoclose: true});
+	dateInput.on('changeDate', function() {
+		$('input[name=new-app-start]').datetimepicker({
+			format: 'hh:ii',
+			autoclose: true,
+			initialDate: new Date(dateInput.val()),
+			startView: 1
+		});
+		$('input[name=new-app-end]').datetimepicker({
+			format: 'hh:ii',
+			autoclose: true,
+			initialDate: new Date(dateInput.val()),
+			startView: 1
+		});
 	});
+}
 
-	$('.app-item-inner').click( function(event) {
-		event.stopPropagation();
-		appTarget = $(this);
-		$('#edit-appointment-popup').modal('toggle');
-	});
+function initClientsAutocompleteDropdown(autocompleteRequestDelay) {
 
-	$('.edit-status-option').click( function() {
-		var status = $(this).data('status');
-		$('#edit-appointment-popup').find('#app-status-label').html(status);
-		$('#edit-appointment-popup').find('input[name=edit-app-status]').val(status);
-		$('#edit-appointment-popup').find('#app-status-list').attr('class', 'btn ' + getButtonClassByStatus(status) + ' dropdown-toggle')
-	});
+	var autocompleteTimer;
 
 	$('input[name=new-app-client]').on('keyup', function(event) {
-		if(event.which == 13) {
-			console.log('submit');
-		}
 
-		if(autocompleteTimer !== null) {
+		if(autocompleteTimer !== null)
 			autocompleteTimer = clearTimeout(autocompleteTimer);
-		}
 
-		autocompleteTimer = setTimeout(getAutocompleteResults, 500);
+		autocompleteTimer = setTimeout(getAutocompleteResults, autocompleteRequestDelay);
 	});
 
 	$('#client-autocomplete-dropdown').on('click', '.client-autocomplete-link', function() {
@@ -64,38 +69,12 @@ $( function() {
 		$('#submit-form').prop('disabled', false);
 		return false;
 	});
-
-	var dateInput = $('input[name=new-app-date]');
-	dateInput.datepicker({format: 'yyyy-mm-dd', autoclose: true});
-	dateInput.on('changeDate', function() {
-		$('input[name=new-app-start]').datetimepicker({format: 'hh:ii', autoclose: true, initialDate: new Date(dateInput.val()), startView: 1});
-		$('input[name=new-app-end]').datetimepicker({format: 'hh:ii', autoclose: true, initialDate: new Date(dateInput.val()), startView: 1});
-	});
-
-	$('.app-type-option').click( function() {
-		$('input[name=new-app-type]').val($(this).text());
-		$('#app-type-dropdown').dropdown('toggle');
-		return false;
-	});
-});
-
-function getButtonClassByStatus(status) {
-
-	var buttonStatusClass = 'btn-info';
-
-	if(status == 'done')
-		buttonStatusClass = 'btn-success';
-	else if(status == 'cancelled')
-		buttonStatusClass = 'btn-warning';
-
-	return buttonStatusClass;
 }
 
 function getAutocompleteResults() {
 
 	var dropdown = $('#client-autocomplete-dropdown');
 	dropdown.find('.autocomplete-result').remove();
-
 
 	var newClientId = Math.round(new Date().getTime() / 1000);
 	$('input[name=new-app-client-id]').val(newClientId);
