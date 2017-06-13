@@ -58,7 +58,9 @@
 								<button id="submit-form" type="submit" class="btn btn-success" disabled>Save</button>
 							</div>
 							<input type="hidden" name="new-app-client-id" value="-1">
+							<input type="hidden" name="edit-app-id" value="-1">
 							<input type="hidden" name="week" value="{$week}">
+							<!-- add app id for editting -->
 						</form>
 					</p>
 				</div>
