@@ -94,6 +94,20 @@ function initDatepickers() {
 		updateTimeInput(startTimeInput, event.date);
 		updateTimeInput(endTimeInput, event.date);
 	});
+
+	startTimeInput.on('changeDate', function(event) {
+		var hours = [];
+ 		var maxHour = startTimeInput.val().split(':')[0];
+
+		for(var i = 0; i < maxHour; i++)
+			hours.push(i);
+		for(var i = 20; i <= 23; i++)
+ 			hours.push(i);
+
+ 		endTimeInput.datetimepicker('setHoursDisabled', hours);
+ 		endTimeInput.datetimepicker('update', event.date);
+ 		endTimeInput.val('');
+	});
 }
 
 function updateTimeInput(element, date) {
