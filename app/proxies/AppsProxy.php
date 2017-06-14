@@ -25,14 +25,23 @@ class AppsProxy extends AbstractProxy {
 		$this->db->query($query, array('app_id' => $app_id), null, false);
 	}
 
-	public function updateApp($app_id, $status) {
-		$query = "UPDATE " . self::TABLE . " SET status='$status' WHERE app_id = $app_id";
+	public function updateApp($params) {
 		$values = array(
-			'status' => $status,
-			'app_id' => $app_id
+			':client_id' => $params['new-app-client-id'],
+			':type' => $params['new-app-type'],
+			':date' => $params['new-app-date'],
+			':start_time' => $params['new-app-start'],
+			':end_time' => $params['new-app-end'],
+			':notes' => $params['new-app-notes']
 		);
+		$fields = array('client_id', 'type', 'date', 'start_time', 'end_time', 'notes');
 
-		$this->db->query($query, null, null, false);
+		$pairs = array();
+		foreach($fields as $field)
+			$pairs[] = $field . '=:' . $field;
+
+		$query = 'UPDATE ' . self::TABLE . ' SET ' . implode(',', $pairs) . ' WHERE app_id=' . $params['edit-app-id'];
+		$this->db->query($query, $values, null, false);
 	}
 
 	public function getAppointmentsForWeek($week) {

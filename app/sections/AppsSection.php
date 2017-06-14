@@ -33,7 +33,7 @@ class AppsSection extends AbstractMenuSection {
 
 	private function showView($params) {
 		$this->init();
-		$this->assignSmartyVariables($this->getWeekParam($params), 8, 19);
+		$this->assignSmartyVariables($this->getWeekParam($params), 8, 20);
 		$this->view->display('apps');
 	}
 
@@ -93,7 +93,9 @@ class AppsSection extends AbstractMenuSection {
 				$hour = '0' . $i;
 
 			$result[] = $hour . ':00';
-			$result[] = $hour . ':30';
+
+			if($i < $end)
+				$result[] = $hour . ':30';
 		}
 
 		return $result;
@@ -134,7 +136,7 @@ class AppsSection extends AbstractMenuSection {
 
 	private function updateApp($params) {
 		$proxy = new AppsProxy(DBWrapper::cloneInstance());
-		$proxy->updateApp($params['edit-app-id'], $params['edit-app-status']);
+		$proxy->updateApp($params);
 	}
 
 	private function getAppEventType($types, $appType) {

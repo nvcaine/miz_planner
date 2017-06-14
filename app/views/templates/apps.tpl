@@ -74,7 +74,7 @@
 					<ul>
 					{foreach from=$apps item=app}
 						{if $app.day == $day}
-						<li class="single-event" data-start="{$app.start_time}" data-end="{$app.end_time}" data-content="{$appURL}app_details/?app_id={$app.app_id}" data-event="event-{$app.event_type}">
+						<li class="single-event" data-start="{$app.start_time}" data-end="{$app.end_time}" data-content="{$appURL}app_details/?app_id={$app.app_id}&week={$week}" data-event="event-{$app.event_type}">
 							<a href="#0">
 								<div class="visible-xs" style="color:#DDDDDD;">{$app.start_time} - {$app.end_time}</div>
 								<strong class="event-name">{$app.first_name[0]}. {$app.last_name}</strong>
@@ -88,27 +88,11 @@
 			</ul>
 		</div>
 
-		<div class="event-modal">
-			<header class="header">
-				<div class="content">
-					<span class="event-date"></span>
-					<h3 class="event-name"></h3>
-				</div>
+		{include file='popups/app-details-popup.tpl'}
 
-				<div class="header-bg"></div>
-			</header>
-
-			<div class="body">
-				<div class="event-info"></div>
-				<div class="body-bg"></div>
-			</div>
-
-			<a href="#0" class="close">Close</a>
-		</div> <!--event-modal-->
-		<div class="cover-layer"></div>
 	</div> <!--cd-schedule-->
 
-	{include file='popups/add-app-popup.tpl'}
+	{include file='popups/add-app-popup.tpl' week=$week}
 
 	{include file='popups/edit-app-popup.tpl'}
 

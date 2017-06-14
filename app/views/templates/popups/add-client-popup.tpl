@@ -17,7 +17,7 @@
 							<input name="new-client-last-name" type="text" class="form-control validate" placeholder="Last name *" required>
 						</div>
 						<div class="form-group-lg">
-							<input name="new-client-birthday" type="text" class="form-control validate" placeholder="Birthdate *" required>
+							<input name="new-client-birthday" type="text" class="form-control validate" placeholder="Birthdate">
 						</div>
 						<div class="form-group-lg">
 							<input name="new-client-address" type="text" class="form-control validate" placeholder="Street number code city country">
