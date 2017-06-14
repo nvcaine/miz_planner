@@ -42,27 +42,23 @@ function initEditAppPopup() {
 
 		if(relTarget.is('#edit-app-button')) {
 
+			var startInput = $(this).find('input[name=new-app-start]');
+			var endInput = $(this).find('input[name=new-app-end]');
+
 			$(this).find('input[name=new-app-client]').val(relTarget.data('appclient'));
 			$(this).find('input[name=new-app-type]').val(relTarget.data('apptype'));
-			// !!!!!  $(this).find('input[name=new-app-date]').val(relTarget.data('appdate'));
-			//$(this).find('input[name=new-app-start]').val(relTarget.data('appstart'));
-			//$(this).find('input[name=new-app-end]').val(relTarget.data('append'));
+			$(this).find('input[name=new-app-date]').val(relTarget.data('appdate'));
+			startInput.val(relTarget.data('appstart'));
+			endInput.val(relTarget.data('append'));
 			$(this).find('textarea[name=new-app-notes]').val(relTarget.data('appnotes'));
 			$(this).find('input[name=new-app-client-id]').val(relTarget.data('appclientid'));
 			$(this).find('input[name=edit-app-id]').val(relTarget.data('appid'));
 			$('#submit-form').attr('value', 'edit-app-action');
 			$('#submit-form').prop('disabled', false);
-		}
-	});
 
-	$('#add-appointment-popup').on('shown.bs.modal', function(event) {
-
-		var relTarget = $(event.relatedTarget);
-
-		if(relTarget.is('#edit-app-button')) {
-
-			var dateInput = $('input[name=new-app-date]');
-			dateInput.trigger('changeDate', new Date(dateInput.val()));
+			var dateObject = new Date(relTarget.data('appdate'));
+			updateTimeInput(startInput, getTimeInputDateObject(dateObject, relTarget.data('appstart')));
+			updateTimeInput(startInput, getTimeInputDateObject(dateObject, relTarget.data('append')));
 		}
 	});
 }
@@ -74,7 +70,6 @@ function initDatepickers() {
 	var endTimeInput = $('input[name=new-app-end]');
 
 	dateInput.datepicker({
-
 		format: 'yyyy-mm-dd',
 		autoclose: true,
 		daysOfWeekDisabled: [0, 6]
@@ -82,7 +77,6 @@ function initDatepickers() {
 	});
 
 	startTimeInput.datetimepicker({
-
 		format: 'hh:ii',
 		autoclose: true,
 		startView: 1,
@@ -90,7 +84,6 @@ function initDatepickers() {
 	});
 
 	endTimeInput.datetimepicker({
-
 		format: 'hh:ii',
 		autoclose: true,
 		startView: 1,
@@ -98,7 +91,6 @@ function initDatepickers() {
 	});
 
 	dateInput.on('changeDate', function(event) {
-
 		updateTimeInput(startTimeInput, event.date);
 		updateTimeInput(endTimeInput, event.date);
 	});
