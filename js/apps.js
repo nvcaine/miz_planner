@@ -44,9 +44,9 @@ function initEditAppPopup() {
 
 			$(this).find('input[name=new-app-client]').val(relTarget.data('appclient'));
 			$(this).find('input[name=new-app-type]').val(relTarget.data('apptype'));
-			$(this).find('input[name=new-app-date]').val(relTarget.data('appdate'));
-			$(this).find('input[name=new-app-start]').val(relTarget.data('appstart'));
-			$(this).find('input[name=new-app-end]').val(relTarget.data('append'));
+			// !!!!!  $(this).find('input[name=new-app-date]').val(relTarget.data('appdate'));
+			//$(this).find('input[name=new-app-start]').val(relTarget.data('appstart'));
+			//$(this).find('input[name=new-app-end]').val(relTarget.data('append'));
 			$(this).find('textarea[name=new-app-notes]').val(relTarget.data('appnotes'));
 			$(this).find('input[name=new-app-client-id]').val(relTarget.data('appclientid'));
 			$(this).find('input[name=edit-app-id]').val(relTarget.data('appid'));
@@ -69,8 +69,9 @@ function initEditAppPopup() {
 
 function initDatepickers() {
 
-	var initialized = false;
 	var dateInput = $('input[name=new-app-date]');
+	var startTimeInput = $('input[name=new-app-start]');
+	var endTimeInput = $('input[name=new-app-end]');
 
 	dateInput.datepicker({
 
@@ -78,71 +79,56 @@ function initDatepickers() {
 		autoclose: true,
 		daysOfWeekDisabled: [0, 6]
 
-	}).on('changeDate', function(event, date) {
-
-		if(!initialized) {
-			var startTimeInput = $('input[name=new-app-start]');
-
-			startTimeInput.datetimepicker({
-
-				format: 'hh:ii',
-				autoclose: true,
-				initialDate: event.date,
-				startView: 1,
-				hoursDisabled: [0, 1, 2, 3, 4, 5, 6, 7, 20, 21, 22, 23]
-
-			});
-
-			$('input[name=new-app-end]').datetimepicker({
-
-				format: 'hh:ii',
-				autoclose: true,
-				initialDate: event.date,
-				startView: 1,
-				hoursDisabled: [0, 1, 2, 3, 4, 5, 6, 7, 20, 21, 22, 23]
-			});
-
-			startTimeInput.on('changeDate', function(event) {
-				var hours = [];
-				var maxHour = startTimeInput.val().split(':')[0];
-
-				for(var i = 0; i < maxHour; i++)
-					hours.push(i);
-
-				for(var i = 20; i <= 23; i++)
-					hours.push(i);
-
-				$('input[name=new-app-end]').datetimepicker('setHoursDisabled', hours);
-			});
-
-			initialized = true;
-
-		} else {
-
-			var startInput = $('input[name=new-app-start]');
-			var endInput = $('input[name=new-app-end]');
-
-			var selectedDate = ((date!==undefined) ? date : event.date);
-
-			var startDate = selectedDate;
-			if(startInput.val() != '') {
-				var startHours = startInput.val().split(':');
-				startDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), startHours[0], startHours[1]);
-				startInput.datetimepicker('update', startDate);
-			} else {
-				startInput.datetimepicker('setInitialDate', selectedDate);
-			}
-
-			var endDate = selectedDate;
-			if(endInput.val() != '') {
-				var endHours = endInput.val().split(':');
-				endDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), endHours[0], endHours[1]);
-				endInput.datetimepicker('update', endDate);
-			} else {
-				endInput.datetimepicker('setInitialDate', selectedDate);
-			}
-		}
 	});
+
+	startTimeInput.datetimepicker({
+
+		format: 'hh:ii',
+		autoclose: true,
+		startView: 1,
+		hoursDisabled: [0, 1, 2, 3, 4, 5, 6, 7, 20, 21, 22, 23]
+	});
+
+	endTimeInput.datetimepicker({
+
+		format: 'hh:ii',
+		autoclose: true,
+		startView: 1,
+		hoursDisabled: [0, 1, 2, 3, 4, 5, 6, 7, 20, 21, 22, 23]
+	});
+
+	dateInput.on('changeDate', function(event) {
+
+		updateTimeInput(startTimeInput, event.date);
+		updateTimeInput(endTimeInput, event.date);
+	});
+}
+
+function updateTimeInput(element, date) {
+
+	var elementValue = element.val();
+	var method = 'setInitialDate';
+	var param = date;
+
+	if(elementValue != '') {
+		method = 'update';
+		param = getTimeInputDateObject(date, elementValue);
+	}
+
+	element.datetimepicker(method, param);
+}
+
+function getTimeInputDateObject(date, time) {
+
+	var startHours = time.split(':');
+
+	return new Date(
+		date.getFullYear(),
+		date.getMonth(),
+		date.getDate(),
+		startHours[0],
+		startHours[1]
+	);	
 }
 
 function initClientsAutocompleteDropdown(autocompleteRequestDelay) {
