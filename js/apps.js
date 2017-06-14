@@ -53,7 +53,7 @@ function initEditAppPopup() {
 			$(this).find('textarea[name=new-app-notes]').val(relTarget.data('appnotes'));
 			$(this).find('input[name=new-app-client-id]').val(relTarget.data('appclientid'));
 			$(this).find('input[name=edit-app-id]').val(relTarget.data('appid'));
-			$('#submit-form').attr('value', 'edit-app-action');
+			$('#submit-form').attr('name', 'edit-app-action');
 			$('#submit-form').prop('disabled', false);
 
 			var dateObject = new Date(relTarget.data('appdate'));

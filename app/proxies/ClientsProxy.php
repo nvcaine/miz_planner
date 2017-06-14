@@ -66,7 +66,7 @@ class ClientsProxy extends AbstractProxy {
 		foreach($fields as $field)
 			$pairs[] = $field . '=:' . $field;
 
-		$query = 'UPDATE ' . self::TABLE . ' SET ' . implode(',', $pairs) . ' WHERE client_id='.$params['edit-client-id'];
+		$query = 'UPDATE ' . self::TABLE . ' SET ' . implode(',', $pairs) . ' WHERE client_id=' . $params['edit-client-id'];
 		$this->db->query($query, $values, null, false);
 	}
 
