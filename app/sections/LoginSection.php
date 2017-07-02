@@ -5,12 +5,10 @@ class LoginSection extends AbstractAuthSection {
 
 		session_start();
 
-		if($this->userIsLoggedIn()) {
+		if($this->userIsLoggedIn())
 			header('Location:' . $this->appFacade->getAppURL());
-		} else {
-			$this->view->display('login');
-		}
 
+		$this->view->display('login');
 	}
 
 	public function runPostMethod($params) {
@@ -50,17 +48,13 @@ class LoginSection extends AbstractAuthSection {
 	}
 
 	private function persistLogin($user_id) {
-		$selector = $this->getLoginToken(12);
-		$validator = $this->getLoginToken(40);
+
+		$selector = $this->getRandomToken(12);
+		$validator = $this->getRandomToken(40);
 
 		$loginsProxy = new LoginsProxy(DBWrapper::cloneInstance());
 		$loginsProxy->addLogin($selector, hash('sha256', $validator), $user_id);
 
-		setcookie(Consts::LOGIN_TOKEN, $selector . ':' . $validator);
-	}
-
-	private function getLoginToken($length = 20) {
-
-		return bin2hex(openssl_random_pseudo_bytes($length / 2));
+		setcookie(Consts::LOGIN_TOKEN, $selector . ':' . $validator, time() + (3600 * Consts::COOKIE_HOUR_INTERVAL), '/');
 	}
 }

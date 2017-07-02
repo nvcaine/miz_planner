@@ -5,10 +5,13 @@ class AppsSection extends AbstractMenuSection {
 		session_start();
 
 		if(!$this->userIsLoggedIn()) {
-			header('Location: ' . $this->appFacade->getAppURL());
-		} else {
-			$this->showView($params);
+			$peristent = $this->checkPersistentLogin();
+	
+			if(!$peristent)
+				header('Location: ' . $this->appFacade->getAppURL());
 		}
+
+		$this->showView($params);
 	}
 
 	public function runPostMethod($params) {

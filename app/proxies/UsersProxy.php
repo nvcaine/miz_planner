@@ -14,4 +14,15 @@ class UsersProxy extends AbstractProxy {
 
 		return $result;
 	}
+
+	public function getUserById($user_id) {
+
+		$query = 'SELECT * FROM ' . self::TABLE. ' WHERE user_id = :user_id';
+		$result = $this->db->query($query, array('user_id' => $user_id));
+
+		if($this->db->affectedRowsCount() < 1)
+			return null;
+
+		return $result[0];
+	}
 }
