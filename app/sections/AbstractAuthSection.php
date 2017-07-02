@@ -53,7 +53,8 @@ class AbstractAuthSection extends AbstractSection {
 			$_SESSION[Consts::LOGGED_IN_INDEX] = true;
 
 			$this->updatePersistentLogin($login['login_id']);
-			header('Location: ' . $this->appFacade->getAppURL() . 'apps/');
+			//header('Location: ' . $this->appFacade->getAppURL() . 'apps/');
+			header('Refresh:0');
 
 			return true;
 		}
