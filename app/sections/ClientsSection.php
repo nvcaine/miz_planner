@@ -18,8 +18,12 @@ class ClientsSection extends AbstractMenuSection {
 
 		session_start();
 
-		if(!$this->userIsLoggedIn())
-			header('Location: ' . $this->appFacade->getAppURL());
+		if(!$this->userIsLoggedIn()) {
+			$peristent = $this->checkPersistentLogin();
+	
+			if(!$peristent)
+				header('Location: ' . $this->appFacade->getAppURL());
+		}
 	}
 
 	private function showView($params) {

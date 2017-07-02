@@ -30,6 +30,12 @@
 					</div>
 
 					<div class="form-group">
+						<label>
+							<input name="remember_me" type="checkbox" class="from-control">
+							Remember me
+						</label>
+					</div>
+					<div class="form-group">
 						<button type="submit" class="btn btn-primary">Login</button>
 					</div>
 			</form>
