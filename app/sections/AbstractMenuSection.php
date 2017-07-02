@@ -3,7 +3,7 @@ abstract class AbstractMenuSection extends AbstractAuthSection {
 
 	const LOGIN_SECTION = 'login';
 
-	private $requiresLogin = array('apps', 'clients', 'logout');
+	private $requiresLogin = array('apps', 'clients', 'logout', 'users');
 
 	protected function init() {
 		$this->initMenu($this->appFacade->getSections());

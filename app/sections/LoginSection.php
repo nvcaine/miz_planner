@@ -44,6 +44,7 @@ class LoginSection extends AbstractAuthSection {
 			$this->persistLogin($user['user_id']);
 
 		$_SESSION[Consts::USERNAME_INDEX] = $user['name'];
+		$_SESSION[Consts::USERTYPE_INDEX] = $user['type'];
 		$_SESSION[Consts::LOGGED_IN_INDEX] = true;
 	}
 

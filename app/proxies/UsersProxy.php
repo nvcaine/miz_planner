@@ -25,4 +25,11 @@ class UsersProxy extends AbstractProxy {
 
 		return $result[0];
 	}
+
+	public function getAllUsers() {
+
+		$query = 'SELECT user_id,name,email,type FROM ' . self::TABLE;
+
+		return $this->db->query($query);
+	}
 }

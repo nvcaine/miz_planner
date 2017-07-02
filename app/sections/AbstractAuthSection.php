@@ -50,6 +50,7 @@ class AbstractAuthSection extends AbstractSection {
 		if($user != null) {		
 
 			$_SESSION[Consts::USERNAME_INDEX] = $user['name'];
+			$_SESSION[Consts::USERTYPE_INDEX] = $user['type'];
 			$_SESSION[Consts::LOGGED_IN_INDEX] = true;
 
 			$this->updatePersistentLogin($login['login_id']);

@@ -8,6 +8,7 @@ class LogoutSection extends AbstractAuthSection {
 		if($this->userIsLoggedIn()) {
 			unset($_SESSION[Consts::LOGGED_IN_INDEX]);
 			unset($_SESSION[Consts::USERNAME_INDEX]);
+			unset($_SESSION[Consts::USERTYPE_INDEX]);
 
 			if(isset($_COOKIE[Consts::LOGIN_TOKEN]))
 				$this->deletePersistentLogin();
