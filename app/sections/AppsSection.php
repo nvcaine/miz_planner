@@ -117,7 +117,8 @@ class AppsSection extends AbstractMenuSection {
 	}
 
 	private function getMaxWeek() {
-		return (strtotime('2017W53') !== false) ? 53 : 52;
+		$year = date('Y');
+		return (strtotime($year . 'W53') !== false) ? 53 : 52;
 	}
 
 	private function addApp($params) {
