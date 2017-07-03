@@ -27,6 +27,12 @@ class UsersSection extends AbstractMenuSection {
 
 			if(isset($params['new-user-add-action']))
 				$this->addUser($params);
+
+			if(isset($params['user-edit-action']))
+				$this->editUser($params);
+
+			if(isset($params['user-delete-action']))
+				$this->deleteUser($params);
 		}
 
 		$this->showView();
@@ -52,5 +58,30 @@ class UsersSection extends AbstractMenuSection {
 			$params['new-user-email'],
 			hash('sha256', $params['new-user-password'])
 		);
+	}
+
+	private function editUser($params) {
+
+		$proxy = new UsersProxy(DBWrapper::cloneInstance());
+
+		if(isset($params['edit-user-password']) && $params['edit-user-password'] != '')
+			$proxy->updateUser(
+				$params['edit-user-id'],
+				$params['edit-user-name'],
+				$params['edit-user-email'],
+				hash('sha256', $params['edit-user-password'])
+			);
+		else
+			$proxy->updateUser(
+				$params['edit-user-id'],
+				$params['edit-user-name'],
+				$params['edit-user-email']
+			);
+	}
+
+	private function deleteUser($params) {
+
+		$proxy = new UsersProxy(DBWrapper::cloneInstance());
+		$proxy->deleteUser($params['edit-user-id']);
 	}
 }
