@@ -49,12 +49,14 @@
 			</div>
 
 			<div>
-				<button class="btn btn-success btn-lg" data-toggle="modal" data-target="#add-appointment-popup">
-					Add appointment
-				</button>
+				<div class="pull-left">
+					<button class="btn btn-success btn-lg" data-toggle="modal" data-target="#add-appointment-popup">
+						Add appointment
+					</button>&nbsp;
+				</div>
 
 				{if isset($users)}
-				<div class="dropdown">
+				<div class="dropdown pull-left">
 					<button class="btn btn-primary btn-lg" id="admin-users-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 						Filter by user
 						<span class="caret"></span>
@@ -77,6 +79,8 @@
 					{/foreach}
 					</ul>
 				</div>
+
+				<div class="clearfix"></div>
 				{/if}
 			</div>
 		</div>
