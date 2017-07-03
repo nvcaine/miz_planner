@@ -56,6 +56,8 @@
 		</div>
 	</main>
 
+	{include file='popups/add-user-popup.tpl'}
+
 	{include file='components/footer.tpl'}
 
 	{include file='components/page-footer.tpl' includeDatepicker='true'}
