@@ -32,7 +32,9 @@
 
 						<div class="form-group">
 							<button type="submit" class="btn btn-success" name="edit-client-action">Save</button>
-							<button type="submit" class="btn btn-danger" name="delete-client-action" onclick="return confirm('Are you sure you want to delete this client?');">Delete</button>
+							<button type="submit" class="btn btn-danger" name="delete-client-action" onclick="return confirm('Are you sure you want to delete this client?');">
+								<span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Delete
+							</button>
 						</div>
 
 						<input type="hidden" name="edit-client-id">

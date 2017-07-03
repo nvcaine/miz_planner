@@ -3,6 +3,8 @@ class App_detailsSection extends AbstractSection {
 
 	public function runGetMethod($params) {
 
+		session_start();
+
 		if(isset($_SESSION[Consts::LOGGED_IN_INDEX]) && ($_SESSION[Consts::LOGGED_IN_INDEX] === true)) {
 
 			$proxy = new AppsProxy(DBWrapper::cloneInstance());

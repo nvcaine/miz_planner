@@ -27,7 +27,7 @@
 						<div class="form-group">
 							<button type="submit" class="btn btn-success" name="user-edit-action">Save</button>
 							<button type="submit" class="btn btn-danger" name="user-delete-action" onclick="return confirm('Are you sure you want to delete this user ?');">
-								<span class="glyphicon glyphicon-trash"></span> Delete
+								<span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Delete
 							</button>
 						</div>
 						<input type="hidden" name="edit-user-id">
