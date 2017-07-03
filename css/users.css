@@ -1,0 +1,8 @@
+#users-table {
+	width: 100%;
+}
+
+#users-table td {
+	padding: 5px;
+	font-size: 16px;
+}

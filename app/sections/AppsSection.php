@@ -2,6 +2,7 @@
 class AppsSection extends AbstractMenuSection {
 
 	public function runGetMethod($params) {
+
 		session_start();
 
 		if(!$this->userIsLoggedIn()) {
@@ -15,6 +16,7 @@ class AppsSection extends AbstractMenuSection {
 	}
 
 	public function runPostMethod($params) {
+
 		session_start();
 
 		if(!$this->userIsLoggedIn()) {
@@ -36,7 +38,7 @@ class AppsSection extends AbstractMenuSection {
 
 	private function showView($params) {
 		$this->init();
-		$this->assignSmartyVariables($this->getWeekParam($params), 8, 20);
+		$this->assignSmartyVariables($params, 8, 20);
 		$this->view->display('apps');
 	}
 
@@ -49,9 +51,10 @@ class AppsSection extends AbstractMenuSection {
 		return date('W');
 	}
 
-	private function assignSmartyVariables($currentWeek, $startHour, $endHour) {
+	private function assignSmartyVariables($params, $startHour, $endHour) {
 
 		$maxWeek = $this->getMaxWeek();
+		$currentWeek = $this->getWeekParam($params);
 
 		$this->view->assign('week', $currentWeek);
 		$this->view->assign('weekdays', $this->getWeekdays($currentWeek));
@@ -67,7 +70,24 @@ class AppsSection extends AbstractMenuSection {
 			$this->view->assign('nextWeek', $currentWeek + 1);
 		}
 
-		$this->view->assign('apps', $this->getAppointments($currentWeek));
+		$userId = $_SESSION[Consts::USERID_INDEX];
+
+		if($this->userIsAdmin()) {
+			$usersProxy = new UsersProxy(DBWrapper::cloneInstance());
+			$users = $usersProxy->getAllUsers();
+			foreach($users as $key => $user)
+				if($user['user_id'] == $_SESSION[Consts::USERID_INDEX])
+					$users[$key]['user_id'] = -1; // to avoid redundant params in dropdown links
+
+			$this->view->assign('users', $users);
+
+			if(isset($params['user_id'])) {
+				$userId = $params['user_id'];
+				$this->view->assign('user_id', $userId);
+			}
+		}
+
+		$this->view->assign('apps', $this->getAppointments($currentWeek, $userId));
 	}
 
 	private function getWeekdays($week) {
@@ -104,11 +124,15 @@ class AppsSection extends AbstractMenuSection {
 		return $result;
 	}
 
-	private function getAppointments($week) {
+	private function getAppointments($week, $userId = -1) {
 
 		$types = json_decode(file_get_contents('json/types.json'));
 		$proxy = new AppsProxy(DBWrapper::cloneInstance());
-		$apps = $proxy->getAppointmentsForWeek($week);
+
+		if($userId != -1)
+			$apps = $proxy->getAppointmentsForWeekByUser($week, $userId);
+		else
+			$apps = $proxy->getAppointmentsForWeekByUser($week, $_SESSION[Consts::USERID_INDEX]);
 
 		foreach($apps as $key => $app)
 			$apps[$key]['event_type'] = $this->getAppEventType($types, $app['type']);
@@ -117,7 +141,8 @@ class AppsSection extends AbstractMenuSection {
 	}
 
 	private function getMaxWeek() {
-		return (strtotime('2017W53') !== false) ? 53 : 52;
+		$year = date('Y');
+		return (strtotime($year . 'W53') !== false) ? 53 : 52;
 	}
 
 	private function addApp($params) {
@@ -130,6 +155,19 @@ class AppsSection extends AbstractMenuSection {
 			$params['new-app-type'],
 			$params['new-app-notes']
 		);
+
+		$this->addUserApp($proxy->getLastInsertId());
+
+	}
+
+	private function addUserApp($app_id) {
+
+		$app_id = $app_id;
+		$user_id = $_SESSION[Consts::USERID_INDEX];
+		$added_by = $_SESSION[Consts::USERID_INDEX];
+
+		$proxy = new UserappsProxy(DBWrapper::cloneInstance());
+		$proxy->addUserApp($app_id, $user_id, $added_by);
 	}
 
 	private function deleteApp($params) {
