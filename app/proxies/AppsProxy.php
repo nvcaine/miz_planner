@@ -64,6 +64,10 @@ class AppsProxy extends AbstractProxy {
 		return $this->parseApps($apps)[0];
 	}
 
+	public function getLastInsertId() {
+		return $this->db->lastInsertId();
+	}
+
 	private function getDateFromWeekday($week, $weekday) {
 		return date('Y-m-d', strtotime($weekday, strtotime('2017W' . $week)));
 	}

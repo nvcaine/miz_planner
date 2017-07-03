@@ -133,6 +133,19 @@ class AppsSection extends AbstractMenuSection {
 			$params['new-app-type'],
 			$params['new-app-notes']
 		);
+
+		$this->addUserApp($proxy->getLastInsertId());
+
+	}
+
+	private function addUserApp($app_id) {
+
+		$app_id = $app_id;
+		$user_id = $_SESSION[Consts::USERID_INDEX];
+		$added_by = $_SESSION[Consts::USERID_INDEX];
+
+		$proxy = new UserappsProxy(DBWrapper::cloneInstance());
+		$proxy->addUserApp($app_id, $user_id, $added_by);
 	}
 
 	private function deleteApp($params) {
