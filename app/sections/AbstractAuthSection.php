@@ -19,6 +19,13 @@ class AbstractAuthSection extends AbstractSection {
 		return bin2hex(openssl_random_pseudo_bytes($length / 2));
 	}
 
+	protected function saveUserSessionData($user) {
+		$_SESSION[Consts::USERNAME_INDEX] = $user['name'];
+		$_SESSION[Consts::USERTYPE_INDEX] = $user['type'];
+		$_SESSION[Consts::USERID_INDEX] = $user['user_id'];
+		$_SESSION[Consts::LOGGED_IN_INDEX] = true;
+	}
+
 	private function checkLoginToken($token) {
 
 		$split = explode(':', $token);
@@ -49,9 +56,7 @@ class AbstractAuthSection extends AbstractSection {
 
 		if($user != null) {		
 
-			$_SESSION[Consts::USERNAME_INDEX] = $user['name'];
-			$_SESSION[Consts::USERTYPE_INDEX] = $user['type'];
-			$_SESSION[Consts::LOGGED_IN_INDEX] = true;
+			$this->saveUserSessionData($user);
 
 			$this->updatePersistentLogin($login['login_id']);
 			//header('Location: ' . $this->appFacade->getAppURL() . 'apps/');

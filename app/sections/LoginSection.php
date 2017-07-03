@@ -43,9 +43,7 @@ class LoginSection extends AbstractAuthSection {
 		if($remember)
 			$this->persistLogin($user['user_id']);
 
-		$_SESSION[Consts::USERNAME_INDEX] = $user['name'];
-		$_SESSION[Consts::USERTYPE_INDEX] = $user['type'];
-		$_SESSION[Consts::LOGGED_IN_INDEX] = true;
+		$this->saveUserSessionData($user);
 	}
 
 	private function persistLogin($user_id) {

@@ -2,6 +2,7 @@
 class AppsSection extends AbstractMenuSection {
 
 	public function runGetMethod($params) {
+
 		session_start();
 
 		if(!$this->userIsLoggedIn()) {
@@ -15,6 +16,7 @@ class AppsSection extends AbstractMenuSection {
 	}
 
 	public function runPostMethod($params) {
+
 		session_start();
 
 		if(!$this->userIsLoggedIn()) {
