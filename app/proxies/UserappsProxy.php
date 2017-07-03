@@ -16,4 +16,9 @@ class UserappsProxy extends AbstractProxy {
 
 		$this->db->query($query, $values, null, false);
 	}
+
+	public function deleteUserApp($app_id) {
+		$query = 'DELETE FROM ' . self::TABLE . ' WHERE app_id=:app_id';
+		$this->db->query($query, array('app_id' => $app_id), null, false);
+	}
 }
