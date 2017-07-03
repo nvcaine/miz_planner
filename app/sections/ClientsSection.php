@@ -30,6 +30,7 @@ class ClientsSection extends AbstractMenuSection {
 
 		$this->init();
 		$this->loadClients();
+		$this->getUpcomingBirthdays();
 		$this->view->display('clients');
 	}
 
@@ -51,5 +52,11 @@ class ClientsSection extends AbstractMenuSection {
 
 		$proxy = new ClientsProxy(DBWrapper::cloneInstance());
 		$this->view->assign('clients', $proxy->getClients());
+	}
+
+	private function getUpcomingBirthdays() {
+
+		$proxy = new ClientsProxy(DBWrapper::cloneInstance());
+		$this->view->assign('clients_birthdays', $proxy->getUpcomingBirthdays());
 	}
 }
