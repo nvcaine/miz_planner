@@ -41,7 +41,7 @@
 					</td>
 					<td>{$user.email|replace:'@':'<br/>@'}</td>
 					<td>
-						<button class="btn btn-primary btn-sm">
+						<button class="btn btn-primary btn-sm" data-user_name="{$user.name}" data-user_email="{$user.email}" data-user_id="{$user.user_id}" data-toggle="modal" data-target="#edit-user-popup">
 							<span class="glyphicon glyphicon-pencil"></span>
 						</button>
 					</td>
@@ -57,6 +57,8 @@
 	</main>
 
 	{include file='popups/add-user-popup.tpl'}
+
+	{include file='popups/edit-user-popup.tpl'}
 
 	{include file='components/footer.tpl'}
 

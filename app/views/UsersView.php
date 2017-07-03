@@ -8,9 +8,9 @@ class UsersView extends AbstractView {
 			'css/users.css'
 		));
 
-		/*$this->addExternalScripts(array(
-			'js/apps.js'
-		));*/
+		$this->addExternalScripts(array(
+			'js/users.js'
+		));
 
 		if(isset($this->assignedVariables->users))
 			$this->appFacade->assignSmartyVariable('users', $this->assignedVariables->users);
