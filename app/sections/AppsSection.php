@@ -61,6 +61,11 @@ class AppsSection extends AbstractMenuSection {
 		$this->view->assign('thisWeek', date('W'));
 		$this->view->assign('appTypes', json_decode(file_get_contents('json/types.json')));
 
+		if($this->userIsAdmin()) {
+			$usersProxy = new UsersProxy(DBWrapper::cloneInstance());
+			$this->view->assign('users', $usersProxy->getAllUsers());
+		}
+
 		if($currentWeek > 1) {
 			$this->view->assign('previousWeek', $currentWeek - 1);
 		}

@@ -52,6 +52,24 @@
 				<button class="btn btn-success btn-lg" data-toggle="modal" data-target="#add-appointment-popup">
 					Add appointment
 				</button>
+
+				{if isset($users)}
+				<div class="dropdown">
+					<button class="btn btn-primary btn-lg" id="admin-users-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						Filter by user
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="admin-users-toggle">
+					{foreach from=$users item=user}
+						{if $week == $thisWeek}
+						<li><a href="{$appURL}apps/?user_id={$user.user_id}">{$user.name}</a></li>
+						{else}
+						<li><a href="{$appURL}apps/?week={$week}&user_id={$user.user_id}">{$user.name}</a></li>
+						{/if}
+					{/foreach}
+					</ul>
+				</div>
+				{/if}
 			</div>
 		</div>
 	</div>

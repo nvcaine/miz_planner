@@ -6,6 +6,10 @@ class AbstractAuthSection extends AbstractSection {
 		return isset($_SESSION[Consts::LOGGED_IN_INDEX]) && ($_SESSION[Consts::LOGGED_IN_INDEX] === true);
 	}
 
+	protected function userIsAdmin() {
+		return isset($_SESSION[Consts::USERTYPE_INDEX]) && ($_SESSION[Consts::USERTYPE_INDEX] == 'admin');
+	}
+
 	protected function checkPersistentLogin() {
 
 		if(isset($_COOKIE[Consts::LOGIN_TOKEN]))

@@ -36,7 +36,7 @@ class UsersSection extends AbstractMenuSection {
 
 		$this->init();
 
-		if(isset($_SESSION[Consts::USERTYPE_INDEX]) && $_SESSION[Consts::USERTYPE_INDEX] == 'admin') {
+		if($this->userIsAdmin()) {
 			$usersProxy = new UsersProxy(DBWrapper::cloneInstance());
 			$this->view->assign('users', $usersProxy->getAllUsers());
 		}
