@@ -21,11 +21,11 @@
 			<div>
 				{if isset($previousWeek)}
 				{if $previousWeek != $thisWeek}
-				<a href="{$appURL}apps/?week={$previousWeek}" class="btn btn-primary btn-sm">
+				<a href="{$appURL}apps/?week={$previousWeek}{if isset($user_id)}&user_id={$user_id}{/if}" class="btn btn-primary btn-sm">
 					<span class="glyphicon glyphicon-chevron-left"></span> Previous week
 				</a>
 				{else}
-				<a href="{$appURL}apps/" class="btn btn-primary btn-sm">
+				<a href="{$appURL}apps/{if isset($user_id)}?user_id={$user_id}{/if}" class="btn btn-primary btn-sm">
 					<span class="glyphicon glyphicon-chevron-left"></span> Previous week
 				</a>
 				{/if}
@@ -33,18 +33,18 @@
 
 				{if isset($nextWeek)}
 				{if $nextWeek != $thisWeek}
-				<a href="{$appURL}apps/?week={$nextWeek}" class="btn btn-primary btn-sm">
+				<a href="{$appURL}apps/?week={$nextWeek}{if isset($user_id)}&user_id={$user_id}{/if}" class="btn btn-primary btn-sm">
 					Next week <span class="glyphicon glyphicon-chevron-right"></span>
 				</a>
 				{else}
-				<a href="{$appURL}apps/" class="btn btn-primary btn-sm">
+				<a href="{$appURL}apps/{if isset($user_id)}?user_id={$user_id}{/if}" class="btn btn-primary btn-sm">
 					Next week <span class="glyphicon glyphicon-chevron-right"></span>
 				</a>
 				{/if}
 				{/if}
 
 				{if $week != $thisWeek}
-				<a href="{$appURL}apps/" class="btn btn-primary btn-sm">This week</a>
+				<a href="{$appURL}apps/{if isset($user_id)}?user_id={$user_id}{/if}" class="btn btn-primary btn-sm">This week</a>
 				{/if}
 			</div>
 
@@ -61,11 +61,19 @@
 					</button>
 					<ul class="dropdown-menu" aria-labelledby="admin-users-toggle">
 					{foreach from=$users item=user}
+					{if $user.user_id != -1}
 						{if $week == $thisWeek}
 						<li><a href="{$appURL}apps/?user_id={$user.user_id}">{$user.name}</a></li>
 						{else}
 						<li><a href="{$appURL}apps/?week={$week}&user_id={$user.user_id}">{$user.name}</a></li>
 						{/if}
+					{else}
+						{if $week == $thisWeek}
+						<li><a href="{$appURL}apps/">{$user.name}</a></li>
+						{else}
+						<li><a href="{$appURL}apps/?week={$week}">{$user.name}</a></li>
+						{/if}
+					{/if}
 					{/foreach}
 					</ul>
 				</div>

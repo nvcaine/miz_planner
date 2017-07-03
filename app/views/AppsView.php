@@ -29,6 +29,9 @@ class AppsView extends AbstractView {
 		if(isset($this->assignedVariables->users))
 			$this->appFacade->assignSmartyVariable('users', $this->assignedVariables->users);
 
+		if(isset($this->assignedVariables->user_id))
+			$this->appFacade->assignSmartyVariable('user_id', $this->assignedVariables->user_id);
+
 		if(isset($this->assignedVariables->menuItems))
 			$this->appFacade->assignSmartyVariable('menuItems', $this->assignedVariables->menuItems);
 
