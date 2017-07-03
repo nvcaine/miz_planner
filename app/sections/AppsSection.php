@@ -173,6 +173,9 @@ class AppsSection extends AbstractMenuSection {
 	private function deleteApp($params) {
 		$proxy = new AppsProxy(DBWrapper::cloneInstance());
 		$proxy->deleteApp($params['edit-app-id']);
+
+		$userAppsProxy = new UserappsProxy(DBWrapper::cloneInstance());
+		$userAppsProxy->deleteUserApp($params['edit-app-id']);
 	}
 
 	private function updateApp($params) {
