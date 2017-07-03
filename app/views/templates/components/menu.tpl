@@ -38,3 +38,9 @@
 		<div class="clearfix"></div>
 	</div> <!--.container-->
 </nav>
+
+{if isset($activeLogin)}
+<div class="container">
+	<div class="pull-right" style="padding:10px 10px 0 0;">Logged in as <strong>{$activeLogin}</strong></div>
+</div>
+{/if}
