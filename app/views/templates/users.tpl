@@ -16,7 +16,7 @@
 
 		<p>
 			This section is dedicated to user management.<br />
-			You can Add and remove users if you admin privileges.
+			You can add and remove users if you have admin privileges.
 		</p>
 
 		{if isset($users)}
