@@ -110,7 +110,7 @@ class AppsSection extends AbstractMenuSection {
 
 		$types = json_decode(file_get_contents('json/types.json'));
 		$proxy = new AppsProxy(DBWrapper::cloneInstance());
-		$apps = $proxy->getAppointmentsForWeek($week);
+		$apps = $proxy->getAppointmentsForWeekByUser($week, $_SESSION[Consts::USERID_INDEX]);//getAppointmentsForWeek($week);
 
 		foreach($apps as $key => $app)
 			$apps[$key]['event_type'] = $this->getAppEventType($types, $app['type']);

@@ -55,6 +55,18 @@ class AppsProxy extends AbstractProxy {
 		return $this->parseApps($apps);
 	}
 
+	public function getAppointmentsForWeekByUser($week, $user_id) {
+
+		$start = $this->getDateFromWeekday($week, 'monday');
+		$end = $this->getDateFromWeekday($week, 'sunday');
+		$query = 'SELECT * FROM ' . self::TABLE . ' RIGHT JOIN miz_clients ON miz_apps.client_id = miz_clients.client_id';
+		$query .= ' RIGHT JOIN miz_userapps ON miz_apps.app_id = miz_userapps.app_id AND miz_userapps.user_id = ' . $user_id;
+		$where = 'WHERE (date BETWEEN \'' . $start . '\' AND \'' . $end . '\')';
+		$apps = $this->db->query($query . ' ' . $where);
+
+		return $this->parseApps($apps);
+	}
+
 	public function getAppointmentById($app_id) {
 
 		$query = 'SELECT * FROM ' . self::TABLE . ' RIGHT JOIN miz_clients ON miz_apps.client_id = miz_clients.client_id';
