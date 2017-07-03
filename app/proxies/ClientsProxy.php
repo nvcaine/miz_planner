@@ -74,4 +74,21 @@ class ClientsProxy extends AbstractProxy {
 		$query = 'DELETE FROM ' . self::TABLE . ' WHERE client_id = :client_id';
 		$this->db->query($query, array('client_id' => $params['edit-client-id']), null, false);
 	}
+
+	public function getUpcomingBirthdays() {
+		$monday = date('Y-m-d', strtotime('monday this week'));
+		$date = 'DATE_ADD(birthday, INTERVAL YEAR(CURDATE()) - YEAR(birthday) + IF(DAYOFYEAR(CURDATE()) > DAYOFYEAR(birthday),1,0) YEAR)';
+
+		$query = 'SELECT *, ' . $date . ' AS cdate FROM ' . self::TABLE . ' WHERE ' . $date . ' BETWEEN \'' . $monday . '\' AND DATE_ADD(\'' . $monday . '\', INTERVAL 6 DAY) ORDER BY cdate';
+		$results = $this->db->query($query);
+
+		foreach($results as $key => $result) {
+			$date = date('Y') . '-' . date('m-d', strtotime($result['birthday']));
+			$results[$key]['week_birthday'] = date('l M d', strtotime($date));
+			$results[$key]['birthyear'] = date('Y', strtotime($result['birthday']));
+			$results[$key]['age'] = date('Y') - $results[$key]['birthyear'];
+		}
+
+		return $results;
+	}
 }
