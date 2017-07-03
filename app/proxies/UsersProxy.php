@@ -32,4 +32,19 @@ class UsersProxy extends AbstractProxy {
 
 		return $this->db->query($query);
 	}
+
+	public function addUser($name, $email, $passwordHash) {
+
+		$values = array(
+			'name' => $name,
+			'email' => $email,
+			'password' => $passwordHash
+		);
+
+		$fields = array('name','email','password');
+		$tokens = array(':name',':email',':password');
+
+		$query = 'INSERT INTO ' . self::TABLE . ' (' . implode(',', $fields) . ') VALUES (' . implode(',', $tokens) . ')';
+		$this->db->query($query, $values, null, false);
+	}
 }
