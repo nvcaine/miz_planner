@@ -29,14 +29,25 @@
 
 		<div>
 		{if isset($users)}
-		{foreach from=$users item=user}
-			<tr>
-				<td>{$user.user_id}</td>
-				<td>{$user.name}</td>
-				<td>{$user.email}</td>
-				<td>{$user.type}</td>
-			</tr>
-		{/foreach}
+			<table id="users-table" class="center">
+			{foreach from=$users item=user}
+				<tr style="background-color:{cycle values='#dddddd,#ffffff'};">
+					<td>{$user.user_id}</td>
+					<td>
+						{$user.name}
+					{if $user.type == 'admin'}
+						&nbsp;&nbsp;<span class="glyphicon glyphicon-star"></span>
+					{/if}
+					</td>
+					<td>{$user.email|replace:'@':'<br/>@'}</td>
+					<td>
+						<button class="btn btn-primary btn-sm">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</button>
+					</td>
+				</tr>
+			{/foreach}
+			</table>
 		{else}
 			<h4>
 				<span class="label label-danger">Your account is not authorized to access this section.</span>

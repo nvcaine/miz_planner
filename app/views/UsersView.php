@@ -4,7 +4,8 @@ class UsersView extends AbstractView {
 	public function display($template) {
 		$this->addStyles(array(
 			'css/main.css',
-			'css/sticky.css'
+			'css/sticky.css',
+			'css/users.css'
 		));
 
 		/*$this->addExternalScripts(array(
