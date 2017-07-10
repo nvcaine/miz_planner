@@ -77,7 +77,7 @@ class ClientsProxy extends AbstractProxy {
 
 	public function getUpcomingBirthdays() {
 		$monday = date('Y-m-d', strtotime('monday this week'));
-		$date = 'DATE_ADD(birthday, INTERVAL YEAR(CURDATE()) - YEAR(birthday) + IF(DAYOFYEAR(CURDATE()) > DAYOFYEAR(birthday),1,0) YEAR)';
+		$date = 'DATE_ADD(birthday, INTERVAL YEAR(\''.$monday.'\') - YEAR(birthday) + IF(DAYOFYEAR(\''.$monday.'\') > DAYOFYEAR(birthday),1,0) YEAR)';
 
 		$query = 'SELECT *, ' . $date . ' AS cdate FROM ' . self::TABLE . ' WHERE ' . $date . ' BETWEEN \'' . $monday . '\' AND DATE_ADD(\'' . $monday . '\', INTERVAL 6 DAY) ORDER BY cdate';
 		$results = $this->db->query($query);
