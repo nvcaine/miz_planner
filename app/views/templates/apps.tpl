@@ -107,7 +107,12 @@
 						<li class="single-event" data-start="{$app.start_time}" data-end="{$app.end_time}" data-content="{$appURL}app_details/?app_id={$app.app_id}&week={$week}" data-event="event-{$app.event_type}">
 							<a href="#0">
 								<div class="visible-xs" style="color:#DDDDDD;">{$app.start_time} - {$app.end_time}</div>
-								<strong class="event-name">{$app.first_name[0]}. {$app.last_name}</strong>
+								<strong class="event-name">
+									{if isset($app.first_name) && $app.first_name != ''} 
+									{$app.first_name[0]}.&nbsp;
+									{/if}
+									{$app.last_name}
+								</strong>
 							</a>
 						</li>
 						{/if}
