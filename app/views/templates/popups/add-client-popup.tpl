@@ -29,6 +29,10 @@
 							<input name="new-client-email" type="text" class="form-control validate" placeholder="E-mail">
 						</div>
 						<p><br />* Required</p>
+						<p>
+							<strong>Note:</strong>
+							First name field is optional. Use only last name when adding a company.
+						</p>
 
 						<div class="form-group">
 							<button type="submit" class="btn btn-success" name="new-client-add-action">Save</button>
