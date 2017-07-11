@@ -11,7 +11,7 @@
 				<p>
 					<form method="post">
 						<div class="form-group-lg">
-							<input name="new-client-first-name" type="text" class="form-control validate" placeholder="First name *" required>
+							<input name="new-client-first-name" type="text" class="form-control validate" placeholder="First name">
 						</div>
 						<div class="form-group-lg">
 							<input name="new-client-last-name" type="text" class="form-control validate" placeholder="Last name *" required>
