@@ -58,14 +58,19 @@ class ClientsProxy extends AbstractProxy {
 
 	public function updateClient($params) {
 		$values = array(
-			':first_name' => $params['edit-client-first-name'],
 			':last_name' => $params['edit-client-last-name'],
 			':birthday' => $params['edit-client-birthday'],
 			':phone' => $params['edit-client-phone'],
 			':email' => $params['edit-client-email'],
 			':address' => $params['edit-client-address']
 		);
-		$fields = array('first_name', 'last_name', 'birthday', 'phone', 'email', 'address');
+
+		$fields = array('last_name', 'birthday', 'phone', 'email', 'address');
+
+		if(isset($params['edit-client-first-name']) && $params['edit-client-first-name'] != '') {
+			$values[':first_name'] = $params['edit-client-first-name'];
+			$fields[] = 'first_name';
+		}
 
 		$pairs = array();
 		foreach($fields as $field)
