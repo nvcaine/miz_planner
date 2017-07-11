@@ -15,13 +15,18 @@ class ClientsProxy extends AbstractProxy {
 	public function addClient($params) {
 
 		$values = array(
-			'first_name' => $params['new-client-first-name'],
 			'last_name' => $params['new-client-last-name'],
 			'added' => date('Y-m-d')
 		);
 
-		$fields = array('first_name', 'last_name', 'added');
-		$tokens = array(':first_name', ':last_name', ':added');
+		$fields = array('last_name', 'added');
+		$tokens = array(':last_name', ':added');
+
+		if(isset($params['new-client-first-name']) && $params['new-client-first-name'] != '') {
+			$values['first_name'] = $params['new-client-first-name'];
+			$fields[] = 'first_name';
+			$tokens[] = ':first_name';
+		}
 
 		if(isset($params['new-client-birthday']) && $params['new-client-birthday'] != '') {
 			$values['birthday'] = $params['new-client-birthday'];
