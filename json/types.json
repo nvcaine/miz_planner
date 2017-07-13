@@ -9,7 +9,8 @@
 		{"name": "Fußreflexzonen-Massage"},
 		{"name": "Gesichts-Massage"},
 		{"name": "Hot Stone-Massage"},
-		{"name": "Massage für Beine und Füße"}
+		{"name": "Massage für Beine und Füße"},
+		{"name": "Kombinationmassage"}
 	]
 }, {
 	"category": "Fernöstliche Massagen",
@@ -19,7 +20,8 @@
 		{"name": "Chinesische Kopf-Massage"},
 		{"name": "Indische Warmöl-Massage (Abhyanga)"},
 		{"name": "Thai-Yoga-Massage"},
-		{"name": "Bambus-Massage"}
+		{"name": "Bambus-Massage"},
+		{"name": "Lomi Lomi Nui"}
 	]
 }, {
 	"category": "Therapien & Behandlungen",
