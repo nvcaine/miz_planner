@@ -8,7 +8,7 @@
 				<h4 class="modal-title" id="myModalLabel">Add appointment</h4>
 				<div class="modal-body">
 					<p>
-						<form method="post">
+						<form id="app-form" method="post">
 							<div class="form-group">
 								<div id="client-dropdown-wrapper" class="dropdown">
 									<input name="new-app-client" type="text" class="form-control validate" placeholder="Client name" required autocomplete="off" data-toggle="dropdown">
@@ -55,7 +55,7 @@
 							</div>
 
 							<div class="form-group">
-								<button id="submit-form" type="submit" class="btn btn-success" disabled>Save</button>
+								<button id="submit-form" type="submit" class="btn btn-success">Save</button>
 							</div>
 							<input type="hidden" name="new-app-client-id" value="-1">
 							<input type="hidden" name="edit-app-id" value="-1">

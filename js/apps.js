@@ -9,6 +9,8 @@ $( function() {
 
 	initDatepickers();
 
+	initForm();
+
 	$('.app-type-option').click( function() {
 		$('input[name=new-app-type]').val($(this).text());
 		$('#app-type-dropdown').dropdown('toggle');
@@ -30,7 +32,7 @@ function initAddAppPopup() {
 			$(this).find('textarea[name=new-app-notes]').val('');
 
 			$('#client-autocomplete-dropdown').find('.autocomplete-result').remove();
-			$('#submit-form').prop('disabled', true);
+			//$('#submit-form').prop('disabled', true);
 		}
 	});
 }
@@ -54,7 +56,7 @@ function initEditAppPopup() {
 			$(this).find('input[name=new-app-client-id]').val(relTarget.data('appclientid'));
 			$(this).find('input[name=edit-app-id]').val(relTarget.data('appid'));
 			$('#submit-form').attr('name', 'edit-app-action');
-			$('#submit-form').prop('disabled', false);
+			//$('#submit-form').prop('disabled', false);
 
 			var dateObject = new Date(relTarget.data('appdate'));
 			updateTimeInput(startInput, getTimeInputDateObject(dateObject, relTarget.data('appstart')));
@@ -153,7 +155,7 @@ function initClientsAutocompleteDropdown(autocompleteRequestDelay) {
 		$('input[name=new-app-client]').val($(this).text());
 		$('input[name=new-app-client-id]').val($(this).data('client_id'));
 		$('#client-autocomplete-dropdown').dropdown('toggle');
-		$('#submit-form').prop('disabled', false);
+		//$('#submit-form').prop('disabled', false);
 		return false;
 	});
 }
@@ -191,4 +193,26 @@ function getHighightedAutocompleteLabel(name, query) {
 	return name.substring(0, startIndex) +
 		'<strong>' + name.substring(startIndex, startIndex + query.length) + '</strong>' +
 		name.substring(startIndex + query.length);
+}
+
+function initForm() {
+
+	$('#app-form').submit( function() {
+
+		var selectors = [
+			'input[name=new-app-type]',
+			'input[name=new-app-date]',
+			'input[name=new-app-start]', 
+			'input[name=new-app-end]'];
+
+		for(i = 0; i < selectors.length; i++) {		
+			var elementValue = $(selectors[i]).val();
+			if(elementValue === undefined || elementValue == '') {
+				$(selectors[i]).focus().trigger('click');
+				return false;
+			}
+		}
+
+		return true;
+	})
 }
