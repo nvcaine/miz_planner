@@ -87,6 +87,7 @@ class AppsSection extends AbstractMenuSection {
 			}
 		}
 
+		$this->view->assign('assign_to_user_id', $userId);
 		$this->view->assign('apps', $this->getAppointments($currentWeek, $userId));
 	}
 
@@ -156,18 +157,13 @@ class AppsSection extends AbstractMenuSection {
 			$params['new-app-notes']
 		);
 
-		$this->addUserApp($proxy->getLastInsertId());
+		$this->addUserApp($proxy->getLastInsertId(), $params['assigned_user_id']);
 
 	}
 
-	private function addUserApp($app_id) {
-
-		$app_id = $app_id;
-		$user_id = $_SESSION[Consts::USERID_INDEX];
-		$added_by = $_SESSION[Consts::USERID_INDEX];
-
+	private function addUserApp($app_id, $userId) {
 		$proxy = new UserappsProxy(DBWrapper::cloneInstance());
-		$proxy->addUserApp($app_id, $user_id, $added_by);
+		$proxy->addUserApp($app_id, $userId, $_SESSION[Consts::USERID_INDEX]);
 	}
 
 	private function deleteApp($params) {

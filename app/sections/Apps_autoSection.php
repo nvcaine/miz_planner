@@ -30,13 +30,9 @@ class Apps_autoSection extends AbstractSection {
 				$result = $this->validateAppInterval($params['start'], $params['end'], $params['date'], $params['user_id']);
 				break;
 
-			/*case 'validate_start':
-				$result = $this->validateAppInterval($params['start'], $params['date'], $params['user_id']);
+			case 'list_users':
+				$result = $this->getUsers();
 				break;
-
-			case 'validate_end':
-				$result = $this->validateAppInterval($params['end'], $params['date'], $params['user_id']);
-				break;*/
 		}
 
 		echo json_encode($result, JSON_PRETTY_PRINT);
@@ -66,5 +62,11 @@ class Apps_autoSection extends AbstractSection {
 				return array('error' => 'overlapping 3', 'app' => $app);
 
 		return array('result' => 'valid');
+	}
+
+	private function getUsers() {
+		$proxy = new UsersProxy(DBWrapper::cloneInstance());
+
+		return $proxy->getAllUsers();
 	}
 }
