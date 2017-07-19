@@ -170,7 +170,7 @@ function getAutocompleteResults() {
 
 	var query = $('input[name=new-app-client]').val();
 
-	$.get(serviceURL, {query: query}, function(data) {
+	$.get(serviceURL, {request: 'clients_autocomplete', query: query}, function(data) {
 		if(data !== undefined && data !== null && data.length > 0) {
 			$.each(data, function(index, item) {
 				var htmlElement = $('<li class="autocomplete-result"></li>');
