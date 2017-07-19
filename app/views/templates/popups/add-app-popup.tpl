@@ -50,6 +50,12 @@
 								<input type="text" class="form-control" name="new-app-end" placeholder="End time (HH:MM)" readonly>
 							</div>
 
+							<div id="overlap-app-alert" class="alert alert-danger" role="alert">
+								<p>The selected interval overlaps an existing appointment:</p>
+								<p class="overlap-app-time">[Start time] - [End time]</p>
+								<p class="overlap-app-client">Client: [Name], type: [Type]</p>
+							</div>
+
 							<div class="form-group">
 								<textarea class="form-control" name="new-app-notes" placeholder="Notes" rows="5"></textarea>
 							</div>

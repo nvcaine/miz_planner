@@ -65,6 +65,6 @@ class Apps_autoSection extends AbstractSection {
 			else if($end > $app['start_time'] && $end < $app['end_time'])
 				return array('error' => 'overlapping 3', 'app' => $app);
 
-		return array('result' => 'Interval valid');
+		return array('result' => 'valid');
 	}
 }
