@@ -72,19 +72,17 @@ class AppsSection extends AbstractMenuSection {
 
 		$userId = $_SESSION[Consts::USERID_INDEX];
 
-		if($this->userIsAdmin()) {
-			$usersProxy = new UsersProxy(DBWrapper::cloneInstance());
-			$users = $usersProxy->getAllUsers();
-			foreach($users as $key => $user)
-				if($user['user_id'] == $_SESSION[Consts::USERID_INDEX])
-					$users[$key]['user_id'] = -1; // to avoid redundant params in dropdown links
+		$usersProxy = new UsersProxy(DBWrapper::cloneInstance());
+		$users = $usersProxy->getAllUsers();
+		foreach($users as $key => $user)
+			if($user['user_id'] == $_SESSION[Consts::USERID_INDEX])
+				$users[$key]['user_id'] = -1; // to avoid redundant params in dropdown links
 
-			$this->view->assign('users', $users);
+		$this->view->assign('users', $users);
 
-			if(isset($params['user_id'])) {
-				$userId = $params['user_id'];
-				$this->view->assign('user_id', $userId);
-			}
+		if(isset($params['user_id'])) {
+			$userId = $params['user_id'];
+			$this->view->assign('user_id', $userId);
 		}
 
 		$this->view->assign('assign_to_user_id', $userId);

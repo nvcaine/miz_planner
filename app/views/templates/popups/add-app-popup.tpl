@@ -50,12 +50,6 @@
 								<input type="text" class="form-control" name="new-app-end" placeholder="End time (HH:MM)" readonly>
 							</div>
 
-							<div id="overlap-app-alert" class="alert alert-danger" role="alert">
-								<p>The selected interval overlaps an existing appointment assigned to the user:</p>
-								<p class="overlap-app-time">[Start time] - [End time]</p>
-								<p class="overlap-app-client">Client: [Name], type: [Type]</p>
-							</div>
-
 							<div class="form-group">
 								<div class="dropdown">
 									<input id="assigned-user" type="text" class="form-control validate" autocomplete="off" required data-toggle="dropdown" placeholder="Assign to" readonly>
@@ -63,6 +57,12 @@
 									<ul id="users-list" class="dropdown-menu" style="width:100%">
 									</ul>
 								</div>
+							</div>
+
+							<div id="overlap-app-alert" class="alert alert-danger" role="alert">
+								<p>The specified interval overlaps an existing appointment assigned to the selected user:</p>
+								<p class="overlap-app-time">[Start time] - [End time]</p>
+								<p class="overlap-app-client">Client: [Name], type: [Type]</p>
 							</div>
 
 							<div class="form-group">
