@@ -72,21 +72,20 @@ class AppsSection extends AbstractMenuSection {
 
 		$userId = $_SESSION[Consts::USERID_INDEX];
 
-		if($this->userIsAdmin()) {
-			$usersProxy = new UsersProxy(DBWrapper::cloneInstance());
-			$users = $usersProxy->getAllUsers();
-			foreach($users as $key => $user)
-				if($user['user_id'] == $_SESSION[Consts::USERID_INDEX])
-					$users[$key]['user_id'] = -1; // to avoid redundant params in dropdown links
+		$usersProxy = new UsersProxy(DBWrapper::cloneInstance());
+		$users = $usersProxy->getAllUsers();
+		foreach($users as $key => $user)
+			if($user['user_id'] == $_SESSION[Consts::USERID_INDEX])
+				$users[$key]['user_id'] = -1; // to avoid redundant params in dropdown links
 
-			$this->view->assign('users', $users);
+		$this->view->assign('users', $users);
 
-			if(isset($params['user_id'])) {
-				$userId = $params['user_id'];
-				$this->view->assign('user_id', $userId);
-			}
+		if(isset($params['user_id'])) {
+			$userId = $params['user_id'];
+			$this->view->assign('user_id', $userId);
 		}
 
+		$this->view->assign('assign_to_user_id', $userId);
 		$this->view->assign('apps', $this->getAppointments($currentWeek, $userId));
 	}
 
@@ -156,18 +155,13 @@ class AppsSection extends AbstractMenuSection {
 			$params['new-app-notes']
 		);
 
-		$this->addUserApp($proxy->getLastInsertId());
+		$this->addUserApp($proxy->getLastInsertId(), $params['assigned_user_id']);
 
 	}
 
-	private function addUserApp($app_id) {
-
-		$app_id = $app_id;
-		$user_id = $_SESSION[Consts::USERID_INDEX];
-		$added_by = $_SESSION[Consts::USERID_INDEX];
-
+	private function addUserApp($app_id, $userId) {
 		$proxy = new UserappsProxy(DBWrapper::cloneInstance());
-		$proxy->addUserApp($app_id, $user_id, $added_by);
+		$proxy->addUserApp($app_id, $userId, $_SESSION[Consts::USERID_INDEX]);
 	}
 
 	private function deleteApp($params) {
@@ -181,6 +175,9 @@ class AppsSection extends AbstractMenuSection {
 	private function updateApp($params) {
 		$proxy = new AppsProxy(DBWrapper::cloneInstance());
 		$proxy->updateApp($params);
+
+		$userAppsProxy = new UserappsProxy(DBWrapper::cloneInstance());
+		$userAppsProxy->updateUserApp($params['edit-app-id'], $params['assigned_user_id']);
 	}
 
 	private function getAppEventType($types, $appType) {

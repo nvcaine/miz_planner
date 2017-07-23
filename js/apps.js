@@ -6,8 +6,11 @@ $( function() {
 	initEditAppPopup();
 
 	initClientsAutocompleteDropdown(500);
-
+	initUsersDropdown();
 	initDatepickers();
+
+	initForm();
+	initDateValidation();
 
 	$('.app-type-option').click( function() {
 		$('input[name=new-app-type]').val($(this).text());
@@ -20,6 +23,8 @@ function initAddAppPopup() {
 
 	$('#add-appointment-popup').on('show.bs.modal', function(event) {
 
+		$('#overlap-app-alert').hide();
+
 		if($(event.target).is('#add-appointment-popup')) {
 	
 			$(this).find('input[name=new-app-client]').val('');
@@ -28,15 +33,18 @@ function initAddAppPopup() {
 			$(this).find('input[name=new-app-start]').val('');
 			$(this).find('input[name=new-app-end]').val('');
 			$(this).find('textarea[name=new-app-notes]').val('');
+			$(this).find('#assigned-user').val('');
 
 			$('#client-autocomplete-dropdown').find('.autocomplete-result').remove();
-			$('#submit-form').prop('disabled', true);
+			//$('#submit-form').prop('disabled', true);
 		}
 	});
 }
 
 function initEditAppPopup() {
 	$('#add-appointment-popup').on('show.bs.modal', function(event) {
+
+		$('#overlap-app-alert').hide();
 
 		var relTarget = $(event.relatedTarget);
 
@@ -53,8 +61,14 @@ function initEditAppPopup() {
 			$(this).find('textarea[name=new-app-notes]').val(relTarget.data('appnotes'));
 			$(this).find('input[name=new-app-client-id]').val(relTarget.data('appclientid'));
 			$(this).find('input[name=edit-app-id]').val(relTarget.data('appid'));
+
+			var assignedUserName = $('.assign-user-link[data-user_id=' + relTarget.data('userid') + ']').text();
+			$(this).find('#assigned-user').val(assignedUserName);
+			$('input[name=assigned_user_id]').val(relTarget.data('userid'));
 			$('#submit-form').attr('name', 'edit-app-action');
-			$('#submit-form').prop('disabled', false);
+			//$('#submit-form').prop('disabled', false);
+
+			// !! set assigned user
 
 			var dateObject = new Date(relTarget.data('appdate'));
 			updateTimeInput(startInput, getTimeInputDateObject(dateObject, relTarget.data('appstart')));
@@ -107,6 +121,7 @@ function initDatepickers() {
  		endTimeInput.datetimepicker('setHoursDisabled', hours);
  		endTimeInput.datetimepicker('update', event.date);
  		endTimeInput.val('');
+		$('#overlap-app-alert').hide();
 	});
 }
 
@@ -153,7 +168,7 @@ function initClientsAutocompleteDropdown(autocompleteRequestDelay) {
 		$('input[name=new-app-client]').val($(this).text());
 		$('input[name=new-app-client-id]').val($(this).data('client_id'));
 		$('#client-autocomplete-dropdown').dropdown('toggle');
-		$('#submit-form').prop('disabled', false);
+		//$('#submit-form').prop('disabled', false);
 		return false;
 	});
 }
@@ -168,7 +183,7 @@ function getAutocompleteResults() {
 
 	var query = $('input[name=new-app-client]').val();
 
-	$.get(serviceURL, {query: query}, function(data) {
+	$.get(serviceURL, {request: 'clients_autocomplete', query: query}, function(data) {
 		if(data !== undefined && data !== null && data.length > 0) {
 			$.each(data, function(index, item) {
 				var htmlElement = $('<li class="autocomplete-result"></li>');
@@ -191,4 +206,96 @@ function getHighightedAutocompleteLabel(name, query) {
 	return name.substring(0, startIndex) +
 		'<strong>' + name.substring(startIndex, startIndex + query.length) + '</strong>' +
 		name.substring(startIndex + query.length);
+}
+
+function initForm() {
+
+	$('#app-form').submit( function() {
+
+		var selectors = [
+			'input[name=new-app-type]',
+			'input[name=new-app-date]',
+			'input[name=new-app-start]', 
+			'input[name=new-app-end]',
+			'#assigned-user'];
+
+		for(i = 0; i < selectors.length; i++) {		
+			var elementValue = $(selectors[i]).val();
+			if(elementValue === undefined || elementValue == '') {
+				$(selectors[i]).focus().trigger('click');
+				return false;
+			}
+		}
+
+		return true;
+	});
+}
+
+function initDateValidation() {
+
+	var selector = 'input[name=new-app-date],input[name=new-app-start],input[name=new-app-end]';
+
+	$(selector).on('changeDate', validateAppOverlapping);
+}
+
+function validateAppOverlapping() {
+	$('#overlap-app-alert').hide();
+
+	date = $('input[name=new-app-date]').val();
+	start = $('input[name=new-app-start]').val();
+	end = $('input[name=new-app-end]').val();
+	assignedTo = $('#assigned-user').val();
+
+	if(date !== undefined && date != '' &&
+		start !== undefined && start != '' &&
+		end !== undefined && end != '' &&
+		assignedTo !== undefined && assignedTo != '') {
+
+		var requestData = {
+			request: 'validate_interval',
+			date: date,
+			start: start,
+			end: end,
+			user_id: $('input[name=assigned_user_id]').val()};
+
+		$.get(serviceURL, requestData, function(data) {
+			if(data.hasOwnProperty('result') && data.result == 'valid')
+				$('#submit-form').prop('disabled', false);
+			else
+				showOverlappingAlert(data);
+		});
+	}	
+}
+
+function showOverlappingAlert(data) {
+	var alert = $('#overlap-app-alert');
+	alert.find('.overlap-app-time').html(data.app.start_time + ' - ' + data.app.end_time);
+	alert.find('.overlap-app-client').html(data.app.first_name + ' ' + data.app.last_name + ' - ' + data.app.type);
+	alert.show();
+	$('#submit-form').prop('disabled', true);
+}
+
+function initUsersDropdown() {
+
+	$.get(serviceURL, {request: 'list_users'}, function(data) {
+		var dropdown = $('#users-list');
+
+		$.each(data, function(index, item) {
+			var htmlElement = $('<li></li>');
+			htmlElement.html(
+				'<a href="#" class="assign-user-link" data-user_id="' + item.user_id + '">' +
+					item.name +
+				'</a>'
+			);
+			dropdown.append(htmlElement);
+		});
+	});
+
+	$('#users-list').on('click', '.assign-user-link', function() {
+		$('input[name=assigned_user_id]').val($(this).data('user_id'));
+		$('#assigned-user').val($(this).text());
+		$('#users-list').dropdown('toggle');
+		validateAppOverlapping();
+		return false;
+	});
 }

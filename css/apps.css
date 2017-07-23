@@ -38,6 +38,10 @@ span.hour.disabled {
 	display: none;
 }
 
+#overlap-app-alert {
+	display: none;
+}
+
 @media(max-width: 479px) {
 	.apps-wrapper {
 		overflow: scroll;

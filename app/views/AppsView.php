@@ -19,6 +19,7 @@ class AppsView extends AbstractView {
 		$this->appFacade->assignSmartyVariable('apps', $this->parseApps($this->assignedVariables->apps));
 		$this->appFacade->assignSmartyVariable('thisWeek', $this->assignedVariables->thisWeek);
 		$this->appFacade->assignSmartyVariable('app_types', $this->assignedVariables->appTypes);
+		$this->appFacade->assignSmartyVariable('assign_to_user_id', $this->assignedVariables->assign_to_user_id);
 
 		if(isset($this->assignedVariables->previousWeek))
 			$this->appFacade->assignSmartyVariable('previousWeek', $this->assignedVariables->previousWeek);

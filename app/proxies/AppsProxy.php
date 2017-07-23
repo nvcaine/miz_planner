@@ -67,10 +67,20 @@ class AppsProxy extends AbstractProxy {
 		return $this->parseApps($apps);
 	}
 
+	public function getAppointmentsForDateByUser($date, $user_id) {
+		$query = 'SELECT * FROM ' . self::TABLE . ' RIGHT JOIN miz_clients ON miz_apps.client_id = miz_clients.client_id';
+		$query .= ' RIGHT JOIN miz_userapps ON miz_apps.app_id = miz_userapps.app_id AND miz_userapps.user_id = ' . $user_id;
+		$where = 'WHERE date = \'' . $date . '\'';
+		$apps = $this->db->query($query . ' ' . $where);
+
+		return $this->parseApps($apps);
+	}
+
 	public function getAppointmentById($app_id) {
 
 		$query = 'SELECT * FROM ' . self::TABLE . ' RIGHT JOIN miz_clients ON miz_apps.client_id = miz_clients.client_id';
-		$where = 'WHERE app_id = :app_id';
+		$query .= ' RIGHT JOIN miz_userapps ON miz_apps.app_id = miz_userapps.app_id';
+		$where = 'WHERE miz_apps.app_id = :app_id';
 		$apps = $this->db->query($query . ' ' . $where, array('app_id' => $app_id));
 
 		return $this->parseApps($apps)[0];
