@@ -35,7 +35,7 @@
 	</p>
 	<form method="post">
 		<div class="form-group">
-			<button id="edit-app-button" type="button" class="btn btn-info" data-toggle="modal" data-target="#add-appointment-popup" data-appclient="{$app.first_name} {$app.last_name}" data-apptype="{$app.type}" data-appdate="{$app.date}" data-appstart="{$app.start_time}" data-append="{$app.end_time}" data-appnotes="{$app.notes}" data-appclientid="{$app.client_id}" data-appid="{$app.app_id}">
+			<button id="edit-app-button" type="button" class="btn btn-info" data-toggle="modal" data-target="#add-appointment-popup" data-appclient="{$app.first_name} {$app.last_name}" data-apptype="{$app.type}" data-appdate="{$app.date}" data-appstart="{$app.start_time}" data-append="{$app.end_time}" data-appnotes="{$app.notes}" data-appclientid="{$app.client_id}" data-appid="{$app.app_id}" data-userid="{$app.user_id}">
 				<span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp; Edit
 			</button>
 

@@ -175,6 +175,9 @@ class AppsSection extends AbstractMenuSection {
 	private function updateApp($params) {
 		$proxy = new AppsProxy(DBWrapper::cloneInstance());
 		$proxy->updateApp($params);
+
+		$userAppsProxy = new UserappsProxy(DBWrapper::cloneInstance());
+		$userAppsProxy->updateUserApp($params['edit-app-id'], $params['assigned_user_id']);
 	}
 
 	private function getAppEventType($types, $appType) {

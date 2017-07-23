@@ -61,6 +61,10 @@ function initEditAppPopup() {
 			$(this).find('textarea[name=new-app-notes]').val(relTarget.data('appnotes'));
 			$(this).find('input[name=new-app-client-id]').val(relTarget.data('appclientid'));
 			$(this).find('input[name=edit-app-id]').val(relTarget.data('appid'));
+
+			var assignedUserName = $('.assign-user-link[data-user_id=' + relTarget.data('userid') + ']').text();
+			$(this).find('#assigned-user').val(assignedUserName);
+			$('input[name=assigned_user_id]').val(relTarget.data('userid'));
 			$('#submit-form').attr('name', 'edit-app-action');
 			//$('#submit-form').prop('disabled', false);
 
