@@ -75,8 +75,8 @@ class AppsSection extends AbstractMenuSection {
 		$usersProxy = new UsersProxy(DBWrapper::cloneInstance());
 		$users = $usersProxy->getAllUsers();
 		foreach($users as $key => $user)
-			if($user['user_id'] == $_SESSION[Consts::USERID_INDEX])
-				$users[$key]['user_id'] = -1; // to avoid redundant params in dropdown links
+			if($user['user_id'] == $userId)
+				$users[$key]['current_user'] = true; // to avoid redundant params in dropdown links
 
 		$this->view->assign('users', $users);
 

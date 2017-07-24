@@ -17,7 +17,16 @@
 		<p>In this section you can add, edit and remove appointments.</p>
 
 		<div>
-			<h3>Week {$week}</h3>
+			<h3>
+				Week {$week}
+				{if isset($users)}
+					{foreach from=$users item=user}
+						{if $user.user_id == $assign_to_user_id}
+							- {$user.name}
+						{/if}
+					{/foreach}
+				{/if}
+			</h3>
 			<div>
 				{if isset($previousWeek)}
 				{if $previousWeek != $thisWeek}
@@ -63,7 +72,7 @@
 					</button>
 					<ul class="dropdown-menu" aria-labelledby="admin-users-toggle">
 					{foreach from=$users item=user}
-					{if $user.user_id != -1}
+					{if !isset($user.current_user)}
 						{if $week == $thisWeek}
 						<li><a href="{$appURL}apps/?user_id={$user.user_id}">{$user.name}</a></li>
 						{else}

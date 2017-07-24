@@ -272,20 +272,6 @@ function showOverlappingAlert(data, alert) {
 
 function initUsersDropdown() {
 
-	$.get(serviceURL, {request: 'list_users'}, function(data) {
-		var dropdown = $('#users-list');
-
-		$.each(data, function(index, item) {
-			var htmlElement = $('<li></li>');
-			htmlElement.html(
-				'<a href="#" class="assign-user-link" data-user_id="' + item.user_id + '">' +
-					item.name +
-				'</a>'
-			);
-			dropdown.append(htmlElement);
-		});
-	});
-
 	$('#users-list').on('click', '.assign-user-link', function() {
 		$('input[name=assigned_user_id]').val($(this).data('user_id'));
 		$('#assigned-user').val($(this).text());

@@ -55,6 +55,13 @@
 									<input id="assigned-user" type="text" class="form-control validate" autocomplete="off" required data-toggle="dropdown" placeholder="Assign to" readonly>
 
 									<ul id="users-list" class="dropdown-menu" style="width:100%">
+										{foreach from=$users item=user}
+										<li>
+											<a href="#" class="assign-user-link" data-user_id="{$user.user_id}">
+												{$user.name}
+											</a>
+										</li>
+										{/foreach}
 									</ul>
 								</div>
 							</div>
