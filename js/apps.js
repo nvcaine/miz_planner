@@ -7,9 +7,20 @@ $( function() {
 
 	initClientsAutocompleteDropdown(500);
 	initUsersDropdown();
-	initDatepickers();
 
-	initForm();
+	initDatepickers(
+		$('input[name=new-app-date]'),
+		$('input[name=new-app-start]'),
+		$('input[name=new-app-end]')
+	);
+
+	initForm('#app-form', [
+			'input[name=new-app-type]',
+			'input[name=new-app-date]',
+			'input[name=new-app-start]', 
+			'input[name=new-app-end]',
+			'#assigned-user']);
+
 	initDateValidation();
 
 	$('.app-type-option').click( function() {
@@ -36,7 +47,6 @@ function initAddAppPopup() {
 			$(this).find('#assigned-user').val('');
 
 			$('#client-autocomplete-dropdown').find('.autocomplete-result').remove();
-			//$('#submit-form').prop('disabled', true);
 		}
 	});
 }
@@ -66,9 +76,6 @@ function initEditAppPopup() {
 			$(this).find('#assigned-user').val(assignedUserName);
 			$('input[name=assigned_user_id]').val(relTarget.data('userid'));
 			$('#submit-form').attr('name', 'edit-app-action');
-			//$('#submit-form').prop('disabled', false);
-
-			// !! set assigned user
 
 			var dateObject = new Date(relTarget.data('appdate'));
 			updateTimeInput(startInput, getTimeInputDateObject(dateObject, relTarget.data('appstart')));
@@ -77,32 +84,23 @@ function initEditAppPopup() {
 	});
 }
 
-function initDatepickers() {
+function initDatepickers(dateInput, startTimeInput, endTimeInput) {
 
-	var dateInput = $('input[name=new-app-date]');
-	var startTimeInput = $('input[name=new-app-start]');
-	var endTimeInput = $('input[name=new-app-end]');
+	var timePickerOptions = {
+		format: 'hh:ii',
+		autoclose: true,
+		startView: 1,
+		hoursDisabled: [0, 1, 2, 3, 4, 5, 6, 7, 20, 21, 22, 23]
+	};
 
 	dateInput.datepicker({
 		format: 'yyyy-mm-dd',
 		autoclose: true,
 		daysOfWeekDisabled: [0, 6]
-
 	});
 
-	startTimeInput.datetimepicker({
-		format: 'hh:ii',
-		autoclose: true,
-		startView: 1,
-		hoursDisabled: [0, 1, 2, 3, 4, 5, 6, 7, 20, 21, 22, 23]
-	});
-
-	endTimeInput.datetimepicker({
-		format: 'hh:ii',
-		autoclose: true,
-		startView: 1,
-		hoursDisabled: [0, 1, 2, 3, 4, 5, 6, 7, 20, 21, 22, 23]
-	});
+	startTimeInput.datetimepicker(timePickerOptions);
+	endTimeInput.datetimepicker(timePickerOptions);
 
 	dateInput.on('changeDate', function(event) {
 		updateTimeInput(startTimeInput, event.date);
@@ -168,7 +166,6 @@ function initClientsAutocompleteDropdown(autocompleteRequestDelay) {
 		$('input[name=new-app-client]').val($(this).text());
 		$('input[name=new-app-client-id]').val($(this).data('client_id'));
 		$('#client-autocomplete-dropdown').dropdown('toggle');
-		//$('#submit-form').prop('disabled', false);
 		return false;
 	});
 }
@@ -208,21 +205,15 @@ function getHighightedAutocompleteLabel(name, query) {
 		name.substring(startIndex + query.length);
 }
 
-function initForm() {
+function initForm(formSelector, selectors) {
 
-	$('#app-form').submit( function() {
+	$(formSelector).submit( function() {
 
-		var selectors = [
-			'input[name=new-app-type]',
-			'input[name=new-app-date]',
-			'input[name=new-app-start]', 
-			'input[name=new-app-end]',
-			'#assigned-user'];
-
-		for(i = 0; i < selectors.length; i++) {		
-			var elementValue = $(selectors[i]).val();
+		for(i = 0; i < selectors.length; i++) {
+			var element = $(this).find(selectors[i]);
+			var elementValue = element.val();
 			if(elementValue === undefined || elementValue == '') {
-				$(selectors[i]).focus().trigger('click');
+				element.focus().trigger('click');
 				return false;
 			}
 		}
