@@ -7,7 +7,7 @@ $( function() {
 
 	initClientsAutocompleteDropdown(500);
 
-	// break form doesn't have type - maybe add a readonly
+	// break form doesn't have type - maybe add a readonly; or better - a hidden input
 	initForm(
 		'#app-form',
 		'input[name=new-app-type]',
@@ -15,7 +15,9 @@ $( function() {
 		'input[name=new-app-start]', 
 		'input[name=new-app-end]',
 		'input[name=new-app-assigned-user]',
-		'input[name=assigned_user_id]'
+		'input[name=assigned_user_id]',
+		'.submit-form-button',
+		'.overlap-app-alert'
 	);
 
 	$('.app-type-option').click( function() {
@@ -29,7 +31,7 @@ function initAddAppPopup() {
 
 	$('#add-appointment-popup').on('show.bs.modal', function(event) {
 
-		$('#overlap-app-alert').hide();
+		$('.overlap-app-alert').hide();
 
 		if($(event.target).is('#add-appointment-popup')) {
 	
@@ -49,7 +51,7 @@ function initAddAppPopup() {
 function initEditAppPopup() {
 	$('#add-appointment-popup').on('show.bs.modal', function(event) {
 
-		$('#overlap-app-alert').hide();
+		$('.overlap-app-alert').hide();
 
 		var relTarget = $(event.relatedTarget);
 
@@ -70,7 +72,7 @@ function initEditAppPopup() {
 			var assignedUserName = $('.assign-user-link[data-user_id=' + relTarget.data('userid') + ']').text();
 			$(this).find('input[name=new-app-assigned-user]').val(assignedUserName);
 			$('input[name=assigned_user_id]').val(relTarget.data('userid'));
-			$('#submit-form').attr('name', 'edit-app-action');
+			$('.submit-form-button').attr('name', 'edit-app-action');
 
 			var dateObject = new Date(relTarget.data('appdate'));
 			updateTimeInput(startInput, getTimeInputDateObject(dateObject, relTarget.data('appstart')));
@@ -114,7 +116,7 @@ function initDatepickers(dateInput, startTimeInput, endTimeInput) {
  		endTimeInput.datetimepicker('setHoursDisabled', hours);
  		endTimeInput.datetimepicker('update', event.date);
  		endTimeInput.val('');
-		$('#overlap-app-alert').hide();
+		$('.overlap-app-alert').hide();
 	});
 }
 
@@ -200,7 +202,7 @@ function getHighightedAutocompleteLabel(name, query) {
 		name.substring(startIndex + query.length);
 }
 
-function initForm(formSelector, typeSelector, dateSelector, startSelector, endSelector, userSelector, userIdSelector) {
+function initForm(formSelector, typeSelector, dateSelector, startSelector, endSelector, userSelector, userIdSelector, submitSelector, alertSelector) {
 
 	var selectors = [typeSelector, dateSelector, startSelector, endSelector, userSelector];
 
@@ -215,7 +217,9 @@ function initForm(formSelector, typeSelector, dateSelector, startSelector, endSe
 		startSelector, 
 		endSelector,
 		userIdSelector,
-		userSelector
+		userSelector,
+		submitSelector,
+		alertSelector
 	);
 
 	$(formSelector).submit( function() {
@@ -233,7 +237,7 @@ function initForm(formSelector, typeSelector, dateSelector, startSelector, endSe
 	});
 }
 
-function initOverlapValidation(dateSelector, startSelector, endSelector, userIdSelector, userNameSelector) {
+function initOverlapValidation(dateSelector, startSelector, endSelector, userIdSelector, userNameSelector, submitSelector, alertSelector) {
 
 	var dateSelectors = [];
 
@@ -242,7 +246,10 @@ function initOverlapValidation(dateSelector, startSelector, endSelector, userIdS
 			$(dateSelector).val(),
 			$(startSelector).val(),
 			$(endSelector).val(),
-			$(userIdSelector).val()
+			$(userIdSelector).val(),
+			submitSelector,
+			alertSelector
+
 		);
 	});
 
@@ -258,14 +265,16 @@ function initOverlapValidation(dateSelector, startSelector, endSelector, userIdS
 			$(dateSelector).val(),
 			$(startSelector).val(),
 			$(endSelector).val(),
-			$(userIdSelector).val()
+			$(userIdSelector).val(),
+			submitSelector,
+			alertSelector
 		);
 		return false;
 	});
 }
 
-function validateAppOverlapping(date, start, end, assignedTo) {
-	var alert = $('#overlap-app-alert');
+function validateAppOverlapping(date, start, end, assignedTo, submitButtonSelector, alertSelector) {
+	var alert = $(alertSelector);
 
 	alert.hide();
 
@@ -289,7 +298,7 @@ function validateAppOverlapping(date, start, end, assignedTo) {
 			else
 				showOverlappingAlert(data, alert);
 
-			$('#submit-form').prop('disabled', submitEnabled);
+			$(submitButtonSelector).prop('disabled', submitEnabled);
 		});
 	}	
 }

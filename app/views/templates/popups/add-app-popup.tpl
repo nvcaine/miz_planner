@@ -64,7 +64,7 @@
 								</div>
 							</div>
 
-							<div id="overlap-app-alert" class="alert alert-danger" role="alert">
+							<div class="overlap-app-alert alert alert-danger" role="alert">
 								<p>The specified interval overlaps an existing appointment assigned to the selected user:</p>
 								<p class="overlap-app-time">[Start time] - [End time]</p>
 								<p class="overlap-app-client">Client: [Name], type: [Type]</p>
@@ -75,7 +75,7 @@
 							</div>
 
 							<div class="form-group">
-								<button id="submit-form" type="submit" class="btn btn-success">Save</button>
+								<button type="submit" class="btn btn-success submit-form-button">Save</button>
 							</div>
 							<input type="hidden" name="new-app-client-id" value="-1">
 							<input type="hidden" name="edit-app-id" value="-1">
