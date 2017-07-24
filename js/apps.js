@@ -105,19 +105,21 @@ function initDatepickers(dateInput, startTimeInput, endTimeInput) {
 	});
 
 	startTimeInput.on('changeDate', function(event) {
-		var hours = [];
- 		var maxHour = startTimeInput.val().split(':')[0];
-
-		for(var i = 0; i < maxHour; i++)
-			hours.push(i);
-		for(var i = 20; i <= 23; i++)
- 			hours.push(i);
-
- 		endTimeInput.datetimepicker('setHoursDisabled', hours);
+ 		endTimeInput.datetimepicker('setHoursDisabled', getEndTimeHours(startTimeInput.val()));
  		endTimeInput.datetimepicker('update', event.date);
  		endTimeInput.val('');
-		$('.overlap-app-alert').hide();
 	});
+}
+
+function getEndTimeHours(startTime) {
+	var hours = [];
+	var maxHour = startTime.split(':')[0];
+
+	for(var i = 0; i < 24; i++)
+		if(i < maxHour || i >= 20)
+			hours.push(i);
+
+	return hours;
 }
 
 function updateTimeInput(element, date) {
@@ -249,18 +251,17 @@ function initOverlapValidation(dateSelector, startSelector, endSelector, userIdS
 			$(userIdSelector).val(),
 			submitSelector,
 			alertSelector
-
 		);
 	});
 
 	var dropdown = $('.users-list');
 
 	dropdown.on('click', '.assign-user-link', function() {
+
 		$(userIdSelector).val($(this).data('user_id'));
-
 		$(userNameSelector).val($(this).text());
-
 		dropdown.dropdown('toggle');
+
 		validateAppOverlapping(
 			$(dateSelector).val(),
 			$(startSelector).val(),
@@ -269,6 +270,7 @@ function initOverlapValidation(dateSelector, startSelector, endSelector, userIdS
 			submitSelector,
 			alertSelector
 		);
+
 		return false;
 	});
 }
