@@ -122,6 +122,7 @@
 									{/if}
 									{$app.last_name}
 								</strong>
+								<span style="color:white;">{$app.type}</span>
 							</a>
 						</li>
 						{/if}

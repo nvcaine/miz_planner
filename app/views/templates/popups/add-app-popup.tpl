@@ -52,9 +52,9 @@
 
 							<div class="form-group">
 								<div class="dropdown">
-									<input id="assigned-user" type="text" class="form-control validate" autocomplete="off" required data-toggle="dropdown" placeholder="Assign to" readonly>
+									<input name="new-app-assigned-user" type="text" class="form-control validate" autocomplete="off" required data-toggle="dropdown" placeholder="Assign to" readonly>
 
-									<ul id="users-list" class="dropdown-menu" style="width:100%">
+									<ul class="users-list dropdown-menu" style="width:100%">
 										{foreach from=$users item=user}
 										<li>
 											<a href="#" class="assign-user-link" data-user_id="{$user.user_id}">{$user.name}</a>
@@ -80,7 +80,7 @@
 							<input type="hidden" name="new-app-client-id" value="-1">
 							<input type="hidden" name="edit-app-id" value="-1">
 							<input type="hidden" name="week" value="{$week}">
-							<input type="hidden" name="assigned_user_id" value="{$assign_to_user_id}">
+							<input type="hidden" name="assigned_user_id" value="">
 							<!-- add app id for editting -->
 						</form>
 					</p>

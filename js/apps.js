@@ -6,22 +6,17 @@ $( function() {
 	initEditAppPopup();
 
 	initClientsAutocompleteDropdown(500);
-	initUsersDropdown();
 
-	initDatepickers(
-		$('input[name=new-app-date]'),
-		$('input[name=new-app-start]'),
-		$('input[name=new-app-end]')
+	// break form doesn't have type - maybe add a readonly
+	initForm(
+		'#app-form',
+		'input[name=new-app-type]',
+		'input[name=new-app-date]',
+		'input[name=new-app-start]', 
+		'input[name=new-app-end]',
+		'input[name=new-app-assigned-user]',
+		'input[name=assigned_user_id]'
 	);
-
-	initForm('#app-form', [
-			'input[name=new-app-type]',
-			'input[name=new-app-date]',
-			'input[name=new-app-start]', 
-			'input[name=new-app-end]',
-			'#assigned-user']);
-
-	initOverlapValidation();
 
 	$('.app-type-option').click( function() {
 		$('input[name=new-app-type]').val($(this).text());
@@ -44,7 +39,7 @@ function initAddAppPopup() {
 			$(this).find('input[name=new-app-start]').val('');
 			$(this).find('input[name=new-app-end]').val('');
 			$(this).find('textarea[name=new-app-notes]').val('');
-			$(this).find('#assigned-user').val('');
+			$(this).find('input[name=new-app-assigned-user]').val('');
 
 			$('#client-autocomplete-dropdown').find('.autocomplete-result').remove();
 		}
@@ -73,7 +68,7 @@ function initEditAppPopup() {
 			$(this).find('input[name=edit-app-id]').val(relTarget.data('appid'));
 
 			var assignedUserName = $('.assign-user-link[data-user_id=' + relTarget.data('userid') + ']').text();
-			$(this).find('#assigned-user').val(assignedUserName);
+			$(this).find('input[name=new-app-assigned-user]').val(assignedUserName);
 			$('input[name=assigned_user_id]').val(relTarget.data('userid'));
 			$('#submit-form').attr('name', 'edit-app-action');
 
@@ -205,7 +200,23 @@ function getHighightedAutocompleteLabel(name, query) {
 		name.substring(startIndex + query.length);
 }
 
-function initForm(formSelector, selectors) {
+function initForm(formSelector, typeSelector, dateSelector, startSelector, endSelector, userSelector, userIdSelector) {
+
+	var selectors = [typeSelector, dateSelector, startSelector, endSelector, userSelector];
+
+	initDatepickers(
+		$(dateSelector),
+		$(startSelector),
+		$(endSelector)
+	);
+
+	initOverlapValidation(
+		dateSelector,
+		startSelector, 
+		endSelector,
+		userIdSelector,
+		userSelector
+	);
 
 	$(formSelector).submit( function() {
 
@@ -222,22 +233,41 @@ function initForm(formSelector, selectors) {
 	});
 }
 
-function initOverlapValidation() {
+function initOverlapValidation(dateSelector, startSelector, endSelector, userIdSelector, userNameSelector) {
 
-	var selector = 'input[name=new-app-date],input[name=new-app-start],input[name=new-app-end]';
+	var dateSelectors = [];
 
-	$(selector).on('changeDate', validateAppOverlapping);
+	$(dateSelector + ',' + startSelector + ',' + endSelector).on('changeDate', function() {
+		validateAppOverlapping(
+			$(dateSelector).val(),
+			$(startSelector).val(),
+			$(endSelector).val(),
+			$(userIdSelector).val()
+		);
+	});
+
+	var dropdown = $('.users-list');
+
+	dropdown.on('click', '.assign-user-link', function() {
+		$(userIdSelector).val($(this).data('user_id'));
+
+		$(userNameSelector).val($(this).text());
+
+		dropdown.dropdown('toggle');
+		validateAppOverlapping(
+			$(dateSelector).val(),
+			$(startSelector).val(),
+			$(endSelector).val(),
+			$(userIdSelector).val()
+		);
+		return false;
+	});
 }
 
-function validateAppOverlapping() {
+function validateAppOverlapping(date, start, end, assignedTo) {
 	var alert = $('#overlap-app-alert');
 
 	alert.hide();
-
-	date = $('input[name=new-app-date]').val();
-	start = $('input[name=new-app-start]').val();
-	end = $('input[name=new-app-end]').val();
-	assignedTo = $('#assigned-user').val();
 
 	if(date !== undefined && date != '' &&
 		start !== undefined && start != '' &&
@@ -249,7 +279,7 @@ function validateAppOverlapping() {
 			date: date,
 			start: start,
 			end: end,
-			user_id: $('input[name=assigned_user_id]').val()};
+			user_id: assignedTo};
 
 		$.get(serviceURL, requestData, function(data) {
 			var submitEnabled = true;
@@ -268,15 +298,4 @@ function showOverlappingAlert(data, alert) {
 	alert.find('.overlap-app-time').html(data.app.start_time + ' - ' + data.app.end_time);
 	alert.find('.overlap-app-client').html(data.app.first_name + ' ' + data.app.last_name + ' - ' + data.app.type);
 	alert.show();
-}
-
-function initUsersDropdown() {
-
-	$('#users-list').on('click', '.assign-user-link', function() {
-		$('input[name=assigned_user_id]').val($(this).data('user_id'));
-		$('#assigned-user').val($(this).text());
-		$('#users-list').dropdown('toggle');
-		validateAppOverlapping();
-		return false;
-	});
 }
