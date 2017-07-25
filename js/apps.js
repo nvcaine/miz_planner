@@ -5,6 +5,7 @@ $( function() {
 	initAddAppPopup();
 	initAddBreakPopup();
 	initEditAppPopup();
+	initEditBreakPopup();
 
 	initClientsAutocompleteDropdown(500);
 
@@ -92,10 +93,38 @@ function initEditAppPopup() {
 			$(this).find('input[name=new-app-client-id]').val(relTarget.data('appclientid'));
 			$(this).find('input[name=edit-app-id]').val(relTarget.data('appid'));
 
-			var assignedUserName = $('.assign-user-link[data-user_id=' + relTarget.data('userid') + ']').text();
+			var assignedUserName = $(this).find('.assign-user-link[data-user_id=' + relTarget.data('userid') + ']').text();
 			$(this).find('input[name=new-app-assigned-user]').val(assignedUserName);
-			$('input[name=assigned_user_id]').val(relTarget.data('userid'));
-			$('.submit-form-button').attr('name', 'edit-app-action');
+			$(this).find('input[name=assigned_user_id]').val(relTarget.data('userid'));
+			$(this).find('.submit-form-button').attr('name', 'edit-app-action');
+
+			var dateObject = new Date(relTarget.data('appdate'));
+			updateTimeInput(startInput, getTimeInputDateObject(dateObject, relTarget.data('appstart')));
+			updateTimeInput(startInput, getTimeInputDateObject(dateObject, relTarget.data('append')));
+		}
+	});
+}
+
+function initEditBreakPopup() {
+	$('#add-break-popup').on('show.bs.modal', function(event) {
+
+		var relTarget = $(event.relatedTarget);
+
+		if(relTarget.is('#edit-break-button')) {
+
+			var startInput = $(this).find('input[name=new-app-start]');
+			var endInput = $(this).find('input[name=new-app-end]');
+
+			$(this).find('input[name=new-app-date]').val(relTarget.data('appdate'));
+			startInput.val(relTarget.data('appstart'));
+			endInput.val(relTarget.data('append'));
+			$(this).find('textarea[name=new-app-notes]').val(relTarget.data('appnotes'));
+			$(this).find('input[name=edit-app-id]').val(relTarget.data('appid'));
+
+			var assignedUserName = $(this).find('.assign-user-link[data-user_id=' + relTarget.data('userid') + ']').text();
+			$(this).find('input[name=new-app-assigned-user]').val(assignedUserName);
+			$(this).find('input[name=assigned_user_id]').val(relTarget.data('userid'));
+			$(this).find('.submit-form-button').attr('name', 'edit-app-action');
 
 			var dateObject = new Date(relTarget.data('appdate'));
 			updateTimeInput(startInput, getTimeInputDateObject(dateObject, relTarget.data('appstart')));
