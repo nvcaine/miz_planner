@@ -64,6 +64,12 @@
 					</button>&nbsp;
 				</div>
 
+				<div class="pull-left">
+					<button class="btn btn-success btn-lg" data-toggle="modal" data-target="#add-break-popup">
+						Add break
+					</button>&nbsp;
+				</div>
+
 				{if isset($users)}
 				<div class="dropdown pull-left">
 					<button class="btn btn-primary btn-lg" id="admin-users-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -138,6 +144,8 @@
 	</div> <!--cd-schedule-->
 
 	{include file='popups/add-app-popup.tpl' week=$week}
+
+	{include file='popups/add-break-popup.tpl' week=$week}
 
 	{include file='popups/edit-app-popup.tpl'}
 
