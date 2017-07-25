@@ -187,6 +187,6 @@ class AppsSection extends AbstractMenuSection {
 				if($option->name == $appType)
 					return $type->code;
 
-		return 0;
+		return 3;
 	}
 }

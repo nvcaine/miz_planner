@@ -64,6 +64,12 @@
 					</button>&nbsp;
 				</div>
 
+				<div class="pull-left">
+					<button class="btn btn-success btn-lg" data-toggle="modal" data-target="#add-break-popup">
+						Add break
+					</button>&nbsp;
+				</div>
+
 				{if isset($users)}
 				<div class="dropdown pull-left">
 					<button class="btn btn-primary btn-lg" id="admin-users-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -116,12 +122,14 @@
 						<li class="single-event" data-start="{$app.start_time}" data-end="{$app.end_time}" data-content="{$appURL}app_details/?app_id={$app.app_id}&week={$week}" data-event="event-{$app.event_type}">
 							<a href="#0">
 								<div class="visible-xs" style="color:#DDDDDD;">{$app.start_time} - {$app.end_time}</div>
+								{if $app.type != 'Break'}
 								<strong class="event-name">
 									{if isset($app.first_name) && $app.first_name != ''} 
 									{$app.first_name[0]}.&nbsp;
 									{/if}
 									{$app.last_name}
 								</strong>
+								{/if}
 								<span style="color:white;">{$app.type}</span>
 							</a>
 						</li>
@@ -138,6 +146,8 @@
 	</div> <!--cd-schedule-->
 
 	{include file='popups/add-app-popup.tpl' week=$week}
+
+	{include file='popups/add-break-popup.tpl' week=$week}
 
 	{include file='popups/edit-app-popup.tpl'}
 
