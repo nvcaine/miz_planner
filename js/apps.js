@@ -207,11 +207,13 @@ function getHighightedAutocompleteLabel(name, query) {
 function initForm(formSelector, typeSelector, dateSelector, startSelector, endSelector, userSelector, userIdSelector, submitSelector, alertSelector) {
 
 	var selectors = [typeSelector, dateSelector, startSelector, endSelector, userSelector];
+	var form = $(formSelector);
+	var alert = form.find(alertSelector);
 
 	initDatepickers(
-		$(dateSelector),
-		$(startSelector),
-		$(endSelector)
+		form.find(dateSelector),
+		form.find(startSelector),
+		form.find(endSelector)
 	);
 
 	initOverlapValidation(
@@ -221,10 +223,10 @@ function initForm(formSelector, typeSelector, dateSelector, startSelector, endSe
 		userIdSelector,
 		userSelector,
 		submitSelector,
-		alertSelector
+		alert
 	);
 
-	$(formSelector).submit( function() {
+	form.submit( function() {
 
 		for(i = 0; i < selectors.length; i++) {
 			var element = $(this).find(selectors[i]);
@@ -239,7 +241,7 @@ function initForm(formSelector, typeSelector, dateSelector, startSelector, endSe
 	});
 }
 
-function initOverlapValidation(dateSelector, startSelector, endSelector, userIdSelector, userNameSelector, submitSelector, alertSelector) {
+function initOverlapValidation(dateSelector, startSelector, endSelector, userIdSelector, userNameSelector, submitSelector, alert) {
 
 	var dateSelectors = [];
 
@@ -250,7 +252,7 @@ function initOverlapValidation(dateSelector, startSelector, endSelector, userIdS
 			$(endSelector).val(),
 			$(userIdSelector).val(),
 			submitSelector,
-			alertSelector
+			alert
 		);
 	});
 
@@ -268,15 +270,14 @@ function initOverlapValidation(dateSelector, startSelector, endSelector, userIdS
 			$(endSelector).val(),
 			$(userIdSelector).val(),
 			submitSelector,
-			alertSelector
+			alert
 		);
 
 		return false;
 	});
 }
 
-function validateAppOverlapping(date, start, end, assignedTo, submitButtonSelector, alertSelector) {
-	var alert = $(alertSelector);
+function validateAppOverlapping(date, start, end, assignedTo, submitButtonSelector, alert) {
 
 	alert.hide();
 
@@ -293,14 +294,14 @@ function validateAppOverlapping(date, start, end, assignedTo, submitButtonSelect
 			user_id: assignedTo};
 
 		$.get(serviceURL, requestData, function(data) {
-			var submitEnabled = true;
+			var submitDisabled = true;
 
 			if(data.hasOwnProperty('result') && data.result == 'valid')
-				submitEnabled = false;
+				submitDisabled = false;
 			else
 				showOverlappingAlert(data, alert);
 
-			$(submitButtonSelector).prop('disabled', submitEnabled);
+			$(submitButtonSelector).prop('disabled', submitDisabled);
 		});
 	}	
 }
