@@ -80,8 +80,8 @@ class AppsSection extends AbstractMenuSection {
 
 		$this->view->assign('users', $users);
 
-		if(isset($params['user_id'])) {
-			$userId = $params['user_id'];
+		if(isset($_GET['user_id'])) {
+			$userId = $_GET['user_id'];
 			$this->view->assign('user_id', $userId);
 		}
 
