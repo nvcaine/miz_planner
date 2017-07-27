@@ -4,7 +4,7 @@ class ClientsProxy extends AbstractProxy {
 	const TABLE = 'miz_clients';
 
 	public function getClients() {
-		return $this->db->query('SELECT * FROM ' . self::TABLE . ' ORDER BY last_name');
+		return $this->db->query('SELECT * FROM ' . self::TABLE . ' WHERE client_id > 0 ORDER BY last_name');
 	}
 
 	public function getAutocompleteResults($query) {
